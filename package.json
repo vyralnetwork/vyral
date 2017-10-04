@@ -1,0 +1,34 @@
+{
+    "name": "vyral",
+    "version": "1.0.0",
+    "description": "Vyral campaign management contracts",
+    "main": "index.js",
+    "scripts": {
+        "test": "node_modules/.bin/truffle test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vyralnetwork/vyral.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vyralnetwork/vyral/issues"
+    },
+    "homepage": "https://github.com/vyralnetwork/vyral#readme",
+    "dependencies": {
+        "bignumber.js": "^4.1.0",
+        "debug": "^3.1.0",
+        "ethereumjs-lib": "^3.0.0",
+        "lodash": "^4.17.4",
+        "multi-hash": "^0.1.1",
+        "nconf": "^0.8.5",
+        "truffle-contract": "^3.0.0",
+        "web3": "^1.0.0-beta.22"
+    },
+    "devDependencies": {
+        "mocha": "^4.0.0",
+        "should": "^13.1.0",
+        "truffle": "^3.4.11"
+    }
+}
