@@ -1,6 +1,6 @@
 pragma solidity ^0.4.15;
 
-import "./RewardAllocation.sol";
+import "./rewards/Reward.sol";
 
 /**
  * A ReferralTree is a diffusion graph of all nodes representing campaign participants.
@@ -39,7 +39,7 @@ import "./RewardAllocation.sol";
  *
  */
 library ReferralTree {
-    
+
     
     /**
      * A user in a referral graph
@@ -54,7 +54,7 @@ library ReferralTree {
         /// The key to be shared to receive rewards
         bytes32 referralKey;
         /// Reward accumulated
-        RewardAllocation.Reward reward;
+        Reward.Payment payment;
     }
 
     /**
@@ -64,6 +64,12 @@ library ReferralTree {
         mapping (address => VyralNode) nodes;
     }
 
+    /**
+     * Returns the degree of a node
+     */
+    function degreeOf(Tree storage tree, address nodeid) constant returns (uint) {
+        return tree.nodes[nodeid].inviteeids.length;
+    }
 
     /**
      * @dev Creates a new node representing an invitee and adds to a node's list of invitees.
@@ -73,7 +79,7 @@ library ReferralTree {
         address referrerid,
         address inviteeid,
         bytes32 referralKey,
-        RewardAllocation.Reward memory reward
+        Reward.Payment memory payment
     )
         internal
     {
@@ -81,10 +87,10 @@ library ReferralTree {
         inviteeNode.nodeid = inviteeid;
         inviteeNode.referrerid = referrerid;
         inviteeNode.referralKey = referralKey;
-        inviteeNode.reward = reward;
+        inviteeNode.payment = payment;
 
-        VyralNode referrerNode = tree.nodes[referrerid];
-        referrerNode.inviteeids[inviteeids.length] = inviteeid;
+        VyralNode storage referrerNode = tree.nodes[referrerid];
+        referrerNode.inviteeids[referrerNode.inviteeids.length] = inviteeid;
     }
 
 }

@@ -14,9 +14,7 @@ contract Ownable {
 
     /// Modifiers
     modifier onlyOwner() {
-        if (msg.sender != owner) {
-            throw;
-        }
+        require(msg.sender == owner);
         _;
     }
 
@@ -24,11 +22,13 @@ contract Ownable {
      * Assign a new owner.
      * @param newOwner  must be a valid address of a contract or an account
      */
-    function transferOwnership(address newOwner)
-    onlyOwner
+    function transferOwnership (
+        address newOwner
+    )
+        onlyOwner
+        public
     {
-        if (newOwner != address(0)) {
-            owner = newOwner;
-        }
+        require(newOwner != address(0));
+        owner = newOwner;
     }
 }

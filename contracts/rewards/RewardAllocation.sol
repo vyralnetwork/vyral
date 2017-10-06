@@ -18,17 +18,6 @@ library RewardAllocation {
         /// Reward is distributed equally among the invitee and all of node's ancestors
         Shapley
     }
-    
-    /**
-     * A {Reward} represents the value of a referral. This is the incentive offered by a campaign to both.
-     */
-    struct Reward {
-        /// Unique id of the reward
-        bytes32 id;
-        /// GigaBytes, Fiat Currency (USD), Tokens etc.
-        string units;
-        /// The amount being offered
-        uint amount;
-    }
+
     
 }

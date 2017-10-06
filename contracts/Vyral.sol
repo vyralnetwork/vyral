@@ -1,6 +1,6 @@
 pragma solidity ^0.4.15;
 
-import "./Ownable.sol";
+import "./util/Ownable.sol";
 
 contract Vyral is Ownable {
 
