@@ -1,0 +1,31 @@
+{
+  "contract_name": "RewardPayoffStrategy",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "referrer",
+          "type": "address"
+        },
+        {
+          "name": "invitee",
+          "type": "address"
+        }
+      ],
+      "name": "payoff",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1507760509012
+}

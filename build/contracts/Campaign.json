@@ -1,0 +1,81 @@
+{
+  "contract_name": "Campaign",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "resume",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "stop",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getReferralKey",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "stopped",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "payable": false,
+      "type": "fallback"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b5b60008054600160a060020a03191633600160a060020a03161790555b5b5b6102b08061003e6000396000f300606060405236156100755763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663046f7da2811461008457806307da68f5146100995780632cdebb8f146100ae57806375f12b21146100c35780638da5cb5b146100ea578063f2fde38b14610119575b341561008057600080fd5b5b5b005b341561008f57600080fd5b61008061013a565b005b34156100a457600080fd5b6100806101a0565b005b34156100b957600080fd5b61008061019c565b005b34156100ce57600080fd5b6100d66101f7565b604051901515815260200160405180910390f35b34156100f557600080fd5b6100fd610218565b604051600160a060020a03909116815260200160405180910390f35b341561012457600080fd5b610080600160a060020a0360043516610227565b005b60005433600160a060020a0390811691161461015557600080fd5b60005474010000000000000000000000000000000000000000900460ff161561017d57600080fd5b6000805474ff0000000000000000000000000000000000000000191690555b5b5b565b60005433600160a060020a039081169116146101bb57600080fd5b6000805474ff00000000000000000000000000000000000000001916740100000000000000000000000000000000000000001790555b5b565b5b565b60005474010000000000000000000000000000000000000000900460ff1681565b600054600160a060020a031681565b60005433600160a060020a0390811691161461024257600080fd5b600160a060020a038116151561025757600080fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b5b505600a165627a7a72305820a4331180ab9ca9682295b06274e03557d22cc1eb8e0126bbebff77af75da089b0029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1507760509011
+}

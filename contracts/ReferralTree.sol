@@ -94,3 +94,19 @@ library ReferralTree {
     }
 
 }
+
+
+/*
+
+1) incentive strategies which we are working on
+2) campaign analytics or metrics to show/predict effectiveness of a campaign
+3) cost analysis of marketing - e.g. is giving away GBs helping or hurting you?
+4) governance of a campaign - wallets to receive funds raised from campaign, who can receive funds raised, who can be delegated to run the campaign
+5) campaign lifecycle - when does a campaign start? Immediately, at a certain block, at a certain time? Can it be stopped? Can it resume? I've added a "stoppable" contract to suspend campaign in an emergency
+6) we need measures to be able to suspend a campaign and revert funds if we suspect a campaign is illegal or somehow morally/ethically wrong
+7) Proof or game theoretical analysis of any strategy we propose
+
+
+*/
+
+

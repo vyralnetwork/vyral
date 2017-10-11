@@ -1,8 +1,5 @@
 ## vyral
 
-\begin{equation}
-\sum_{\forall i}{x_i^{2}} 
-\end{equation}
 
 ## Testing
 

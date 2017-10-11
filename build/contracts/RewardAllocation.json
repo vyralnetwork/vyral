@@ -1,0 +1,8 @@
+{
+  "contract_name": "RewardAllocation",
+  "abi": [],
+  "unlinked_binary": "0x60606040523415600e57600080fd5b5b603680601c6000396000f30060606040525b600080fd00a165627a7a7230582098dc29ded8345d55dd6fc0d043c9196d216db57b1f967680efa080da9efcdf450029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1507328598137
+}
