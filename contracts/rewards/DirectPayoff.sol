@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
 
-import "../util/SafeMathLib.sol";
+import "../math/SafeMath.sol";
 import "../ReferralTree.sol";
 import "./RewardPayoffStrategy.sol";
 
@@ -11,9 +11,9 @@ import "./RewardPayoffStrategy.sol";
  */
 contract DirectPayoff is RewardPayoffStrategy {
 
-    using SafeMathLib for uint;
+    using SafeMath for uint256;
 
-    function payoff(address referrer, address invitee) public returns (uint) {
+    function payoff(address referrer, address invitee) public returns (uint256) {
         return 0;
     }
 

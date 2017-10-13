@@ -16,11 +16,23 @@ let web3     = new Web3(provider);
 let properties       = ["contract_name", "abi", "unlinked_binary"];
 let contractDefaults = {
     from: web3.eth.accounts[0],
-    gas: 4712388,
-    gasPrice: 100000000000
+    gas: nconf.get("ethereum:gasLimit"),
+    gasPrice: nconf.get("ethereum:gasPrice")
 };
+
+let Vyral = contract(_.pick(require("../build/contracts/Vyral.json"), properties));
+Vyral.setProvider(provider);
+Vyral.defaults(contractDefaults);
+
+let Campaign = contract(_.pick(require("../build/contracts/Campaign.json"), properties));
+Campaign.setProvider(provider);
+Campaign.defaults(contractDefaults);
+
 
 module.exports      = nconf;
 module.exports.web3 = web3;
 
-module.exports.contracts = {};
+module.exports.contracts = {
+    Vyral: Vyral,
+    Campaign: Campaign
+};

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
 
-import "./util/Ownable.sol";
+import "./traits/Ownable.sol";
 import "./Campaign.sol";
 
 
@@ -18,6 +18,7 @@ contract Vyral is Ownable {
      * One of a kind.
      */
     function Vyral() {
+        owner = msg.sender;
     }
 
     /**
@@ -32,6 +33,7 @@ contract Vyral is Ownable {
      */
     function newCampaign()
     public
+    onlyOwner
     returns (address)
     {
         Campaign campaign = new Campaign();

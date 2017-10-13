@@ -8,7 +8,14 @@
     }
   ],
   "unlinked_binary": "0x60606040523415600e57600080fd5b5b5b5b603680601e6000396000f30060606040525b600080fd00a165627a7a72305820b8672469481a0b44de31cd287e45348c717bc834b1f7f57534f862f94742c8d90029",
-  "networks": {},
+  "networks": {
+    "1507764692881": {
+      "events": {},
+      "links": {},
+      "address": "0x2f5b140c9e92f53e348995615d727c717a56aad6",
+      "updated_at": 1507764699019
+    }
+  },
   "schema_version": "0.0.5",
-  "updated_at": 1507760509012
+  "updated_at": 1507764699019
 }
