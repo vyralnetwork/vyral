@@ -31,12 +31,12 @@ contract Vyral is Ownable {
     /**
      * Creates a new campaign on behalf of campaign director. Returns campaign address.
      */
-    function newCampaign()
+    function newCampaign(string units, uint256 amount)
     public
     onlyOwner
     returns (address)
     {
-        Campaign campaign = new Campaign();
+        Campaign campaign = new Campaign(units, amount);
         campaigns.push(campaign);
         return (campaign);
     }

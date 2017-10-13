@@ -25,17 +25,12 @@ library Reward {
     /**
      * Returns sum of two payments if their units are same.
      */
-    function add(Reward.Payment payment1, Reward.Payment payment2) returns (Payment) {
-        require(payment1.units == payment2.units);
+    function add(Payment storage self, string units, uint256 amount) {
+        require(sha3(self.units) == sha3(units));
 
-        require(payment1.amount >= 0);
-        require(payment2.amount >= 0);
+        require(amount >= 0);
 
-        Payment memory sum = new Payment();
-        sum.units = payment1.units;
-        sum.amount = payment1.units;
-        sum = payment1.amount.add(payment2.amount);
-        return sum;
+        self.amount.add(amount);
     }
 
     /**

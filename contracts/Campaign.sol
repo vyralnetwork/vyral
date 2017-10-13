@@ -2,6 +2,7 @@ pragma solidity ^0.4.15;
 
 
 import "./traits/Stoppable.sol";
+import "./rewards/Reward.sol";
 import "./ReferralTree.sol";
 
 
@@ -10,7 +11,13 @@ import "./ReferralTree.sol";
  */
 contract Campaign is Stoppable {
 
+    using Reward for Reward.Payment;
+
     using ReferralTree for ReferralTree.Tree;
+
+    Reward.Payment budget;
+
+    Reward.Payment reward;
 
     ReferralTree.Tree vyralTree;
 
@@ -41,6 +48,17 @@ contract Campaign is Stoppable {
         _;
     }
 
+    modifier onlyOnReferral(bytes32 referralKey) {
+        require(vyralTree.keys[referralKey] != 0x0);
+        _;
+    }
+
+    modifier onlyIfFundsAvailable() {
+        require(budget.amount >= reward.amount);
+        _;
+    }
+
+
     /*
      * Events
      */
@@ -55,11 +73,35 @@ contract Campaign is Stoppable {
     /**
      * Create a new campaign.
      */
-    function Campaign() {
+    function Campaign(string _units, uint256 _amount, uint256 _reward) {
         owner = msg.sender;
+
+        budget = Reward.Payment({
+            units: _units,
+            amount: _amount
+        });
+
+        budget = Reward.Payment({
+            units: _units,
+            amount: _reward
+        });
     }
 
-    // No reward for joining directly.
+    /**
+     * Accept invitation and join contract.
+     */
+    function join (
+        bytes32 referralKey
+    )
+    public
+    payable
+    inState(CampaignState.Started)
+    onlyOnReferral(referralKey)
+    onlyIfFundsAvailable()
+    {
+        vyralTree.addInvitee(msg.sender, referralKey, reward);
+    }
+
 
     /**
      * Fallback. Don't send ETH to a campaign.

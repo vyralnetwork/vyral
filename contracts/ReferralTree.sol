@@ -1,6 +1,7 @@
 pragma solidity ^0.4.15;
 
 import "./rewards/Reward.sol";
+import "./rewards/DirectPayoff.sol";
 
 /**
  * A ReferralTree is a diffusion graph of all nodes representing campaign participants.
@@ -77,20 +78,21 @@ library ReferralTree {
      */
     function addInvitee (
         Tree storage self,
-        address referrer,
-        address invitee,
-        bytes32 referralKey,
-        Reward.Payment memory payment
+        address _invitee,
+        bytes32 _referralKey,
+        Reward.Payment memory _payment
     )
         internal
     {
-        VyralNode memory inviteeNode;
-        inviteeNode.node = invitee;
-        inviteeNode.referrer = referrer;
-        inviteeNode.referralKey = referralKey;
-        inviteeNode.payment = payment;
+        address _referrer = self.keys[_referralKey];
 
-        VyralNode storage referrerNode = self.nodes[referrer];
-        referrerNode.invitees[referrerNode.invitees.length] = invitee;
+        VyralNode memory inviteeNode;
+        inviteeNode.node = _invitee;
+        inviteeNode.referrer = _referrer;
+        inviteeNode.referralKey = _referralKey;
+        inviteeNode.payment = _payment;
+
+        VyralNode storage referrerNode = self.nodes[_referrer];
+        referrerNode.invitees[referrerNode.invitees.length] = _invitee;
     }
 }
