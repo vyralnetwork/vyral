@@ -5,12 +5,12 @@ pragma solidity ^0.4.15;
  * A library contract for implementing payoff vectors.
  */
 library RewardAllocation {
-    
-    
+
+
     /**
      *
      */
-    enum RewardCharacteristic {
+    enum Characteristic {
         /// Node is rewarded only for direct referrals but not for its children
         Direct,
         /// Node's ancestors are rewarded (indirect referrals) but invitees are not rewarded at the time of joining
@@ -19,5 +19,8 @@ library RewardAllocation {
         Shapley
     }
 
-    
+
+    function allocate(address rewardCharacteristic) {
+
+    }
 }

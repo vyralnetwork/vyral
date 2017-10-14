@@ -3,6 +3,7 @@ pragma solidity ^0.4.15;
 
 import "./traits/Stoppable.sol";
 import "./rewards/Reward.sol";
+import "./rewards/RewardAllocation.sol";
 import "./ReferralTree.sol";
 
 
@@ -20,6 +21,8 @@ contract Campaign is Stoppable {
     Reward.Payment reward;
 
     ReferralTree.Tree vyralTree;
+
+    address rewardCharacteristic;
 
     /// Campaign is always in one of the following states
     enum CampaignState {
@@ -48,8 +51,18 @@ contract Campaign is Stoppable {
         _;
     }
 
-    modifier onlyOnReferral(bytes32 referralKey) {
-        require(vyralTree.keys[referralKey] != 0x0);
+    modifier notEmptyString(string _string) {
+        require(bytes(_string).length != 0);
+        _;
+    }
+
+    modifier notEmptyBytes32(bytes32 _value) {
+        require(_value != "");
+        _;
+    }
+
+    modifier onlyOnReferral(bytes32 _referralKey) {
+        require(vyralTree.keys[_referralKey] != 0x0);
         _;
     }
 
@@ -73,35 +86,70 @@ contract Campaign is Stoppable {
     /**
      * Create a new campaign.
      */
-    function Campaign(string _units, uint256 _amount, uint256 _reward) {
+    function Campaign (
+        string _units,
+        uint256 _amount,
+        uint256 _reward,
+        address _rewardPayoffCharacteristic
+    )
+        notEmptyString(_units)
+    {
         owner = msg.sender;
 
         budget = Reward.Payment({
-            units: _units,
-            amount: _amount
+            units : _units,
+            amount : _amount
         });
 
-        budget = Reward.Payment({
-            units: _units,
-            amount: _reward
+        reward = Reward.Payment({
+            units : _units,
+            amount : _reward
         });
+
+        rewardCharacteristic = _rewardPayoffCharacteristic;
     }
 
     /**
      * Accept invitation and join contract.
      */
     function join (
-        bytes32 referralKey
+        bytes32 _referralKey
     )
-    public
-    payable
-    inState(CampaignState.Started)
-    onlyOnReferral(referralKey)
-    onlyIfFundsAvailable()
+        public
+        payable
+        inState(CampaignState.Started)
+        notEmptyBytes32(_referralKey)
+        onlyOnReferral(_referralKey)
+        onlyIfFundsAvailable()
     {
-        vyralTree.addInvitee(msg.sender, referralKey, reward);
+        vyralTree.addInvitee(msg.sender, _referralKey, reward, rewardCharacteristic);
     }
 
+    /**
+     * Return referral key of caller.
+     */
+    function getReferralKey()
+        constant
+        returns (bytes32 _referralKey)
+    {
+        _referralKey = vyralTree.getReferralKey(msg.sender);
+    }
+
+    /**
+     * Return referral key of the given address.
+     */
+    function getReferralKey (
+        address _address
+    )
+        constant
+        returns (bytes32 _referralKey)
+    {
+        _referralKey = vyralTree.getReferralKey(_address);
+    }
+
+    // Update budget
+
+    // Compute key in the contract
 
     /**
      * Fallback. Don't send ETH to a campaign.

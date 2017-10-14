@@ -1,7 +1,21 @@
 {
   "contract_name": "RewardAllocation",
-  "abi": [],
-  "unlinked_binary": "0x60606040523415600e57600080fd5b5b603680601c6000396000f30060606040525b600080fd00a165627a7a7230582098dc29ded8345d55dd6fc0d043c9196d216db57b1f967680efa080da9efcdf450029",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "rewardCharacteristic",
+          "type": "address"
+        }
+      ],
+      "name": "allocate",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x60606040523415600e57600080fd5b5b608d8061001d6000396000f300606060405263ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663ffd7d9838114603c575b600080fd5b605b73ffffffffffffffffffffffffffffffffffffffff60043516605d565b005b5b505600a165627a7a723058202d882bded2482e0ecead311b03e4ca2ecd9600b19e5f281ffce6afe4cdb077ea0029",
   "networks": {
     "1507764692881": {
       "events": {},
@@ -14,8 +28,14 @@
       "links": {},
       "address": "0x2066b296378de02852cddeb1c3a969abb116b968",
       "updated_at": 1507873208226
+    },
+    "1507907229751": {
+      "events": {},
+      "links": {},
+      "address": "0xf219fc3ee1de1a1cfc8b52433f83bf7f49fdf3f6",
+      "updated_at": 1507907328325
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507873208226
+  "updated_at": 1507950478394
 }
