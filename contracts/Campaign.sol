@@ -3,6 +3,7 @@ pragma solidity ^0.4.15;
 
 import "./traits/Stoppable.sol";
 import "./rewards/Reward.sol";
+//import "./rewards/RewardPayoffStrategy.sol";
 import "./rewards/RewardAllocation.sol";
 import "./ReferralTree.sol";
 
@@ -16,13 +17,17 @@ contract Campaign is Stoppable {
 
     using ReferralTree for ReferralTree.Tree;
 
+    /// Budget from which rewards are paid out
     Reward.Payment budget;
 
+    /// Incentive offered for joining the campaign
     Reward.Payment reward;
 
+    /// The referral tree (k-ary tree)
     ReferralTree.Tree vyralTree;
 
-    address rewardCharacteristic;
+    /// Which payoff method to use?
+    address payoffStrategy;
 
     /// Campaign is always in one of the following states
     enum CampaignState {
@@ -90,7 +95,7 @@ contract Campaign is Stoppable {
         string _units,
         uint256 _amount,
         uint256 _reward,
-        address _rewardPayoffCharacteristic
+        address _payoffStrategy
     )
         notEmptyString(_units)
     {
@@ -106,7 +111,9 @@ contract Campaign is Stoppable {
             amount : _reward
         });
 
-        rewardCharacteristic = _rewardPayoffCharacteristic;
+        payoffStrategy = _payoffStrategy;
+
+        state = CampaignState.Ready;
     }
 
     /**
@@ -122,7 +129,7 @@ contract Campaign is Stoppable {
         onlyOnReferral(_referralKey)
         onlyIfFundsAvailable()
     {
-        vyralTree.addInvitee(msg.sender, _referralKey, reward, rewardCharacteristic);
+        vyralTree.addInvitee(msg.sender, _referralKey, reward, payoffStrategy);
     }
 
     /**

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
 import "./rewards/Reward.sol";
-import "./rewards/RewardAllocation.sol";
+//import "./rewards/RewardPayoffStrategy.sol";
 import "./rewards/DirectPayoff.sol";
 
 /**
@@ -89,7 +89,7 @@ library ReferralTree {
         address _invitee,
         bytes32 _referralKey,
         Reward.Payment memory _payment,
-        address _rewardPayoffCharacteristic
+        address _payoffStrategy
     )
         internal
     {
@@ -104,8 +104,8 @@ library ReferralTree {
         VyralNode memory referrerNode = self.nodes[_referrer];
         referrerNode.invitees[referrerNode.invitees.length] = _invitee;
 
-        RewardPayoffStrategy rps = RewardPayoffStrategy(_rewardPayoffCharacteristic);
-        rps.payoff(_referrer, _invitee);
+//        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
+//        rps.payoff(_referrer, _invitee);
     }
 
     /**
