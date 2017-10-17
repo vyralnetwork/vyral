@@ -18,7 +18,6 @@ contract Vyral is Ownable {
      * One of a kind.
      */
     function Vyral() {
-        owner = msg.sender;
     }
 
     /**
@@ -36,16 +35,16 @@ contract Vyral is Ownable {
      * Creates a new campaign on behalf of campaign director. Returns campaign address.
      */
     function newCampaign (
-        string units,
-        uint256 amount,
-        uint256 reward,
+        address token,
+        uint256 budgetAmount,
+        uint256 rewardAmount,
         address payoffStrategy
     )
         public
         onlyOwner
         returns (address)
     {
-        Campaign campaign = new Campaign(units, amount, reward, payoffStrategy);
+        Campaign campaign = new Campaign(token, budgetAmount, rewardAmount, payoffStrategy);
         campaigns.push(campaign);
         return (campaign);
     }

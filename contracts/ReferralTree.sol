@@ -114,7 +114,6 @@ library ReferralTree {
     function splitRewardWithReferrer (
         Tree storage self,
         address _address,
-        string _units,
         uint256 _referrerReward,
         uint256 _inviteeReward
     )
@@ -122,14 +121,14 @@ library ReferralTree {
         returns (bytes32 _referralKey)
     {
         VyralNode storage inviteeNode = self.nodes[_address];
-        inviteeNode.payment.add(_units, _inviteeReward);
+        inviteeNode.payment.add(_address, _inviteeReward);
 
         VyralNode storage referrerNode = self.nodes[inviteeNode.referrer];
-        referrerNode.payment.add(_units, _referrerReward);
+        referrerNode.payment.add(_address, _referrerReward);
     }
 
     /**
-     * Find a referral key by an address.
+     * Find referrer of the given invitee.
      */
     function getReferrerAddress (
         Tree storage self,

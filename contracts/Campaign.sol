@@ -2,9 +2,10 @@ pragma solidity ^0.4.15;
 
 
 import "./traits/Stoppable.sol";
+import "./tokens/ERC20.sol";
 import "./rewards/Reward.sol";
 //import "./rewards/RewardPayoffStrategy.sol";
-import "./rewards/RewardAllocation.sol";
+//import "./rewards/RewardAllocation.sol";
 import "./ReferralTree.sol";
 
 
@@ -57,7 +58,8 @@ contract Campaign is Stoppable {
     }
 
     modifier notEmptyString(string _string) {
-        require(bytes(_string).length != 0);
+        bytes memory stringInBytes = bytes(_string);
+        require(stringInBytes.length > 0);
         _;
     }
 
@@ -92,23 +94,21 @@ contract Campaign is Stoppable {
      * Create a new campaign.
      */
     function Campaign (
-        string _units,
-        uint256 _amount,
-        uint256 _reward,
+        address _token,
+        uint256 _budgetAmount,
+        uint256 _rewardAmount,
         address _payoffStrategy
     )
-        notEmptyString(_units)
+        public
     {
-        owner = msg.sender;
-
         budget = Reward.Payment({
-            units : _units,
-            amount : _amount
+            token: ERC20(_token),
+            amount: _budgetAmount
         });
 
         reward = Reward.Payment({
-            units : _units,
-            amount : _reward
+            token: ERC20(_token),
+            amount: _rewardAmount
         });
 
         payoffStrategy = _payoffStrategy;
@@ -123,7 +123,6 @@ contract Campaign is Stoppable {
         bytes32 _referralKey
     )
         public
-        payable
         inState(CampaignState.Started)
         notEmptyBytes32(_referralKey)
         onlyOnReferral(_referralKey)

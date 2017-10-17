@@ -2,6 +2,7 @@ pragma solidity ^0.4.11;
 
 
 import "../math/SafeMath.sol";
+import "../tokens/ERC20.sol";
 
 
 /**
@@ -15,8 +16,8 @@ library Reward {
      * A {Payment} represents the value of a referral. This is the incentive offered by a campaign to both.
      */
     struct Payment {
-        /// GigaBytes, Fiat Currency (USD), Tokens etc.
-        string units;
+        /// Token as payment
+        ERC20 token;
         /// The amount being offered
         uint256 amount;
     }
@@ -25,8 +26,8 @@ library Reward {
     /**
      * Returns sum of two payments if their units are same.
      */
-    function add(Payment storage self, string units, uint256 amount) {
-        require(sha3(self.units) == sha3(units));
+    function add(Payment storage self, address token, uint256 amount) {
+        require(self.token == token);
 
         require(amount >= 0);
 
