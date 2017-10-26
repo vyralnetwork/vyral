@@ -218,8 +218,51 @@
       },
       "address": "0xc9c978a44eb989aada122d5dbb35ec497f866498",
       "updated_at": 1508199346026
+    },
+    "1508911856514": {
+      "events": {
+        "0x07a9c134c6ed9c353773b355c69cbf65e34e3c3820554f5b8e1afdecdfb40292": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "campaign",
+              "type": "address"
+            }
+          ],
+          "name": "CampaignCreated",
+          "type": "event"
+        },
+        "0x3dcc3538fe548d412565edac6656fbbcd16eb6195dea382e6eb04dd38dd24f3f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "campaign",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "previousState",
+              "type": "uint8"
+            },
+            {
+              "indexed": false,
+              "name": "currentState",
+              "type": "uint8"
+            }
+          ],
+          "name": "CampaignStateChanged",
+          "type": "event"
+        }
+      },
+      "links": {
+        "ReferralTree": "0xa2a09d051d4d9f76030ccdec757346b5476b75bf"
+      },
+      "address": "0x71eed54b55b56eeb6f7df85736355ae822a9edd3",
+      "updated_at": 1508911926938
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1508199346026
+  "updated_at": 1508911926938
 }

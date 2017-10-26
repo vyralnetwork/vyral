@@ -34,7 +34,7 @@ module.exports = function(deployer) {
     deployer.link(ReferralTree, Campaign);
     deployer.deploy(Campaign);
 
-    // deployer.link(Ownable, Vyral);
-    // deployer.link(ReferralTree, Vyral);
-    // deployer.deploy(Vyral);
+    deployer.link(Ownable, Vyral);
+    deployer.link(ReferralTree, Vyral);
+    deployer.deploy(Vyral);
 };

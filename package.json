@@ -19,7 +19,10 @@
     "dependencies": {
         "bignumber.js": "^4.1.0",
         "debug": "^3.1.0",
+        "ethereumjs-abi": "^0.6.4",
         "ethereumjs-lib": "^3.0.0",
+        "ethereumjs-util": "^5.1.2",
+        "int64-buffer": "^0.1.9",
         "lodash": "^4.17.4",
         "multi-hash": "^0.1.1",
         "nconf": "^0.8.5",
