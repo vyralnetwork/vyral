@@ -2,7 +2,6 @@ pragma solidity ^0.4.15;
 
 import "./rewards/Reward.sol";
 //import "./rewards/RewardPayoffStrategy.sol";
-import "./rewards/DirectPayoff.sol";
 
 /**
  * A ReferralTree is a diffusion graph of all nodes representing campaign participants.
@@ -54,8 +53,6 @@ library ReferralTree {
         address referrer;
         /// Invitees of this node
         address[] invitees;
-        /// The key to be shared to receive rewards
-        bytes32 referralKey;
         /// Reward accumulated
         Reward.Payment payment;
     }
@@ -65,7 +62,6 @@ library ReferralTree {
      */
     struct Tree {
         mapping (address => VyralNode) nodes;
-        mapping (bytes32 => address) keys;
     }
 
     /**
@@ -104,8 +100,8 @@ library ReferralTree {
         VyralNode memory referrerNode = self.nodes[_referrer];
         referrerNode.invitees[referrerNode.invitees.length] = _invitee;
 
-//        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
-//        rps.payoff(_referrer, _invitee);
+        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
+        rps.payoff(_referrer, _invitee);
     }
 
     /**
@@ -132,27 +128,13 @@ library ReferralTree {
      */
     function getReferrerAddress (
         Tree storage self,
-        address _address
+        address _inviteeAddress
     )
         constant
         returns (address _referrerAddress)
     {
-        VyralNode memory node = self.nodes[_address];
+        VyralNode memory node = self.nodes[_inviteeAddress];
         _referrerAddress = node.referrer;
-    }
-
-    /**
-     * Find a referral key by an address.
-     */
-    function getReferralKey (
-        Tree storage self,
-        address _address
-    )
-        constant
-        returns (bytes32 _referralKey)
-    {
-        VyralNode memory node = self.nodes[_address];
-        _referralKey = node.referralKey;
     }
 
 

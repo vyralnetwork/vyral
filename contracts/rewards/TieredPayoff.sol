@@ -9,7 +9,7 @@ import "./RewardPayoffStrategy.sol";
 /**
  * Interface contract to implement various reward allocation algorithms
  */
-contract DirectPayoff is RewardPayoffStrategy {
+contract TieredPayoff is RewardPayoffStrategy {
 
     using SafeMath for uint256;
 
