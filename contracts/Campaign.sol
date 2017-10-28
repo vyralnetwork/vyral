@@ -6,7 +6,7 @@ import "./tokens/ERC20.sol";
 import "./rewards/Reward.sol";
 //import "./rewards/RewardPayoffStrategy.sol";
 //import "./rewards/RewardAllocation.sol";
-import "./ReferralTree.sol";
+import "./referral/ReferralTree.sol";
 
 
 /**

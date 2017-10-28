@@ -12,46 +12,55 @@ import "./Share.sol";
  */
 contract VyralSale is Ownable {
 
-    using SafeMath for uint256;
+    using SafeMath for uint;
 
 
     /// Some useful constants
-    uint256 public constant ONE_MILLION = 1000000 * 10 ** 18;
+    uint public constant ONE_MILLION = 1000000 * 10 ** 18;
 
     ///
-    uint256 public constant SALE_MIN = 1 ether;
+    uint public constant SALE_MIN = 1 ether;
 
-    uint256 public constant SALE_MAX = 50000 ether;
+    uint public constant SALE_MAX = 50000 ether;
 
     /// Exchange rate 1 Ether = 1,700 SHAREs
-    uint256 public constant TOKEN_PRICE = 1700;
+    uint public constant SHARES_PER_ETH = 1700;
 
-    uint256 public constant TOTAL_SUPPLY = 777777777 * (10 ** uint256(decimals));
+    uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
 
-    /// Tokens available for sale in the 1st contribution period
-    uint256 public constant TOKENS_FOR_FIRST_SALE = 40 * ONE_MILLION;
+    address public TEAM = 0x3a965407cEd5E62C5aD71dE491Ce7B23DA5331A4;
 
-    uint256 public constant TOKENS_FOR_SECOND_SALE = 40 * ONE_MILLION;
 
-    /// Tokens allocated for Decibel.LIVE employees
-    uint256 public constant TOKENS_FOR_DECIBEL_LIVE = 20 * ONE_MILLION;
+    /// The sale can be in one of the following states
+    enum Status {
+        Created,
+        Started,
+        Ended,
+        Finalized
+    }
+
+    // Current state of the sale
+    Status public saleStatus;
 
     /// Token in use
     Share public token = new Share();
 
-    /// Tokens sold so far.
-    uint256 public belsSold = 0;
+    /// Funds collected so far.
+    uint public weiRaised = 0;
 
-    // Sale start date (October 1, 2017)
-    uint public start = 1506816000;
+    /// Sale start date (December 1, 2017)
+    uint public saleBeginsAt = 1512086400;
+
+    /// Sale duration
+    uint public saleDuration = 30 days;
+
+    /// Set after sale is over and tokens are allocated
+    uint public saleFinalizedAt;
 
     /// Dictionary of Ether purchased by buyers
     mapping (address => uint) public purchases;
 
-    /// Dictionary of tokens sold to investors
-    mapping (address => uint) public sales;
-
-    /// Holds ETH deposits for Decibel.LIVE
+    /// Holds ETH deposits for Vyral
     address public multiSigWallet;
 
     /// Vyral token sale campaign
@@ -61,15 +70,26 @@ contract VyralSale is Ownable {
      * Modifiers
      */
 
-    modifier isGreaterThanMinPurchase {
-        require(msg.value >= MIN_CONTRIBUTION);
+    modifier ifExceedsMinPurchase {
+        require(msg.value >= SALE_MIN);
         _;
     }
 
-    modifier isBelowHardCap {
+    modifier ifBelowHardCap {
         require(weiRaised.add(msg.value) <= SALE_MAX);
         _;
     }
+
+    modifier inStatus(Status _status) {
+        if (saleStatus != _status) throw;
+        _;
+    }
+
+    modifier notInStatus(Status _status) {
+        if (saleStatus == _status) throw;
+        _;
+    }
+
 
     /*
      * Modifiers
@@ -81,12 +101,14 @@ contract VyralSale is Ownable {
      * One of a kind.
      */
     function VyralSale(
-        address token,
-        uint256 budgetAmount,
-        uint256 rewardAmount,
-        address payoffStrategy
+        address _token,
+        uint _budgetAmount,
+        uint _rewardAmount,
+        address _payoffStrategy
     ) {
-        vyralCampaign = new Campaign(token, budgetAmount, rewardAmount, payoffStrategy);
+        vyralCampaign = new Campaign(_token, _budgetAmount, _rewardAmount, _payoffStrategy);
+
+        saleStatus = Status.Created;
     }
 
 
@@ -94,10 +116,56 @@ contract VyralSale is Ownable {
      * By default, SHAREs are allocated if ETH is sent to this contract.
      */
     function()
-    public
-    payable
+        public
+        payable
     {
         buyTokens(msg.sender);
+    }
+
+    /**
+     * Conclude the sale and begin minting process.
+     * Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
+     * Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
+     * Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 111,111,111 SHARE
+     * Crowdsale 42.9% (3/7) - 333,333,333 SHARE
+     */
+    function finalize()
+        external
+        inStatus(Status.Ended)
+        notInStatus(Status.Finalized)
+    {
+        uint purchasedSupply = weiRaised.mul(SHARES_PER_ETH);
+        uint totalSupply = purchasedSupply.mul(1000).div(429);
+        token.mint(totalSupply);
+
+        // A. 14.3% allocated to team and advisors
+        uint teamAllocation = totalSupply.mul(143) / 1000;
+        token.transfer(TEAM, teamAllocation);
+
+        saleStatus = Status.Finalized;
+        saleFinalizedAt = now;
+    }
+
+    /**
+     * @dev
+     */
+    function isSale()
+    public
+    constant
+    returns (bool)
+    {
+        return (now > saleBeginsAt);
+    }
+
+    /**
+     * @dev Returns true if sale has concluded.
+     */
+    function isSaleOver()
+        public
+        constant
+        returns (bool)
+    {
+        return block.timestamp >= (saleBeginsAt + saleDuration);
     }
 
     /**
@@ -109,11 +177,11 @@ contract VyralSale is Ownable {
         address buyer
     )
         internal
-        isBelowHardCap
-        isGreaterThanMinPurchase
+        ifBelowHardCap
+        ifExceedsMinPurchase
     {
-        uint256 weiReceived = msg.value;
-        uint256 shares = weiReceived * TOKEN_PRICE;
+        uint weiReceived = msg.value;
+        uint shares = weiReceived * SHARES_PER_ETH;
 
         // Transfer funds to wallet
         require(multiSigWallet.send(msg.value));
@@ -123,7 +191,7 @@ contract VyralSale is Ownable {
 
         // Running totals
         purchases[buyer] = weiReceived.add(purchases[buyer]);
-        weiRaised = safeAdd(weiRaised, weiReceived);
+        weiRaised = weiRaised.add(weiReceived);
 
         // Log event
         LogPurchase(buyer, weiReceived);

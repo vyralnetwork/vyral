@@ -2,7 +2,7 @@ pragma solidity ^0.4.15;
 
 
 import "../math/SafeMath.sol";
-import "../ReferralTree.sol";
+import "../referral/ReferralTree.sol";
 import "./RewardPayoffStrategy.sol";
 
 

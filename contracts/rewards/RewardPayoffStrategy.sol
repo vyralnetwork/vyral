@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
 
-import "../ReferralTree.sol";
+import "../referral/ReferralTree.sol";
 
 
 /**
