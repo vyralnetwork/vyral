@@ -105,7 +105,7 @@ contract VyralSale is Ownable {
     /**
      * One of a kind.
      */
-    function VyralSale(
+    function VyralSale (
         address _token,
         uint _budgetAmount,
         uint _rewardAmount,
