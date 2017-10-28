@@ -57,19 +57,13 @@ contract Campaign is Stoppable {
         _;
     }
 
-    modifier notEmptyString(string _string) {
-        bytes memory stringInBytes = bytes(_string);
-        require(stringInBytes.length > 0);
+    modifier onlyNonZeroAddress(address _a) {
+        require(_a != 0);
         _;
     }
 
-    modifier notEmptyBytes32(bytes32 _value) {
-        require(_value != "");
-        _;
-    }
-
-    modifier onlyOnReferral(bytes32 _referralKey) {
-        require(vyralTree.keys[_referralKey] != 0x0);
+    modifier onlyOnReferral(address _referrer) {
+        require(getReferrer() != 0x0);
         _;
     }
 
@@ -120,37 +114,25 @@ contract Campaign is Stoppable {
      * Accept invitation and join contract.
      */
     function join (
-        bytes32 _referralKey
+        address _referrer
     )
         public
         inState(CampaignState.Started)
-        notEmptyBytes32(_referralKey)
-        onlyOnReferral(_referralKey)
+        onlyNonZeroAddress(_referrer)
+        onlyOnReferral(_referrer)
         onlyIfFundsAvailable()
     {
-        vyralTree.addInvitee(msg.sender, _referralKey, reward, payoffStrategy);
+        vyralTree.addInvitee(msg.sender, _referrer, reward, payoffStrategy);
     }
 
     /**
      * Return referral key of caller.
      */
-    function getReferralKey()
+    function getReferrer()
         constant
-        returns (bytes32 _referralKey)
+        returns (address _referrer)
     {
-        _referralKey = vyralTree.getReferralKey(msg.sender);
-    }
-
-    /**
-     * Return referral key of the given address.
-     */
-    function getReferralKey (
-        address _address
-    )
-        constant
-        returns (bytes32 _referralKey)
-    {
-        _referralKey = vyralTree.getReferralKey(_address);
+        _referrer = vyralTree.getReferrerAddress(msg.sender);
     }
 
     // Update budget

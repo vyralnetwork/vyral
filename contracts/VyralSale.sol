@@ -26,9 +26,14 @@ contract VyralSale is Ownable {
     /// Exchange rate 1 Ether = 1,700 SHAREs
     uint public constant SHARES_PER_ETH = 1700;
 
+    /// Total tokens that can be minted
     uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
 
-    address public TEAM = 0x3a965407cEd5E62C5aD71dE491Ce7B23DA5331A4;
+    /// Address at which to hold tokens for team and advisors
+    address public VYRAL_TEAM = 0x0;
+
+    /// Address at which to hold tokens for partnerships and development
+    address public VYRAL_PARTNERSHIPS = 0x0;
 
 
     /// The sale can be in one of the following states
@@ -41,9 +46,6 @@ contract VyralSale is Ownable {
 
     // Current state of the sale
     Status public saleStatus;
-
-    /// Token in use
-    Share public token = new Share();
 
     /// Funds collected so far.
     uint public weiRaised = 0;
@@ -62,6 +64,9 @@ contract VyralSale is Ownable {
 
     /// Holds ETH deposits for Vyral
     address public multiSigWallet;
+
+    /// Token in use
+    Share public vyralToken;
 
     /// Vyral token sale campaign
     Campaign vyralCampaign;
@@ -123,49 +128,38 @@ contract VyralSale is Ownable {
     }
 
     /**
-     * Conclude the sale and begin minting process.
-     * Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-     * Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-     * Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 111,111,111 SHARE
-     * Crowdsale 42.9% (3/7) - 333,333,333 SHARE
+     * @dev Conclude the sale and begin minting process. Tokens are allocated as follows:
+     *      A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
+     *      B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
+     *      C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 111,111,111 SHARE
+     *      D. Crowdsale 42.9% (3/7) - 333,333,333 SHARE
      */
     function finalize()
         external
         inStatus(Status.Ended)
         notInStatus(Status.Finalized)
     {
-        uint purchasedSupply = weiRaised.mul(SHARES_PER_ETH);
-        uint totalSupply = purchasedSupply.mul(1000).div(429);
-        token.mint(totalSupply);
+        uint totalSupply = weiRaised.mul(SHARES_PER_ETH);
+        vyralToken.mint(totalSupply, address(multiSigWallet));
 
-        // A. 14.3% allocated to team and advisors
-        uint teamAllocation = totalSupply.mul(143) / 1000;
-        token.transfer(TEAM, teamAllocation);
+        uint oneSeventh = totalSupply.mul(143) / 1000;
+        uint twoSevenths = totalSupply.mul(286) / 1000;
+        uint threeSevenths = totalSupply.mul(429) / 1000;
+
+        // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
+        vyralToken.transfer(VYRAL_TEAM, oneSeventh);
+
+        // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
+        vyralToken.transfer(VYRAL_PARTNERSHIPS, oneSeventh);
+
+        // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 111,111,111 SHARE
+        vyralToken.transfer(vyralCampaign, twoSevenths);
+
+        // D. Crowdsale 42.9% (3/7) - 333,333,333 SHARE
+        uint crowdsaleAllocation = threeSevenths;
 
         saleStatus = Status.Finalized;
         saleFinalizedAt = now;
-    }
-
-    /**
-     * @dev
-     */
-    function isSale()
-    public
-    constant
-    returns (bool)
-    {
-        return (now > saleBeginsAt);
-    }
-
-    /**
-     * @dev Returns true if sale has concluded.
-     */
-    function isSaleOver()
-        public
-        constant
-        returns (bool)
-    {
-        return block.timestamp >= (saleBeginsAt + saleDuration);
     }
 
     /**

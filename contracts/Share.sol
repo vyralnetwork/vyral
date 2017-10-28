@@ -2,13 +2,14 @@ pragma solidity ^0.4.0;
 
 
 import "./math/SafeMath.sol";
+import "./traits/Ownable.sol";
 import "./tokens/ERC20.sol";
 
 
 /**
  * Vyral Token
  */
-contract Share is ERC20 {
+contract Share is ERC20, Ownable {
 
     using SafeMath for uint;
 
@@ -20,11 +21,43 @@ contract Share is ERC20 {
 
     uint256 public constant decimals = 18;
 
+    bool public mintingFinished = false;
+
+    uint public totalSupply = 0;
+
     mapping (address => uint256) balances;
 
     mapping (address => mapping (address => uint256)) allowances;
 
+    /*
+     * Modifiers
+     */
+
+    modifier canMint() {
+        if (mintingFinished) throw;
+        _;
+    }
+
+
     function Share() {
 
     }
+
+    /**
+     * Owner can mint and assign `amount` tokens to a `buyer` address.
+     */
+    function mint (
+        uint amount,
+        address buyer
+    )
+        onlyOwner
+        canMint
+        returns (bool)
+    {
+        totalSupply = totalSupply.add(amount);
+
+        balances[buyer] = balances[buyer].add(amount);
+        return true;
+    }
+
 }

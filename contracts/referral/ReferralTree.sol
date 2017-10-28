@@ -83,18 +83,15 @@ library ReferralTree {
     function addInvitee (
         Tree storage self,
         address _invitee,
-        bytes32 _referralKey,
+        address _referrer,
         Reward.Payment memory _payment,
         address _payoffStrategy
     )
         internal
     {
-        address _referrer = self.keys[_referralKey];
-
         VyralNode memory inviteeNode;
         inviteeNode.node = _invitee;
         inviteeNode.referrer = _referrer;
-        inviteeNode.referralKey = _referralKey;
         inviteeNode.payment = _payment;
 
         VyralNode memory referrerNode = self.nodes[_referrer];
@@ -136,7 +133,4 @@ library ReferralTree {
         VyralNode memory node = self.nodes[_inviteeAddress];
         _referrerAddress = node.referrer;
     }
-
-
-
 }
