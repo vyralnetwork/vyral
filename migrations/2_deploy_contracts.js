@@ -6,10 +6,10 @@ let Reward           = artifacts.require("./rewards/Reward.sol");
 let RewardAllocation = artifacts.require("./rewards/RewardAllocation.sol");
 let TieredPayoff     = artifacts.require("./rewards/TieredPayoff.sol");
 
-let ReferralTree = artifacts.require("./ReferralTree.sol");
-let Campaign     = artifacts.require("./Campaign.sol");
-let Share        = artifacts.require("./Share.sol");
-let VyralSale    = artifacts.require("./VyralSale.sol");
+let ReferralTree   = artifacts.require("./ReferralTree.sol");
+let Campaign       = artifacts.require("./Campaign.sol");
+let Share          = artifacts.require("./Share.sol");
+let VyralSale      = artifacts.require("./VyralSale.sol");
 
 
 module.exports = function(deployer) {
