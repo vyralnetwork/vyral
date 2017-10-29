@@ -1,30 +1,34 @@
 /**
  * Vyral contract scenarios.
  */
-let Vyral    = artifacts.require("./Vyral.sol");
-let Campaign = artifacts.require("./Campaign.sol");
+let Share = artifacts.require("./Share.sol");
 
-const {assert}  = require('chai');
+const {assert} = require('chai');
+const ethutil  = require("ethereumjs-util");
 
-contract('Vyral agreements', function(accounts) {
+let config = require("../config");
 
-    beforeEach(async () => {
+contract('Token API', (accounts) => {
+
+    before(async () => {
+        this.share = await Share.deployed();
     });
 
-    it('should initialize Vyral', async () => {
-        let vyral = await Vyral.new();
-        assert.equal(await vyral.campaignCount(), 0);
+    describe("when working with ERC20 properties", () => {
+        it("should return SHARE as symbol", async () => {
+            const symbol = await this.share.symbol();
+            assert.equal(symbol, 'SHARE');
+        });
+
+        it('should return 18 decimals', async () => {
+            const decimals = await this.share.decimals.call();
+            assert.equal(decimals.toString(), "18");
+        });
+
+        it("should return 'Vyral Token' as name", async () => {
+            const name = await this.share.name.call();
+            assert.equal(name, 'Vyral Token');
+        });
     });
 
-
-    it('should create a new campaign', async () => {
-        let vyral    = await Vyral.new({ from: accounts[0] });
-        let campaign = await Campaign.new();
-
-        assert.equal(await vyral.campaignCount(), 0);
-
-        await vyral.addCampaign(campaign.address);
-
-        assert.equal(await vyral.campaignCount(), 1);
-    });
 });

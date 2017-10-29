@@ -16,7 +16,7 @@ contract VyralSale is Ownable {
 
 
     /// Some useful constants
-    uint public constant ONE_MILLION = 1000000 * 10 ** 18;
+    uint public constant ONE_MILLION = 1000000 * (10 ** uint(18));
 
     ///
     uint public constant SALE_MIN = 1 ether;
@@ -163,7 +163,7 @@ contract VyralSale is Ownable {
     }
 
     /**
-     * Send Ether, receive SHAREs.
+     * Send Ether, receive SHARE.
      *
      * @param buyer Address of buying contract or account
      */

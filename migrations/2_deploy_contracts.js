@@ -4,13 +4,12 @@ let Stoppable = artifacts.require("./Stoppable.sol");
 
 let Reward           = artifacts.require("./rewards/Reward.sol");
 let RewardAllocation = artifacts.require("./rewards/RewardAllocation.sol");
-let DirectPayoff     = artifacts.require("./rewards/DirectPayoff.sol");
-let GeometricPayoff  = artifacts.require("./rewards/GeometricPayoff.sol");
-let ShapleyPayoff    = artifacts.require("./rewards/ShapleyPayoff.sol");
+let TieredPayoff     = artifacts.require("./rewards/TieredPayoff.sol");
 
 let ReferralTree = artifacts.require("./ReferralTree.sol");
 let Campaign     = artifacts.require("./Campaign.sol");
-let Vyral        = artifacts.require("./Vyral.sol");
+let Share        = artifacts.require("./Share.sol");
+let VyralSale    = artifacts.require("./VyralSale.sol");
 
 
 module.exports = function(deployer) {
@@ -20,9 +19,7 @@ module.exports = function(deployer) {
 
     deployer.deploy(Reward);
     deployer.deploy(RewardAllocation);
-    deployer.deploy(DirectPayoff);
-    deployer.deploy(GeometricPayoff);
-    deployer.deploy(ShapleyPayoff);
+    deployer.deploy(TieredPayoff);
 
     deployer.link(Reward, ReferralTree);
     deployer.deploy(ReferralTree);
@@ -34,7 +31,9 @@ module.exports = function(deployer) {
     deployer.link(ReferralTree, Campaign);
     deployer.deploy(Campaign);
 
-    deployer.link(Ownable, Vyral);
-    deployer.link(ReferralTree, Vyral);
-    deployer.deploy(Vyral);
+    deployer.deploy(Share);
+
+    deployer.link(Ownable, VyralSale);
+    deployer.link(ReferralTree, VyralSale);
+    // deployer.deploy(VyralSale);
 };
