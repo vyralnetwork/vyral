@@ -27,7 +27,7 @@
         "multi-hash": "^0.1.1",
         "nconf": "^0.8.5",
         "truffle-contract": "^3.0.0",
-        "web3": "^1.0.0-beta.22"
+        "web3": "^0.19.0"
     },
     "devDependencies": {
         "chai": "^4.1.2",

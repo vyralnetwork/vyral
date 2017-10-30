@@ -108,10 +108,9 @@ contract VyralSale is Ownable {
     function VyralSale (
         address _token,
         uint _budgetAmount,
-        uint _rewardAmount,
         address _payoffStrategy
     ) {
-        vyralCampaign = new Campaign(_token, _budgetAmount, _rewardAmount, _payoffStrategy);
+        vyralCampaign = new Campaign(_token, _budgetAmount, _payoffStrategy);
 
         saleStatus = Status.Created;
     }

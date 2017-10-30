@@ -4,20 +4,20 @@
 const Share          = artifacts.require("./Share.sol");
 const MultiSigWallet = artifacts.require('./MultiSigWallet.sol');
 
-
 const {assert} = require('chai');
 const ethutil  = require("ethereumjs-util");
 
-let config = require("../config");
-
 contract('Token API', (accounts) => {
 
-    before(async () => {
-        this.share = await Share.deployed();
-        this.wallet = await MultiSigWallet.deployed();
-    });
+    let coinbase = accounts[0];
+    let owner1   = accounts[1];
+    let owner2   = accounts[2];
 
     describe("Basic ERC20 properties", () => {
+        before(async () => {
+            this.share = await Share.deployed();
+        });
+
         it("should return SHARE as symbol", async () => {
             const symbol = await this.share.symbol();
             assert.equal(symbol, 'SHARE');
@@ -34,21 +34,24 @@ contract('Token API', (accounts) => {
         });
     });
 
-    describe('Minting and balances', function() {
-        beforeEach("mint 777777777 tokens", async () => {
-            await this.share.mint(777777777);
+    describe('Minting and balances', () => {
+        before(async () => {
+            this.share = await Share.deployed();
+            await this.share.mint(777777777, coinbase);
+
+            let wallet = await MultiSigWallet.new([owner1, owner2], 2, {from: coinbase});
         });
 
-        it("should report 777777777 as total supply", async function() {
+        it("should report 777777777 as total supply", async () => {
             let total = await this.share.totalSupply.call();
             assert.equal(777777777, total.toNumber());
         });
 
-        // it('should be able to get token balance', async function() {
-        //     var balance = await token.balanceOf.call(COINBASE_ACCOUNT);
-        //     assert.equal(1500000, balance.toNumber());
-        // });
-        //
+        it('should be able to get token balance', async () => {
+            let balance = await this.share.balanceOf.call(coinbase);
+            assert.equal(777777777, balance.toNumber());
+        });
+
         // it('should be able to get allowance for address', async function() {
         //     await token.approve(ACCOUNT_TWO, 200000);
         //     var allowance = await token.allowance.call(COINBASE_ACCOUNT, ACCOUNT_TWO);

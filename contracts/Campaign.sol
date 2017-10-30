@@ -4,6 +4,8 @@ pragma solidity ^0.4.15;
 import "./traits/Stoppable.sol";
 import "./tokens/ERC20.sol";
 import "./rewards/Reward.sol";
+
+
 //import "./rewards/RewardPayoffStrategy.sol";
 //import "./rewards/RewardAllocation.sol";
 import "./referral/ReferralTree.sol";
@@ -20,9 +22,6 @@ contract Campaign is Stoppable {
 
     /// Budget from which rewards are paid out
     Reward.Payment budget;
-
-    /// Incentive offered for joining the campaign
-    Reward.Payment reward;
 
     /// The referral tree (k-ary tree)
     ReferralTree.Tree vyralTree;
@@ -68,7 +67,7 @@ contract Campaign is Stoppable {
     }
 
     modifier onlyIfFundsAvailable() {
-        require(budget.amount >= reward.amount);
+        require(getAvailableBalance() >= 0);
         _;
     }
 
@@ -87,22 +86,16 @@ contract Campaign is Stoppable {
     /**
      * Create a new campaign.
      */
-    function Campaign (
+    function Campaign(
         address _token,
         uint256 _budgetAmount,
-        uint256 _rewardAmount,
         address _payoffStrategy
     )
         public
     {
         budget = Reward.Payment({
-            token: ERC20(_token),
-            amount: _budgetAmount
-        });
-
-        reward = Reward.Payment({
-            token: ERC20(_token),
-            amount: _rewardAmount
+        token : ERC20(_token),
+        amount : _budgetAmount
         });
 
         payoffStrategy = _payoffStrategy;
@@ -113,7 +106,7 @@ contract Campaign is Stoppable {
     /**
      * Accept invitation and join contract.
      */
-    function join (
+    function join(
         address _referrer
     )
         public
@@ -122,7 +115,7 @@ contract Campaign is Stoppable {
         onlyOnReferral(_referrer)
         onlyIfFundsAvailable()
     {
-        vyralTree.addInvitee(msg.sender, _referrer, reward, payoffStrategy);
+        vyralTree.addInvitee(msg.sender, _referrer, payoffStrategy);
     }
 
     /**
@@ -137,7 +130,26 @@ contract Campaign is Stoppable {
 
     // Update budget
 
-    // Compute key in the contract
+    /**
+     * @dev Returns Reward as a tuple.
+     */
+    function getBudget()
+        constant
+        returns (address _token, uint _amount)
+    {
+        _token = address(budget.token);
+        _amount = budget.amount;
+    }
+
+    /**
+     * @dev Return (budget - cost)
+     */
+    function getAvailableBalance()
+        constant
+        returns (uint _balance)
+    {
+        _balance = 56789;
+    }
 
     /**
      * Fallback. Don't send ETH to a campaign.

@@ -23,8 +23,6 @@ contract Share is ERC20, Ownable {
 
     bool public mintingFinished = false;
 
-    uint public totalSupply = 0;
-
     mapping (address => uint256) balances;
 
     mapping (address => mapping (address => uint256)) allowances;
@@ -34,13 +32,25 @@ contract Share is ERC20, Ownable {
      */
 
     modifier canMint() {
-        if (mintingFinished) throw;
+        require(!mintingFinished);
         _;
     }
 
 
     function Share() {
 
+    }
+
+    /**
+     * @dev Retrieves token balance of `buyer`
+     */
+    function balanceOf (
+        address buyer
+    )
+        constant
+        returns (uint256)
+    {
+        return balances[buyer];
     }
 
     /**

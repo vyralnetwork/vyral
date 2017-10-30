@@ -84,7 +84,6 @@ library ReferralTree {
         Tree storage self,
         address _invitee,
         address _referrer,
-        Reward.Payment memory _payment,
         address _payoffStrategy
     )
         internal
@@ -92,7 +91,6 @@ library ReferralTree {
         VyralNode memory inviteeNode;
         inviteeNode.node = _invitee;
         inviteeNode.referrer = _referrer;
-        inviteeNode.payment = _payment;
 
         VyralNode memory referrerNode = self.nodes[_referrer];
         referrerNode.invitees[referrerNode.invitees.length] = _invitee;

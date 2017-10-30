@@ -21,6 +21,7 @@ $ NODE_ENV=test DEBUG=vyral:* npm test
     - [X] Referral tree library
     - [X] Reward library
     - [X] Reward payoff interface
+    - [ ] Compute campaign cost and remaining budget
     - [ ] Tiered reward payoff based on percentages
     - [ ] Tests
         - [X] Deploy new campaign

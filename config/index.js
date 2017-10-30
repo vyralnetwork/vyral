@@ -20,9 +20,9 @@ let contractDefaults = {
     gasPrice: nconf.get("ethereum:gasPrice")
 };
 
-let Vyral = contract(_.pick(require("../build/contracts/Vyral.json"), properties));
-Vyral.setProvider(provider);
-Vyral.defaults(contractDefaults);
+let VyralSale = contract(_.pick(require("../build/contracts/VyralSale.json"), properties));
+VyralSale.setProvider(provider);
+VyralSale.defaults(contractDefaults);
 
 let Campaign = contract(_.pick(require("../build/contracts/Campaign.json"), properties));
 Campaign.setProvider(provider);
@@ -33,6 +33,6 @@ module.exports      = nconf;
 module.exports.web3 = web3;
 
 module.exports.contracts = {
-    Vyral: Vyral,
+    VyralSale: VyralSale,
     Campaign: Campaign
 };
