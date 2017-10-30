@@ -24,8 +24,7 @@ module.exports = function(deployer) {
     deployer.link(Reward, ReferralTree);
     deployer.deploy(ReferralTree);
 
-    // FIXME: Campaign can't be deployed
-    // deployer.link(Stoppable, Campaign);
+    deployer.link(Stoppable, Campaign);
     deployer.link(Reward, Campaign);
     // deployer.link(RewardPayoffStrategy, Campaign);
     deployer.link(ReferralTree, Campaign);
@@ -35,5 +34,5 @@ module.exports = function(deployer) {
 
     deployer.link(Ownable, VyralSale);
     deployer.link(ReferralTree, VyralSale);
-    // deployer.deploy(VyralSale);
+    deployer.deploy(VyralSale);
 };

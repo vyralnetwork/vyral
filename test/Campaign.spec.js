@@ -1,17 +1,22 @@
 /**
- * Vyral contract scenarios.
+ * Vyral campaign scenarios.
  */
-let Vyral    = artifacts.require("./Vyral.sol");
-let Campaign = artifacts.require("./Campaign.sol");
+const VyralSale = artifacts.require("./VyralSale.sol");
+const Campaign  = artifacts.require("./Campaign.sol");
+const Share     = artifacts.require("./Share.sol");
 
 let ethutil = require("ethereumjs-util");
 let config  = require("../config");
 
 const {assert} = require('chai');
 
-contract('Campaign ', function(accounts) {
+contract('Campaign', function(accounts) {
 
-    it('should initialize Vyral', async () => {
+    before(async () => {
+        this.share  = await Share.deployed();
+    });
+
+    it('should initialize Campaign', async () => {
         let vyral = await Vyral.new();
         assert.equal(await vyral.campaignCount(), 0);
     });

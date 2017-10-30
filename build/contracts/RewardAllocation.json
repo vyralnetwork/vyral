@@ -17,25 +17,13 @@
   ],
   "unlinked_binary": "0x60606040523415600e57600080fd5b5b608d8061001d6000396000f300606060405263ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663ffd7d9838114603c575b600080fd5b605b73ffffffffffffffffffffffffffffffffffffffff60043516605d565b005b5b505600a165627a7a723058202d882bded2482e0ecead311b03e4ca2ecd9600b19e5f281ffce6afe4cdb077ea0029",
   "networks": {
-    "1508194512368": {
+    "1509328663984": {
       "events": {},
       "links": {},
-      "address": "0x6e6092dbaaa525eac4c0bb2f83b88ba79f786d17",
-      "updated_at": 1508199346025
-    },
-    "1508911856514": {
-      "events": {},
-      "links": {},
-      "address": "0xe0650c66f158e4fa43dff6867c69ec5026fe248f",
-      "updated_at": 1508911926937
-    },
-    "1509256192101": {
-      "events": {},
-      "links": {},
-      "address": "0x93eba8d59493b0c6d625b75000fe7d6e82ed578d",
-      "updated_at": 1509258668617
+      "address": "0x1ce15ac0cabb4a907c41339dc29fb53ab83b77d6",
+      "updated_at": 1509329789771
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1509258668617
+  "updated_at": 1509329789771
 }
