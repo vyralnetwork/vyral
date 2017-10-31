@@ -24,7 +24,7 @@ contract VyralSale is Ownable {
     uint public constant SALE_MAX = 50000 ether;
 
     /// Exchange rate 1 Ether = 1,700 SHAREs
-    uint public constant SHARES_PER_ETH = 1700;
+    uint public constant SHARES_PER_ETH = 4825;
 
     /// Total tokens that can be minted
     uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
@@ -68,7 +68,7 @@ contract VyralSale is Ownable {
     /// Token in use
     Share public vyralToken;
 
-    /// Vyral token sale campaign
+    /// Vyral sale campaign
     Campaign vyralCampaign;
 
     /*
@@ -105,12 +105,15 @@ contract VyralSale is Ownable {
     /**
      * One of a kind.
      */
-    function VyralSale (
-        address _token,
+    function VyralSale(
+        address _tokenSupply,
         uint _budgetAmount,
         address _payoffStrategy
     ) {
-        vyralCampaign = new Campaign(_token, _budgetAmount, _payoffStrategy);
+        token = new Share(_tokenSupply);
+        token.transfer(this, token.totalSupply());
+
+        vyralCampaign = new Campaign(address(_token), _budgetAmount, _payoffStrategy);
 
         saleStatus = Status.Created;
     }
@@ -173,18 +176,36 @@ contract VyralSale is Ownable {
         ifBelowHardCap
         ifExceedsMinPurchase
     {
-        uint weiReceived = msg.value;
-        uint shares = weiReceived * SHARES_PER_ETH;
+//        uint weiReceived = msg.value;
+//        uint shares = weiReceived * SHARES_PER_ETH;
+//
+//        // Transfer funds to wallet
+//        require(multiSigWallet.send(msg.value));
+//
+//        // Enough to buy any tokens?
+//        require(shares > 0);
+//
+//        // Running totals
+//        purchases[buyer] = weiReceived.add(purchases[buyer]);
+//        weiRaised = weiRaised.add(weiReceived);
+
+        uint excessAmount = msg.value % price;
+        uint purchaseAmount = msg.value - excessAmount;
+        uint tokenPurchase = purchaseAmount / SHARES_PER_ETH;
+
+        // Cannot purchase more tokens than this contract has available to sell
+        require(tokenPurchase <= token.balanceOf(this));
+
+        // Return any excess msg.value
+        if (excessAmount > 0) {
+            msg.sender.transfer(excessAmount);
+        }
 
         // Transfer funds to wallet
-        require(multiSigWallet.send(msg.value));
+        multiSigWallet.transfer(purchaseAmount);
 
-        // Enough to buy any tokens?
-        require(shares > 0);
-
-        // Running totals
-        purchases[buyer] = weiReceived.add(purchases[buyer]);
-        weiRaised = weiRaised.add(weiReceived);
+        // Transfer tokens to buyer
+        token.transfer(buyer, tokenPurchase);
 
         // Log event
         LogPurchase(buyer, weiReceived);

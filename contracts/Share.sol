@@ -36,15 +36,23 @@ contract Share is ERC20, Ownable {
         _;
     }
 
+    /**
+     * Create SHARE token with given amount as totalSupply.
+     */
+    function Share(
+        uint _amount
+    ) {
+        // Give the creator all initial tokens
+        balances[msg.sender] = _amount;
 
-    function Share() {
-
+        // Update total supply
+        totalSupply = _amount;
     }
 
     /**
      * @dev Retrieves token balance of `buyer`
      */
-    function balanceOf (
+    function balanceOf(
         address buyer
     )
         constant
@@ -56,7 +64,7 @@ contract Share is ERC20, Ownable {
     /**
      * Owner can mint and assign `amount` tokens to a `buyer` address.
      */
-    function mint (
+    function mint(
         uint amount,
         address buyer
     )
