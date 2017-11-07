@@ -63,13 +63,13 @@ contract VyralSale is Ownable {
     mapping (address => uint) public purchases;
 
     /// Holds ETH deposits for Vyral
-    address public multiSigWallet;
+    address public wallet;
 
     /// Token in use
-    Share public vyralToken;
+    Share public token;
 
     /// Vyral sale campaign
-    Campaign vyralCampaign;
+    Campaign campaign;
 
     /*
      * Modifiers
@@ -106,14 +106,13 @@ contract VyralSale is Ownable {
      * One of a kind.
      */
     function VyralSale(
-        address _tokenSupply,
         uint _budgetAmount,
         address _payoffStrategy
     ) {
-        token = new Share(_tokenSupply);
+        token = new Share(TOTAL_SUPPLY);
         token.transfer(this, token.totalSupply());
 
-        vyralCampaign = new Campaign(address(_token), _budgetAmount, _payoffStrategy);
+        campaign = new Campaign(address(token), _budgetAmount, _payoffStrategy);
 
         saleStatus = Status.Created;
     }
@@ -142,20 +141,20 @@ contract VyralSale is Ownable {
         notInStatus(Status.Finalized)
     {
         uint totalSupply = weiRaised.mul(SHARES_PER_ETH);
-        vyralToken.mint(totalSupply, address(multiSigWallet));
+        token.mint(totalSupply, address(wallet));
 
         uint oneSeventh = totalSupply.mul(143) / 1000;
         uint twoSevenths = totalSupply.mul(286) / 1000;
         uint threeSevenths = totalSupply.mul(429) / 1000;
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        vyralToken.transfer(VYRAL_TEAM, oneSeventh);
+        token.transfer(VYRAL_TEAM, oneSeventh);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        vyralToken.transfer(VYRAL_PARTNERSHIPS, oneSeventh);
+        token.transfer(VYRAL_PARTNERSHIPS, oneSeventh);
 
         // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 111,111,111 SHARE
-        vyralToken.transfer(vyralCampaign, twoSevenths);
+        token.transfer(campaign, twoSevenths);
 
         // D. Crowdsale 42.9% (3/7) - 333,333,333 SHARE
         uint crowdsaleAllocation = threeSevenths;
@@ -176,20 +175,20 @@ contract VyralSale is Ownable {
         ifBelowHardCap
         ifExceedsMinPurchase
     {
-//        uint weiReceived = msg.value;
-//        uint shares = weiReceived * SHARES_PER_ETH;
-//
-//        // Transfer funds to wallet
-//        require(multiSigWallet.send(msg.value));
-//
-//        // Enough to buy any tokens?
-//        require(shares > 0);
-//
+        uint weiReceived = msg.value;
+        uint shares = weiReceived * SHARES_PER_ETH;
+
+        // Transfer funds to wallet
+        wallet.transfer(msg.value);
+
+        // Enough to buy any tokens?
+        require(shares > 0);
+
 //        // Running totals
 //        purchases[buyer] = weiReceived.add(purchases[buyer]);
 //        weiRaised = weiRaised.add(weiReceived);
 
-        uint excessAmount = msg.value % price;
+        uint excessAmount = msg.value % SHARES_PER_ETH;
         uint purchaseAmount = msg.value - excessAmount;
         uint tokenPurchase = purchaseAmount / SHARES_PER_ETH;
 
@@ -202,7 +201,7 @@ contract VyralSale is Ownable {
         }
 
         // Transfer funds to wallet
-        multiSigWallet.transfer(purchaseAmount);
+        wallet.transfer(purchaseAmount);
 
         // Transfer tokens to buyer
         token.transfer(buyer, tokenPurchase);

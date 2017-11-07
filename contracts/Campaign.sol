@@ -7,7 +7,6 @@ import "./rewards/Reward.sol";
 
 
 //import "./rewards/RewardPayoffStrategy.sol";
-//import "./rewards/RewardAllocation.sol";
 import "./referral/ReferralTree.sol";
 
 
