@@ -1,5 +1,5 @@
 {
-  "contract_name": "TieredPayoff",
+  "contractName": "TieredPayoff",
   "abi": [
     {
       "constant": false,
@@ -21,6 +21,7 @@
         }
       ],
       "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -39,6 +40,7 @@
         }
       ],
       "payable": false,
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -57,16 +59,762 @@
         }
       ],
       "payable": false,
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [],
       "payable": false,
+      "stateMutability": "nonpayable",
       "type": "constructor"
     }
   ],
-  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b5b5b610170806100216000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630f891778811461005357806352656f8d14610097578063d1d79974146100c2575b600080fd5b341561005e57600080fd5b61008573ffffffffffffffffffffffffffffffffffffffff600435811690602435166100f1565b60405190815260200160405180910390f35b34156100a257600080fd5b61008560ff600435166100fa565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100db60ff6004351661012f565b60405160ff909116815260200160405180910390f35b60005b92915050565b600060ff8216151561010e5750600061012a565b601b60ff8316106101215750602161012a565b5060ff60068201165b919050565b60006020819052908152604090205460ff16815600a165627a7a72305820daef1c390848c814663bbf74827afadae2b3cfee31b8fb678c62bc7c8fcccd1d0029",
+  "bytecode": "0x6060604052341561000f57600080fd5b6101d48061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630f8917781461005c57806352656f8d146100c8578063d1d7997414610102575b600080fd5b341561006757600080fd5b6100b2600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610142565b6040518082815260200191505060405180910390f35b34156100d357600080fd5b6100ec600480803560ff1690602001909190505061014d565b6040518082815260200191505060405180910390f35b341561010d57600080fd5b610126600480803560ff16906020019091905050610188565b604051808260ff1660ff16815260200191505060405180910390f35b600080905092915050565b6000808260ff1614156101635760009050610183565b601b8260ff161015156101795760219050610183565b6006820160ff1690505b919050565b60006020528060005260406000206000915054906101000a900460ff16815600a165627a7a723058203a5f741246beb649308bebc33cb0274c2c891788a72be3923f7f8bf9728a815a0029",
+  "deployedBytecode": "0x606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630f8917781461005c57806352656f8d146100c8578063d1d7997414610102575b600080fd5b341561006757600080fd5b6100b2600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610142565b6040518082815260200191505060405180910390f35b34156100d357600080fd5b6100ec600480803560ff1690602001909190505061014d565b6040518082815260200191505060405180910390f35b341561010d57600080fd5b610126600480803560ff16906020019091905050610188565b604051808260ff1660ff16815260200191505060405180910390f35b600080905092915050565b6000808260ff1614156101635760009050610183565b601b8260ff161015156101795760219050610183565b6006820160ff1690505b919050565b60006020528060005260406000206000915054906101000a900460ff16815600a165627a7a723058203a5f741246beb649308bebc33cb0274c2c891788a72be3923f7f8bf9728a815a0029",
+  "sourceMap": "1107:701:8:-;;;1236:31;;;;;;;;1107:701;;;;;;",
+  "deployedSourceMap": "1107:701:8:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1273:143;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1534:272;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1192:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1273:143;1378:7;1408:1;1401:8;;1273:143;;;;:::o;1534:272::-;1627:7;1668:1;1654:10;:15;;;1650:54;;;1692:1;1685:8;;;;1650:54;1731:2;1717:10;:16;;;;1713:56;;;1756:2;1749:9;;;;1713:56;1798:1;1785:10;:14;1778:21;;;;1534:272;;;;:::o;1192:37::-;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\n\nimport \"../referral/ReferralTree.sol\";\nimport \"./RewardPayoffStrategy.sol\";\n\nimport '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';\n\n/**\n * Bonus tiers\n * 1 Vyral Referral - 7% bonus\n * 2 Vyral Referrals - 8% bonus\n * 3 Vyral Referrals - 9% bonus\n * 4 Vyral Referrals - 10% bonus\n * 5 Vyral Referrals - 11% bonus\n * 6 Vyral Referrals - 12% bonus\n * 7 Vyral Referrals - 13% bonus\n * 8 Vyral Referrals - 14% bonus\n * 9 Vyral Referrals - 15% bonus\n * 10 Vyral Referrals - 16% bonus\n * 11 Vyral Referrals - 17% bonus\n * 12 Vyral Referrals - 18% bonus\n * 13 Vyral Referrals - 19% bonus\n * 14 Vyral Referrals - 20% bonus\n * 15 Vyral Referrals - 21% bonus\n * 16 Vyral Referrals - 22% bonus\n * 17 Vyral Referrals - 23% bonus\n * 18 Vyral Referrals - 24% bonus\n * 19 Vyral Referrals - 25% bonus\n * 20 Vyral Referrals - 26% bonus\n * 21 Vyral Referrals - 27% bonus\n * 22 Vyral Referrals - 28% bonus\n * 23 Vyral Referrals - 29% bonus\n * 24 Vyral Referrals - 30% bonus\n * 25 Vyral Referrals - 31% bonus\n * 26 Vyral Referrals - 32% bonus\n * 27 Vyral Referrals - 33% bonus\n */\ncontract TieredPayoff is RewardPayoffStrategy {\n    using SafeMath for uint256;\n\n    mapping (uint8 => uint8) public tiers;\n\n    function TieredPayoff() {\n    }\n\n    function payoff(\n        address referrer,\n        address invitee\n    )\n        public\n        returns (uint256)\n    {\n        return 0;\n    }\n\n    /**\n     * Returns bonus percentage for a given number of referrals\n     * based on comments above.\n     */\n    function getBonusPercentage(\n        uint8 _referrals\n    )\n        public constant returns (uint256)\n    {\n        if (_referrals == 0) {\n            return 0;\n        }\n        if (_referrals >= 27) {\n            return 33;\n        }\n        return _referrals + 6;\n    }\n}\n",
+  "sourcePath": "/home/logan/Work/vyral/contracts/rewards/TieredPayoff.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/logan/Work/vyral/contracts/rewards/TieredPayoff.sol",
+      "exportedSymbols": {
+        "TieredPayoff": [
+          1981
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 1926,
+        "name": "PragmaDirective",
+        "src": "0:24:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1868,
+          "absolutePath": "/home/logan/Work/vyral/contracts/referral/ReferralTree.sol",
+          "file": "../referral/ReferralTree.sol",
+          "scope": 1982,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1927,
+        "name": "ImportDirective",
+        "src": "26:38:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1925,
+          "absolutePath": "/home/logan/Work/vyral/contracts/rewards/RewardPayoffStrategy.sol",
+          "file": "./RewardPayoffStrategy.sol",
+          "scope": 1982,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1928,
+        "name": "ImportDirective",
+        "src": "65:36:8"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 2151,
+          "absolutePath": "/home/logan/Work/vyral/node_modules/zeppelin-solidity/contracts/math/SafeMath.sol",
+          "file": "../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol",
+          "scope": 1982,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1929,
+        "name": "ImportDirective",
+        "src": "103:74:8"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            1924
+          ],
+          "contractKind": "contract",
+          "documentation": "Bonus tiers\n1 Vyral Referral - 7% bonus\n2 Vyral Referrals - 8% bonus\n3 Vyral Referrals - 9% bonus\n4 Vyral Referrals - 10% bonus\n5 Vyral Referrals - 11% bonus\n6 Vyral Referrals - 12% bonus\n7 Vyral Referrals - 13% bonus\n8 Vyral Referrals - 14% bonus\n9 Vyral Referrals - 15% bonus\n10 Vyral Referrals - 16% bonus\n11 Vyral Referrals - 17% bonus\n12 Vyral Referrals - 18% bonus\n13 Vyral Referrals - 19% bonus\n14 Vyral Referrals - 20% bonus\n15 Vyral Referrals - 21% bonus\n16 Vyral Referrals - 22% bonus\n17 Vyral Referrals - 23% bonus\n18 Vyral Referrals - 24% bonus\n19 Vyral Referrals - 25% bonus\n20 Vyral Referrals - 26% bonus\n21 Vyral Referrals - 27% bonus\n22 Vyral Referrals - 28% bonus\n23 Vyral Referrals - 29% bonus\n24 Vyral Referrals - 30% bonus\n25 Vyral Referrals - 31% bonus\n26 Vyral Referrals - 32% bonus\n27 Vyral Referrals - 33% bonus",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            1981,
+            1924
+          ],
+          "name": "TieredPayoff",
+          "scope": 1982
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "RewardPayoffStrategy",
+                  "referencedDeclaration": 1924,
+                  "type": "contract RewardPayoffStrategy"
+                },
+                "id": 1930,
+                "name": "UserDefinedTypeName",
+                "src": "1132:20:8"
+              }
+            ],
+            "id": 1931,
+            "name": "InheritanceSpecifier",
+            "src": "1132:20:8"
+          },
+          {
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SafeMath",
+                  "referencedDeclaration": 2150,
+                  "type": "library SafeMath"
+                },
+                "id": 1932,
+                "name": "UserDefinedTypeName",
+                "src": "1165:8:8"
+              },
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 1933,
+                "name": "ElementaryTypeName",
+                "src": "1178:7:8"
+              }
+            ],
+            "id": 1934,
+            "name": "UsingForDirective",
+            "src": "1159:27:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "tiers",
+              "scope": 1981,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint8 => uint8)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint8 => uint8)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 1935,
+                    "name": "ElementaryTypeName",
+                    "src": "1201:5:8"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 1936,
+                    "name": "ElementaryTypeName",
+                    "src": "1210:5:8"
+                  }
+                ],
+                "id": 1937,
+                "name": "Mapping",
+                "src": "1192:24:8"
+              }
+            ],
+            "id": 1938,
+            "name": "VariableDeclaration",
+            "src": "1192:37:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "TieredPayoff",
+              "payable": false,
+              "scope": 1981,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1939,
+                "name": "ParameterList",
+                "src": "1257:2:8"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1940,
+                "name": "ParameterList",
+                "src": "1260:0:8"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1941,
+                "name": "Block",
+                "src": "1260:7:8"
+              }
+            ],
+            "id": 1942,
+            "name": "FunctionDefinition",
+            "src": "1236:31:8"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "payoff",
+              "payable": false,
+              "scope": 1981,
+              "stateMutability": "nonpayable",
+              "superFunction": 1923,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "referrer",
+                      "scope": 1954,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1943,
+                        "name": "ElementaryTypeName",
+                        "src": "1298:7:8"
+                      }
+                    ],
+                    "id": 1944,
+                    "name": "VariableDeclaration",
+                    "src": "1298:16:8"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "invitee",
+                      "scope": 1954,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1945,
+                        "name": "ElementaryTypeName",
+                        "src": "1324:7:8"
+                      }
+                    ],
+                    "id": 1946,
+                    "name": "VariableDeclaration",
+                    "src": "1324:15:8"
+                  }
+                ],
+                "id": 1947,
+                "name": "ParameterList",
+                "src": "1288:57:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1954,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1948,
+                        "name": "ElementaryTypeName",
+                        "src": "1378:7:8"
+                      }
+                    ],
+                    "id": 1949,
+                    "name": "VariableDeclaration",
+                    "src": "1378:7:8"
+                  }
+                ],
+                "id": 1950,
+                "name": "ParameterList",
+                "src": "1377:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1950
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "30",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "number",
+                          "type": "int_const 0",
+                          "value": "0"
+                        },
+                        "id": 1951,
+                        "name": "Literal",
+                        "src": "1408:1:8"
+                      }
+                    ],
+                    "id": 1952,
+                    "name": "Return",
+                    "src": "1401:8:8"
+                  }
+                ],
+                "id": 1953,
+                "name": "Block",
+                "src": "1391:25:8"
+              }
+            ],
+            "id": 1954,
+            "name": "FunctionDefinition",
+            "src": "1273:143:8"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getBonusPercentage",
+              "payable": false,
+              "scope": 1981,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_referrals",
+                      "scope": 1980,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint8",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint8",
+                          "type": "uint8"
+                        },
+                        "id": 1955,
+                        "name": "ElementaryTypeName",
+                        "src": "1571:5:8"
+                      }
+                    ],
+                    "id": 1956,
+                    "name": "VariableDeclaration",
+                    "src": "1571:16:8"
+                  }
+                ],
+                "id": 1957,
+                "name": "ParameterList",
+                "src": "1561:32:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 1980,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1958,
+                        "name": "ElementaryTypeName",
+                        "src": "1627:7:8"
+                      }
+                    ],
+                    "id": 1959,
+                    "name": "VariableDeclaration",
+                    "src": "1627:7:8"
+                  }
+                ],
+                "id": 1960,
+                "name": "ParameterList",
+                "src": "1626:9:8"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint8",
+                            "typeString": "uint8"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "==",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1956,
+                              "type": "uint8",
+                              "value": "_referrals"
+                            },
+                            "id": 1961,
+                            "name": "Identifier",
+                            "src": "1654:10:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 1962,
+                            "name": "Literal",
+                            "src": "1668:1:8"
+                          }
+                        ],
+                        "id": 1963,
+                        "name": "BinaryOperation",
+                        "src": "1654:15:8"
+                      },
+                      {
+                        "children": [
+                          {
+                            "attributes": {
+                              "functionReturnParameters": 1960
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "30",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 0",
+                                  "value": "0"
+                                },
+                                "id": 1964,
+                                "name": "Literal",
+                                "src": "1692:1:8"
+                              }
+                            ],
+                            "id": 1965,
+                            "name": "Return",
+                            "src": "1685:8:8"
+                          }
+                        ],
+                        "id": 1966,
+                        "name": "Block",
+                        "src": "1671:33:8"
+                      }
+                    ],
+                    "id": 1967,
+                    "name": "IfStatement",
+                    "src": "1650:54:8"
+                  },
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint8",
+                            "typeString": "uint8"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">=",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1956,
+                              "type": "uint8",
+                              "value": "_referrals"
+                            },
+                            "id": 1968,
+                            "name": "Identifier",
+                            "src": "1717:10:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "3237",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 27",
+                              "value": "27"
+                            },
+                            "id": 1969,
+                            "name": "Literal",
+                            "src": "1731:2:8"
+                          }
+                        ],
+                        "id": 1970,
+                        "name": "BinaryOperation",
+                        "src": "1717:16:8"
+                      },
+                      {
+                        "children": [
+                          {
+                            "attributes": {
+                              "functionReturnParameters": 1960
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "3333",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 33",
+                                  "value": "33"
+                                },
+                                "id": 1971,
+                                "name": "Literal",
+                                "src": "1756:2:8"
+                              }
+                            ],
+                            "id": 1972,
+                            "name": "Return",
+                            "src": "1749:9:8"
+                          }
+                        ],
+                        "id": 1973,
+                        "name": "Block",
+                        "src": "1735:34:8"
+                      }
+                    ],
+                    "id": 1974,
+                    "name": "IfStatement",
+                    "src": "1713:56:8"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 1960
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint8",
+                            "typeString": "uint8"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "+",
+                          "type": "uint8"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1956,
+                              "type": "uint8",
+                              "value": "_referrals"
+                            },
+                            "id": 1975,
+                            "name": "Identifier",
+                            "src": "1785:10:8"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "36",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 6",
+                              "value": "6"
+                            },
+                            "id": 1976,
+                            "name": "Literal",
+                            "src": "1798:1:8"
+                          }
+                        ],
+                        "id": 1977,
+                        "name": "BinaryOperation",
+                        "src": "1785:14:8"
+                      }
+                    ],
+                    "id": 1978,
+                    "name": "Return",
+                    "src": "1778:21:8"
+                  }
+                ],
+                "id": 1979,
+                "name": "Block",
+                "src": "1640:166:8"
+              }
+            ],
+            "id": 1980,
+            "name": "FunctionDefinition",
+            "src": "1534:272:8"
+          }
+        ],
+        "id": 1981,
+        "name": "ContractDefinition",
+        "src": "1107:701:8"
+      }
+    ],
+    "id": 1982,
+    "name": "SourceUnit",
+    "src": "0:1809:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
   "networks": {},
-  "schema_version": "0.0.5",
-  "updated_at": 1510035489806
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-10T18:37:07.799Z"
 }

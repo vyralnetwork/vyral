@@ -1,26 +1,25 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.18;
 
-
-import "./math/SafeMath.sol";
-import "./traits/Ownable.sol";
 import "./Campaign.sol";
 import "./Share.sol";
 
+import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
+import '../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
 
 /**
- * The driver contract.
+ * @title Vyral Sale
+ * @dev The driver contract.
  */
 contract VyralSale is Ownable {
-
     using SafeMath for uint;
-
 
     /// Some useful constants
     uint public constant ONE_MILLION = 1000000 * (10 ** uint(18));
 
-    ///
+    /// Minimum contribution amount.
     uint public constant SALE_MIN = 1 ether;
 
+    /// Maximum contribtuion amount.
     uint public constant SALE_MAX = 50000 ether;
 
     /// Exchange rate 1 Ether = 1,700 SHAREs
@@ -51,7 +50,7 @@ contract VyralSale is Ownable {
     uint public weiRaised = 0;
 
     /// Sale start date (December 1, 2017)
-    uint public saleBeginsAt = 1512086400;
+    uint public saleBeginsAt = 1512086400; // TODO: can use type uint64 for timestamps.
 
     /// Sale duration
     uint public saleDuration = 30 days;
@@ -59,7 +58,7 @@ contract VyralSale is Ownable {
     /// Set after sale is over and tokens are allocated
     uint public saleFinalizedAt;
 
-    /// Dictionary of Ether purchased by buyers
+    /// Mapping from purchaser address to amount of ether spent
     mapping (address => uint) public purchases;
 
     /// Holds ETH deposits for Vyral
@@ -74,7 +73,6 @@ contract VyralSale is Ownable {
     /*
      * Modifiers
      */
-
     modifier ifExceedsMinPurchase {
         require(msg.value >= SALE_MIN);
         _;
@@ -86,20 +84,19 @@ contract VyralSale is Ownable {
     }
 
     modifier inStatus(Status _status) {
-        if (saleStatus != _status) throw;
+        require(saleStatus == _status);
         _;
     }
 
     modifier notInStatus(Status _status) {
-        if (saleStatus == _status) throw;
+        require(saleStatus != _status);
         _;
     }
 
 
     /*
-     * Modifiers
+     * Events
      */
-
     event LogPurchase(address buyer, uint amount);
 
     /**
@@ -119,7 +116,7 @@ contract VyralSale is Ownable {
 
 
     /**
-     * By default, SHAREs are allocated if ETH is sent to this contract.
+     * @dev By default, SHAREs are allocated if ETH is sent to this contract.
      */
     function()
         public
@@ -137,15 +134,16 @@ contract VyralSale is Ownable {
      */
     function finalize()
         external
+        onlyOwner
         inStatus(Status.Ended)
         notInStatus(Status.Finalized)
     {
         uint totalSupply = weiRaised.mul(SHARES_PER_ETH);
         token.mint(totalSupply, address(wallet));
 
-        uint oneSeventh = totalSupply.mul(143) / 1000;
-        uint twoSevenths = totalSupply.mul(286) / 1000;
-        uint threeSevenths = totalSupply.mul(429) / 1000;
+        uint oneSeventh = totalSupply.mul(143).div(1000);
+        uint twoSevenths = totalSupply.mul(286).div(1000);
+        uint threeSevenths = totalSupply.mul(429).div(1000);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
         token.transfer(VYRAL_TEAM, oneSeventh);
@@ -157,21 +155,21 @@ contract VyralSale is Ownable {
         token.transfer(campaign, twoSevenths);
 
         // D. Crowdsale 42.9% (3/7) - 333,333,333 SHARE
-        uint crowdsaleAllocation = threeSevenths;
+        uint crowdsaleAllocation = threeSevenths;   // TODO: use this variable
 
         saleStatus = Status.Finalized;
         saleFinalizedAt = now;
     }
 
     /**
-     * Send Ether, receive SHARE.
+     * @dev Send Ether, receive SHARE.
      *
      * @param buyer Address of buying contract or account
      */
     function buyTokens(
         address buyer
     )
-        internal
+        internal // TODO: Can make this public
         ifBelowHardCap
         ifExceedsMinPurchase
     {

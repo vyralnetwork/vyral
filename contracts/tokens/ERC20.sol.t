@@ -1,8 +1,7 @@
-pragma solidity ^0.4.11;
-
+pragma solidity ^0.4.18;
 
 import "./ERC20Protocol.sol";
-
+import "../math/SafeMath.sol";
 
 /// @title ERC20 Token
 /// @author Melonport AG <team@melonport.com>
@@ -10,14 +9,14 @@ import "./ERC20Protocol.sol";
 /// @notice Checked against integer overflow
 contract ERC20 is ERC20Protocol {
 
-    function transfer(address _to, uint256 _value) returns (bool success) {
-        if (balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]) {
-            balances[msg.sender] -= _value;
-            balances[_to] += _value;
-            Transfer(msg.sender, _to, _value);
-            return true;
-        }
-        else {return false;}
+    function transfer(address _to, uint256 _value) 
+        returns (bool success)
+    {
+        require(balances[msg.sender] >= _value);
+        balances[msg.sender].sub(_value);
+        balances[_to].add(_value);
+        Transfer(msg.sender, _to, _value);
+        return true;
     }
 
     function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {

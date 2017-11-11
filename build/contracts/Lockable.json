@@ -1,5 +1,5 @@
 {
-  "contract_name": "Lockable",
+  "contractName": "Lockable",
   "abi": [
     {
       "constant": true,
@@ -12,11 +12,209 @@
         }
       ],
       "payable": false,
+      "stateMutability": "view",
       "type": "function"
     }
   ],
-  "unlinked_binary": "0x60606040523415600e57600080fd5b5b60958061001d6000396000f300606060405263ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663cf3090128114603c575b600080fd5b3415604657600080fd5b604c6060565b604051901515815260200160405180910390f35b60005460ff16815600a165627a7a7230582052b047ab1acd0e32763ac19ab2abb41c985f98dafca9d302d6334f07f6267f7b0029",
+  "bytecode": "0x60606040523415600e57600080fd5b60ac8061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820f5c01c4a94409d93e7664386a766cdc3fdb6354069d4e2c983532c4cb145741a0029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820f5c01c4a94409d93e7664386a766cdc3fdb6354069d4e2c983532c4cb145741a0029",
+  "sourceMap": "100:216:9:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "100:216:9:-;;;;;;;;;;;;;;;;;;;;;;;;124:18;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\n\n/**\n * @title Lockable\n * @dev Adds a locking property to a contract.\n */\ncontract Lockable {\n    bool public locked;\n\n    modifier onlyUnlocked() {\n        require(!locked);\n        _;\n    }\n\n    /// TODO: function lock(bool _locked) {\n    ///         locked = _locked;\n    ///        }\n\n}",
+  "sourcePath": "/home/logan/Work/vyral/contracts/traits/Lockable.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/logan/Work/vyral/contracts/traits/Lockable.sol",
+      "exportedSymbols": {
+        "Lockable": [
+          1995
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 1983,
+        "name": "PragmaDirective",
+        "src": "0:24:9"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": "@title Lockable\n@dev Adds a locking property to a contract.",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            1995
+          ],
+          "name": "Lockable",
+          "scope": 1996
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "locked",
+              "scope": 1995,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bool",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bool",
+                  "type": "bool"
+                },
+                "id": 1984,
+                "name": "ElementaryTypeName",
+                "src": "124:4:9"
+              }
+            ],
+            "id": 1985,
+            "name": "VariableDeclaration",
+            "src": "124:18:9"
+          },
+          {
+            "attributes": {
+              "name": "onlyUnlocked",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1986,
+                "name": "ParameterList",
+                "src": "170:2:9"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 2601,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1987,
+                            "name": "Identifier",
+                            "src": "183:7:9"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "!",
+                              "prefix": true,
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1985,
+                                  "type": "bool",
+                                  "value": "locked"
+                                },
+                                "id": 1988,
+                                "name": "Identifier",
+                                "src": "192:6:9"
+                              }
+                            ],
+                            "id": 1989,
+                            "name": "UnaryOperation",
+                            "src": "191:7:9"
+                          }
+                        ],
+                        "id": 1990,
+                        "name": "FunctionCall",
+                        "src": "183:16:9"
+                      }
+                    ],
+                    "id": 1991,
+                    "name": "ExpressionStatement",
+                    "src": "183:16:9"
+                  },
+                  {
+                    "id": 1992,
+                    "name": "PlaceholderStatement",
+                    "src": "209:1:9"
+                  }
+                ],
+                "id": 1993,
+                "name": "Block",
+                "src": "173:44:9"
+              }
+            ],
+            "id": 1994,
+            "name": "ModifierDefinition",
+            "src": "149:68:9"
+          }
+        ],
+        "id": 1995,
+        "name": "ContractDefinition",
+        "src": "100:216:9"
+      }
+    ],
+    "id": 1996,
+    "name": "SourceUnit",
+    "src": "0:316:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
   "networks": {},
-  "schema_version": "0.0.5",
-  "updated_at": 1510035489806
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-10T18:37:07.799Z"
 }

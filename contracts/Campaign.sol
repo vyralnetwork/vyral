@@ -1,22 +1,18 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.18;
 
-
-import "./traits/Stoppable.sol";
-import "./tokens/ERC20.sol";
 import "./rewards/Reward.sol";
 
+import '../node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol';
+import '../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';
 
 //import "./rewards/RewardPayoffStrategy.sol";
 import "./referral/ReferralTree.sol";
 
-
 /**
  * A {Campaign} represents an advertising campaign.
  */
-contract Campaign is Stoppable {
-
+contract Campaign is Pausable {
     using Reward for Reward.Payment;
-
     using ReferralTree for ReferralTree.Tree;
 
     /// Budget from which rewards are paid out
@@ -93,7 +89,7 @@ contract Campaign is Stoppable {
         public
     {
         budget = Reward.Payment({
-        token : ERC20(_token),
+        token : StandardToken(_token),
         amount : _budgetAmount
         });
 

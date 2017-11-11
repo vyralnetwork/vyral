@@ -1,10 +1,9 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.18;
 
-
-import "../math/SafeMath.sol";
 import "../referral/ReferralTree.sol";
 import "./RewardPayoffStrategy.sol";
 
+import '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
 
 /**
  * Bonus tiers
@@ -37,7 +36,6 @@ import "./RewardPayoffStrategy.sol";
  * 27 Vyral Referrals - 33% bonus
  */
 contract TieredPayoff is RewardPayoffStrategy {
-
     using SafeMath for uint256;
 
     mapping (uint8 => uint8) public tiers;
@@ -62,12 +60,14 @@ contract TieredPayoff is RewardPayoffStrategy {
     function getBonusPercentage(
         uint8 _referrals
     )
-        public
-        constant
-        returns (uint256)
+        public constant returns (uint256)
     {
-        if(_referrals == 0) return 0;
-        if(_referrals >= 27) return 33;
+        if (_referrals == 0) {
+            return 0;
+        }
+        if (_referrals >= 27) {
+            return 33;
+        }
         return _referrals + 6;
     }
 }

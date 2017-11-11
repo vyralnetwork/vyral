@@ -1,5 +1,5 @@
 {
-  "contract_name": "Reward",
+  "contractName": "Reward",
   "abi": [
     {
       "constant": false,
@@ -20,16 +20,624 @@
       "name": "add",
       "outputs": [],
       "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [],
-      "payable": false,
-      "type": "constructor"
     }
   ],
-  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b5b5b60f4806100206000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638bf2670a8114603c575b600080fd5b606160043573ffffffffffffffffffffffffffffffffffffffff602435166044356063565b005b825473ffffffffffffffffffffffffffffffffffffffff838116911614608857600080fd5b6000811015609557600080fd5b600183015460a8908263ffffffff60af16565b505b505050565b60008282018381101560bd57fe5b8091505b50929150505600a165627a7a7230582078492e0b8038254ee1954a743a21ac2f7beffa1170a261f1a2c99ad80269def60029",
+  "bytecode": "0x6060604052341561000f57600080fd5b61015b8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638bf2670a14610046575b600080fd5b610084600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091908035906020019091905050610086565b005b8173ffffffffffffffffffffffffffffffffffffffff168360000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161415156100e457600080fd5b600081101515156100f457600080fd5b61010b81846001015461011190919063ffffffff16565b50505050565b600080828401905083811015151561012557fe5b80915050929150505600a165627a7a723058202ed3ecbec02e73044a611352e5a9e470ef01317d13f8603308c10bcfdcd137fc0029",
+  "deployedBytecode": "0x606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638bf2670a14610046575b600080fd5b610084600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091908035906020019091905050610086565b005b8173ffffffffffffffffffffffffffffffffffffffff168360000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161415156100e457600080fd5b600081101515156100f457600080fd5b61010b81846001015461011190919063ffffffff16565b50505050565b600080828401905083811015151561012557fe5b80915050929150505600a165627a7a723058202ed3ecbec02e73044a611352e5a9e470ef01317d13f8603308c10bcfdcd137fc0029",
+  "sourceMap": "247:752:6:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "247:752:6:-;;;;;;;;;;;;;;;;;;;;;;;;658:256;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;775:5;761:19;;:4;:10;;;;;;;;;;;;:19;;;753:28;;;;;;;;809:1;799:6;:11;;791:20;;;;;;;;884:23;900:6;884:4;:11;;;:15;;:23;;;;:::i;:::-;;658:256;;;:::o;680:133:11:-;742:7;757:9;773:1;769;:5;757:17;;792:1;787;:6;;780:14;;;;;;807:1;800:8;;680:133;;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\n\nimport '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';\nimport '../../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';\n\n/**\n * @dev Represents an incentive for joining a campaign.\n */\nlibrary Reward {\n    using SafeMath for uint256;\n\n    /**\n     * @dev A {Payment} represents the value of a referral. This is the incentive offered by a campaign to both.\n     */\n    struct Payment {\n        /// Token as payment\n        StandardToken token;\n        /// The amount being offered\n        uint256 amount;\n    }\n\n    /**\n     * @dev Returns sum of two payments if their units are same.\n     */\n    function add(Payment storage self, address token, uint256 amount)\n        public\n    {\n        require(self.token == token);\n        require(amount >= 0); // TODO: Is this check needed since a uint256 cannot be neg??\n\n        self.amount.add(amount);\n    }\n\n    /**\n     * @dev Won't accept ETH\n     */\n    // function Reward() {\n    // }\n\n}\n",
+  "sourcePath": "/home/logan/Work/vyral/contracts/rewards/Reward.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/logan/Work/vyral/contracts/rewards/Reward.sol",
+      "exportedSymbols": {
+        "Reward": [
+          1911
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 1869,
+        "name": "PragmaDirective",
+        "src": "0:24:6"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 2151,
+          "absolutePath": "/home/logan/Work/vyral/node_modules/zeppelin-solidity/contracts/math/SafeMath.sol",
+          "file": "../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol",
+          "scope": 1912,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1870,
+        "name": "ImportDirective",
+        "src": "26:74:6"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 2587,
+          "absolutePath": "/home/logan/Work/vyral/node_modules/zeppelin-solidity/contracts/token/StandardToken.sol",
+          "file": "../../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol",
+          "scope": 1912,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 1871,
+        "name": "ImportDirective",
+        "src": "101:80:6"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "documentation": "@dev Represents an incentive for joining a campaign.",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            1911
+          ],
+          "name": "Reward",
+          "scope": 1912
+        },
+        "children": [
+          {
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SafeMath",
+                  "referencedDeclaration": 2150,
+                  "type": "library SafeMath"
+                },
+                "id": 1872,
+                "name": "UserDefinedTypeName",
+                "src": "274:8:6"
+              },
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 1873,
+                "name": "ElementaryTypeName",
+                "src": "287:7:6"
+              }
+            ],
+            "id": 1874,
+            "name": "UsingForDirective",
+            "src": "268:27:6"
+          },
+          {
+            "attributes": {
+              "canonicalName": "Reward.Payment",
+              "name": "Payment",
+              "scope": 1911,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "token",
+                  "scope": 1879,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "contract StandardToken",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "StandardToken",
+                      "referencedDeclaration": 2586,
+                      "type": "contract StandardToken"
+                    },
+                    "id": 1875,
+                    "name": "UserDefinedTypeName",
+                    "src": "484:13:6"
+                  }
+                ],
+                "id": 1876,
+                "name": "VariableDeclaration",
+                "src": "484:19:6"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "amount",
+                  "scope": 1879,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 1877,
+                    "name": "ElementaryTypeName",
+                    "src": "550:7:6"
+                  }
+                ],
+                "id": 1878,
+                "name": "VariableDeclaration",
+                "src": "550:14:6"
+              }
+            ],
+            "id": 1879,
+            "name": "StructDefinition",
+            "src": "430:141:6"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "add",
+              "payable": false,
+              "scope": 1911,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "self",
+                      "scope": 1910,
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "type": "struct Reward.Payment storage pointer",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Payment",
+                          "referencedDeclaration": 1879,
+                          "type": "struct Reward.Payment storage pointer"
+                        },
+                        "id": 1880,
+                        "name": "UserDefinedTypeName",
+                        "src": "671:7:6"
+                      }
+                    ],
+                    "id": 1881,
+                    "name": "VariableDeclaration",
+                    "src": "671:20:6"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "token",
+                      "scope": 1910,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 1882,
+                        "name": "ElementaryTypeName",
+                        "src": "693:7:6"
+                      }
+                    ],
+                    "id": 1883,
+                    "name": "VariableDeclaration",
+                    "src": "693:13:6"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "amount",
+                      "scope": 1910,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 1884,
+                        "name": "ElementaryTypeName",
+                        "src": "708:7:6"
+                      }
+                    ],
+                    "id": 1885,
+                    "name": "VariableDeclaration",
+                    "src": "708:14:6"
+                  }
+                ],
+                "id": 1886,
+                "name": "ParameterList",
+                "src": "670:53:6"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 1887,
+                "name": "ParameterList",
+                "src": "743:0:6"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 2601,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1888,
+                            "name": "Identifier",
+                            "src": "753:7:6"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "token",
+                                  "referencedDeclaration": 1876,
+                                  "type": "contract StandardToken"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1881,
+                                      "type": "struct Reward.Payment storage pointer",
+                                      "value": "self"
+                                    },
+                                    "id": 1889,
+                                    "name": "Identifier",
+                                    "src": "761:4:6"
+                                  }
+                                ],
+                                "id": 1890,
+                                "name": "MemberAccess",
+                                "src": "761:10:6"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1883,
+                                  "type": "address",
+                                  "value": "token"
+                                },
+                                "id": 1891,
+                                "name": "Identifier",
+                                "src": "775:5:6"
+                              }
+                            ],
+                            "id": 1892,
+                            "name": "BinaryOperation",
+                            "src": "761:19:6"
+                          }
+                        ],
+                        "id": 1893,
+                        "name": "FunctionCall",
+                        "src": "753:28:6"
+                      }
+                    ],
+                    "id": 1894,
+                    "name": "ExpressionStatement",
+                    "src": "753:28:6"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 2601,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 1895,
+                            "name": "Identifier",
+                            "src": "791:7:6"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": ">=",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1885,
+                                  "type": "uint256",
+                                  "value": "amount"
+                                },
+                                "id": 1896,
+                                "name": "Identifier",
+                                "src": "799:6:6"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "30",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 0",
+                                  "value": "0"
+                                },
+                                "id": 1897,
+                                "name": "Literal",
+                                "src": "809:1:6"
+                              }
+                            ],
+                            "id": 1898,
+                            "name": "BinaryOperation",
+                            "src": "799:11:6"
+                          }
+                        ],
+                        "id": 1899,
+                        "name": "FunctionCall",
+                        "src": "791:20:6"
+                      }
+                    ],
+                    "id": 1900,
+                    "name": "ExpressionStatement",
+                    "src": "791:20:6"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "add",
+                              "referencedDeclaration": 2149,
+                              "type": "function (uint256,uint256) view returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "amount",
+                                  "referencedDeclaration": 1878,
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1881,
+                                      "type": "struct Reward.Payment storage pointer",
+                                      "value": "self"
+                                    },
+                                    "id": 1901,
+                                    "name": "Identifier",
+                                    "src": "884:4:6"
+                                  }
+                                ],
+                                "id": 1904,
+                                "name": "MemberAccess",
+                                "src": "884:11:6"
+                              }
+                            ],
+                            "id": 1905,
+                            "name": "MemberAccess",
+                            "src": "884:15:6"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1885,
+                              "type": "uint256",
+                              "value": "amount"
+                            },
+                            "id": 1906,
+                            "name": "Identifier",
+                            "src": "900:6:6"
+                          }
+                        ],
+                        "id": 1907,
+                        "name": "FunctionCall",
+                        "src": "884:23:6"
+                      }
+                    ],
+                    "id": 1908,
+                    "name": "ExpressionStatement",
+                    "src": "884:23:6"
+                  }
+                ],
+                "id": 1909,
+                "name": "Block",
+                "src": "743:171:6"
+              }
+            ],
+            "id": 1910,
+            "name": "FunctionDefinition",
+            "src": "658:256:6"
+          }
+        ],
+        "id": 1911,
+        "name": "ContractDefinition",
+        "src": "247:752:6"
+      }
+    ],
+    "id": 1912,
+    "name": "SourceUnit",
+    "src": "0:1000:6"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
   "networks": {},
-  "schema_version": "0.0.5",
-  "updated_at": 1510035489806
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-10T18:37:07.799Z"
 }

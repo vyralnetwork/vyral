@@ -1,8 +1,8 @@
-pragma solidity ^0.4.15;
-
+pragma solidity ^0.4.18;
 
 /**
- * A contract to enforce ownership.
+ * @title Ownable 
+ * @dev A contract to enforce ownership.
  */
 contract Ownable {
 

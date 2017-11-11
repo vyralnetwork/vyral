@@ -6,3 +6,6 @@ bower_components/
 tmp/
 dist/
 logs/*
+.notes
+build
+build/*

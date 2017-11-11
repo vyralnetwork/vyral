@@ -1,8 +1,4 @@
-pragma solidity ^0.4.0;
-
-
-pragma solidity ^0.4.11;
-
+pragma solidity ^0.4.18;
 
 /// @title ERC20 Token Protocol
 /// @author Marek Kirejczyk <marek.kirejczyk@gmail.com>

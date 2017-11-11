@@ -1,43 +1,40 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
-
-import "../math/SafeMath.sol";
-import "../tokens/ERC20.sol";
-
+import '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
+import '../../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';
 
 /**
- * Represents an incentive for joining a campaign.
+ * @dev Represents an incentive for joining a campaign.
  */
 library Reward {
-
     using SafeMath for uint256;
 
     /**
-     * A {Payment} represents the value of a referral. This is the incentive offered by a campaign to both.
+     * @dev A {Payment} represents the value of a referral. This is the incentive offered by a campaign to both.
      */
     struct Payment {
         /// Token as payment
-        ERC20 token;
+        StandardToken token;
         /// The amount being offered
         uint256 amount;
     }
 
-
     /**
-     * Returns sum of two payments if their units are same.
+     * @dev Returns sum of two payments if their units are same.
      */
-    function add(Payment storage self, address token, uint256 amount) {
+    function add(Payment storage self, address token, uint256 amount)
+        public
+    {
         require(self.token == token);
-
-        require(amount >= 0);
+        require(amount >= 0); // TODO: Is this check needed since a uint256 cannot be neg??
 
         self.amount.add(amount);
     }
 
     /**
-     * Won't accept ETH
+     * @dev Won't accept ETH
      */
-    function Reward() {
-    }
+    // function Reward() {
+    // }
 
 }

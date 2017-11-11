@@ -1,11 +1,9 @@
-pragma solidity ^0.4.15;
-
+pragma solidity ^0.4.18;
 
 import "../referral/ReferralTree.sol";
 
-
 /**
- * Interface contract to implement various reward allocation algorithms
+ * @dev Interface contract to implement various reward allocation algorithms.
  */
 contract RewardPayoffStrategy {
 

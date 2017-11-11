@@ -1,4 +1,4 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.18;
 
 import "../rewards/Reward.sol";
 import "../rewards/RewardPayoffStrategy.sol";
@@ -40,11 +40,10 @@ import "../rewards/RewardPayoffStrategy.sol";
  *
  */
 library ReferralTree {
-
     using Reward for Reward.Payment;
 
     /**
-     * A user in a referral graph
+     * @dev A user in a referral graph
      */
     struct VyralNode {
         /// Current user's address
@@ -58,14 +57,14 @@ library ReferralTree {
     }
 
     /**
-     * A collection of seed nodes. These are nodes that don't have a referrer.
+     * @dev A collection of seed nodes. These are nodes that don't have a referrer.
      */
-    struct Tree {
+    struct Tree { // TODO: Rename? Suggestions: Root
         mapping (address => VyralNode) nodes;
     }
 
     /**
-     * Returns the degree of a node
+     * @dev Returns the degree of a node
      */
     function degreeOf (
         Tree storage self,
@@ -100,7 +99,7 @@ library ReferralTree {
     }
 
     /**
-     * Find a referral key by an address.
+     * @dev Find a referral key by an address.
      */
     function splitRewardWithReferrer (
         Tree storage self,
@@ -119,7 +118,7 @@ library ReferralTree {
     }
 
     /**
-     * Find referrer of the given invitee.
+     * @dev Find referrer of the given invitee.
      */
     function getReferrerAddress (
         Tree storage self,
