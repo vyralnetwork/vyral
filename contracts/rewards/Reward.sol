@@ -1,20 +1,18 @@
 pragma solidity ^0.4.18;
 
-import '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
-import '../../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';
+import "tokens/HumanStandardToken.sol";
 
 /**
  * @dev Represents an incentive for joining a campaign.
  */
 library Reward {
-    using SafeMath for uint256;
 
     /**
      * @dev A {Payment} represents the value of a referral. This is the incentive offered by a campaign to both.
      */
     struct Payment {
         /// Token as payment
-        StandardToken token;
+        HumanStandardToken token;
         /// The amount being offered
         uint256 amount;
     }
@@ -26,9 +24,8 @@ library Reward {
         public
     {
         require(self.token == token);
-        require(amount >= 0); // TODO: Is this check needed since a uint256 cannot be neg??
 
-        self.amount.add(amount);
+        self.amount += amount;
     }
 
     /**

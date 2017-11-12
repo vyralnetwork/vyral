@@ -16,18 +16,18 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x60606040523415600e57600080fd5b60ac8061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820f5c01c4a94409d93e7664386a766cdc3fdb6354069d4e2c983532c4cb145741a0029",
-  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820f5c01c4a94409d93e7664386a766cdc3fdb6354069d4e2c983532c4cb145741a0029",
+  "bytecode": "0x60606040523415600e57600080fd5b60ac8061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820523a634c1b4eb949b09e9a422871f0b6aa3a95137c05cf6c8cedc643d27b466f0029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cf309012146044575b600080fd5b3415604e57600080fd5b6054606e565b604051808215151515815260200191505060405180910390f35b6000809054906101000a900460ff16815600a165627a7a72305820523a634c1b4eb949b09e9a422871f0b6aa3a95137c05cf6c8cedc643d27b466f0029",
   "sourceMap": "100:216:9:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "100:216:9:-;;;;;;;;;;;;;;;;;;;;;;;;124:18;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "pragma solidity ^0.4.18;\n\n/**\n * @title Lockable\n * @dev Adds a locking property to a contract.\n */\ncontract Lockable {\n    bool public locked;\n\n    modifier onlyUnlocked() {\n        require(!locked);\n        _;\n    }\n\n    /// TODO: function lock(bool _locked) {\n    ///         locked = _locked;\n    ///        }\n\n}",
-  "sourcePath": "/home/logan/Work/vyral/contracts/traits/Lockable.sol",
+  "sourcePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/traits/Lockable.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/logan/Work/vyral/contracts/traits/Lockable.sol",
+      "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/traits/Lockable.sol",
       "exportedSymbols": {
         "Lockable": [
-          1995
+          1802
         ]
       }
     },
@@ -41,7 +41,7 @@
             ".18"
           ]
         },
-        "id": 1983,
+        "id": 1790,
         "name": "PragmaDirective",
         "src": "0:24:9"
       },
@@ -57,17 +57,17 @@
           "documentation": "@title Lockable\n@dev Adds a locking property to a contract.",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1995
+            1802
           ],
           "name": "Lockable",
-          "scope": 1996
+          "scope": 1803
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "locked",
-              "scope": 1995,
+              "scope": 1802,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "bool",
@@ -80,12 +80,12 @@
                   "name": "bool",
                   "type": "bool"
                 },
-                "id": 1984,
+                "id": 1791,
                 "name": "ElementaryTypeName",
                 "src": "124:4:9"
               }
             ],
-            "id": 1985,
+            "id": 1792,
             "name": "VariableDeclaration",
             "src": "124:18:9"
           },
@@ -102,7 +102,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1986,
+                "id": 1793,
                 "name": "ParameterList",
                 "src": "170:2:9"
               },
@@ -136,11 +136,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2601,
+                              "referencedDeclaration": 2408,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 1987,
+                            "id": 1794,
                             "name": "Identifier",
                             "src": "183:7:9"
                           },
@@ -162,51 +162,51 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1985,
+                                  "referencedDeclaration": 1792,
                                   "type": "bool",
                                   "value": "locked"
                                 },
-                                "id": 1988,
+                                "id": 1795,
                                 "name": "Identifier",
                                 "src": "192:6:9"
                               }
                             ],
-                            "id": 1989,
+                            "id": 1796,
                             "name": "UnaryOperation",
                             "src": "191:7:9"
                           }
                         ],
-                        "id": 1990,
+                        "id": 1797,
                         "name": "FunctionCall",
                         "src": "183:16:9"
                       }
                     ],
-                    "id": 1991,
+                    "id": 1798,
                     "name": "ExpressionStatement",
                     "src": "183:16:9"
                   },
                   {
-                    "id": 1992,
+                    "id": 1799,
                     "name": "PlaceholderStatement",
                     "src": "209:1:9"
                   }
                 ],
-                "id": 1993,
+                "id": 1800,
                 "name": "Block",
                 "src": "173:44:9"
               }
             ],
-            "id": 1994,
+            "id": 1801,
             "name": "ModifierDefinition",
             "src": "149:68:9"
           }
         ],
-        "id": 1995,
+        "id": 1802,
         "name": "ContractDefinition",
         "src": "100:216:9"
       }
     ],
-    "id": 1996,
+    "id": 1803,
     "name": "SourceUnit",
     "src": "0:316:9"
   },
@@ -214,7 +214,13 @@
     "name": "solc",
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1510455002438": {
+      "events": {},
+      "links": {},
+      "address": "0x22050361079fab50b920fcc4a41f2b100228d4dd"
+    }
+  },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-10T18:37:07.799Z"
+  "updatedAt": "2017-11-12T04:47:57.723Z"
 }

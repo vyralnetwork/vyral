@@ -30,13 +30,13 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.18;\n\nimport \"../referral/ReferralTree.sol\";\n\n/**\n * @dev Interface contract to implement various reward allocation algorithms.\n */\ncontract RewardPayoffStrategy {\n\n    function payoff(address referrer, address invitee) public returns (uint256);\n\n}\n",
-  "sourcePath": "/home/logan/Work/vyral/contracts/rewards/RewardPayoffStrategy.sol",
+  "sourcePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/rewards/RewardPayoffStrategy.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/logan/Work/vyral/contracts/rewards/RewardPayoffStrategy.sol",
+      "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/rewards/RewardPayoffStrategy.sol",
       "exportedSymbols": {
         "RewardPayoffStrategy": [
-          1924
+          724
         ]
       }
     },
@@ -50,24 +50,24 @@
             ".18"
           ]
         },
-        "id": 1913,
+        "id": 713,
         "name": "PragmaDirective",
-        "src": "0:24:7"
+        "src": "0:24:5"
       },
       {
         "attributes": {
-          "SourceUnit": 1868,
-          "absolutePath": "/home/logan/Work/vyral/contracts/referral/ReferralTree.sol",
+          "SourceUnit": 680,
+          "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/referral/ReferralTree.sol",
           "file": "../referral/ReferralTree.sol",
-          "scope": 1925,
+          "scope": 725,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1914,
+        "id": 714,
         "name": "ImportDirective",
-        "src": "26:38:7"
+        "src": "26:38:5"
       },
       {
         "attributes": {
@@ -81,10 +81,10 @@
           "documentation": "@dev Interface contract to implement various reward allocation algorithms.",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            1924
+            724
           ],
           "name": "RewardPayoffStrategy",
-          "scope": 1925
+          "scope": 725
         },
         "children": [
           {
@@ -98,7 +98,7 @@
               ],
               "name": "payoff",
               "payable": false,
-              "scope": 1924,
+              "scope": 724,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -110,7 +110,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "referrer",
-                      "scope": 1923,
+                      "scope": 723,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -123,20 +123,20 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1915,
+                        "id": 715,
                         "name": "ElementaryTypeName",
-                        "src": "205:7:7"
+                        "src": "205:7:5"
                       }
                     ],
-                    "id": 1916,
+                    "id": 716,
                     "name": "VariableDeclaration",
-                    "src": "205:16:7"
+                    "src": "205:16:5"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "invitee",
-                      "scope": 1923,
+                      "scope": 723,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -149,19 +149,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1917,
+                        "id": 717,
                         "name": "ElementaryTypeName",
-                        "src": "223:7:7"
+                        "src": "223:7:5"
                       }
                     ],
-                    "id": 1918,
+                    "id": 718,
                     "name": "VariableDeclaration",
-                    "src": "223:15:7"
+                    "src": "223:15:5"
                   }
                 ],
-                "id": 1919,
+                "id": 719,
                 "name": "ParameterList",
-                "src": "204:35:7"
+                "src": "204:35:5"
               },
               {
                 "children": [
@@ -169,7 +169,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1923,
+                      "scope": 723,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -182,34 +182,34 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1920,
+                        "id": 720,
                         "name": "ElementaryTypeName",
-                        "src": "256:7:7"
+                        "src": "256:7:5"
                       }
                     ],
-                    "id": 1921,
+                    "id": 721,
                     "name": "VariableDeclaration",
-                    "src": "256:7:7"
+                    "src": "256:7:5"
                   }
                 ],
-                "id": 1922,
+                "id": 722,
                 "name": "ParameterList",
-                "src": "255:9:7"
+                "src": "255:9:5"
               }
             ],
-            "id": 1923,
+            "id": 723,
             "name": "FunctionDefinition",
-            "src": "189:76:7"
+            "src": "189:76:5"
           }
         ],
-        "id": 1924,
+        "id": 724,
         "name": "ContractDefinition",
-        "src": "152:116:7"
+        "src": "152:116:5"
       }
     ],
-    "id": 1925,
+    "id": 725,
     "name": "SourceUnit",
-    "src": "0:269:7"
+    "src": "0:269:5"
   },
   "compiler": {
     "name": "solc",
@@ -217,5 +217,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-10T18:37:07.799Z"
+  "updatedAt": "2017-11-12T04:47:37.686Z"
 }

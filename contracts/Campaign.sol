@@ -1,17 +1,13 @@
 pragma solidity ^0.4.18;
 
 import "./rewards/Reward.sol";
-
-import '../node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol';
-import '../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';
-
-//import "./rewards/RewardPayoffStrategy.sol";
 import "./referral/ReferralTree.sol";
+import "tokens/HumanStandardToken.sol";
 
 /**
  * A {Campaign} represents an advertising campaign.
  */
-contract Campaign is Pausable {
+contract Campaign {
     using Reward for Reward.Payment;
     using ReferralTree for ReferralTree.Tree;
 
@@ -89,8 +85,8 @@ contract Campaign is Pausable {
         public
     {
         budget = Reward.Payment({
-        token : StandardToken(_token),
-        amount : _budgetAmount
+            token: HumanStandardToken(_token),
+            amount: _budgetAmount
         });
 
         payoffStrategy = _payoffStrategy;

@@ -48,18 +48,18 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b61044b8061001e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806347f6bc0314610051578063632300e7146100c8575b600080fd5b610086600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610113565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100fd600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610328565b6040518082815260200191505060405180910390f35b600061011d61037a565b8360000160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020608060405190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016002820180548060200260200160405190810160405280929190818152602001828054801561029b57602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019060010190808311610251575b50505050508152602001600382016040805190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481525050815250509050806020015191505092915050565b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020180549050905092915050565b60a060405190810160405280600073ffffffffffffffffffffffffffffffffffffffff168152602001600073ffffffffffffffffffffffffffffffffffffffff1681526020016103c86103db565b81526020016103d56103ef565b81525090565b602060405190810160405280600081525090565b6040805190810160405280600073ffffffffffffffffffffffffffffffffffffffff1681526020016000815250905600a165627a7a72305820a599a2bd7250051361028b817377d1e7ebd545b5b3ce4321d051c841de9596ed0029",
-  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806347f6bc0314610051578063632300e7146100c8575b600080fd5b610086600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610113565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100fd600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610328565b6040518082815260200191505060405180910390f35b600061011d61037a565b8360000160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020608060405190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016002820180548060200260200160405190810160405280929190818152602001828054801561029b57602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019060010190808311610251575b50505050508152602001600382016040805190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481525050815250509050806020015191505092915050565b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020180549050905092915050565b60a060405190810160405280600073ffffffffffffffffffffffffffffffffffffffff168152602001600073ffffffffffffffffffffffffffffffffffffffff1681526020016103c86103db565b81526020016103d56103ef565b81525090565b602060405190810160405280600081525090565b6040805190810160405280600073ffffffffffffffffffffffffffffffffffffffff1681526020016000815250905600a165627a7a72305820a599a2bd7250051361028b817377d1e7ebd545b5b3ce4321d051c841de9596ed0029",
-  "sourceMap": "2146:2382:5:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "2146:2382:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4257:269;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2808:174;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4257:269;4386:24;4426:21;;:::i;:::-;4450:4;:10;;:27;4461:15;4450:27;;;;;;;;;;;;;;;4426:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4506:4;:13;;;4487:32;;4257:269;;;;;:::o;2808:174::-;2916:4;2943;:10;;:16;2954:4;2943:16;;;;;;;;;;;;;;;:25;;:32;;;;2936:39;;2808:174;;;;:::o;2146:2382::-;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;:::i;:::-;;;;;:::o;:::-;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "bytecode": "0x6060604052341561000f57600080fd5b61044b8061001e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806347f6bc0314610051578063632300e7146100c8575b600080fd5b610086600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610113565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100fd600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610328565b6040518082815260200191505060405180910390f35b600061011d61037a565b8360000160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020608060405190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016002820180548060200260200160405190810160405280929190818152602001828054801561029b57602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019060010190808311610251575b50505050508152602001600382016040805190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481525050815250509050806020015191505092915050565b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020180549050905092915050565b60a060405190810160405280600073ffffffffffffffffffffffffffffffffffffffff168152602001600073ffffffffffffffffffffffffffffffffffffffff1681526020016103c86103db565b81526020016103d56103ef565b81525090565b602060405190810160405280600081525090565b6040805190810160405280600073ffffffffffffffffffffffffffffffffffffffff1681526020016000815250905600a165627a7a72305820e54371f4635bedb006ebcc47f4b7184bd0f22cce545bd49646b5f94f8a4705d60029",
+  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806347f6bc0314610051578063632300e7146100c8575b600080fd5b610086600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610113565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6100fd600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610328565b6040518082815260200191505060405180910390f35b600061011d61037a565b8360000160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020608060405190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016001820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020016002820180548060200260200160405190810160405280929190818152602001828054801561029b57602002820191906000526020600020905b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019060010190808311610251575b50505050508152602001600382016040805190810160405290816000820160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001600182015481525050815250509050806020015191505092915050565b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020180549050905092915050565b60a060405190810160405280600073ffffffffffffffffffffffffffffffffffffffff168152602001600073ffffffffffffffffffffffffffffffffffffffff1681526020016103c86103db565b81526020016103d56103ef565b81525090565b602060405190810160405280600081525090565b6040805190810160405280600073ffffffffffffffffffffffffffffffffffffffff1681526020016000815250905600a165627a7a72305820e54371f4635bedb006ebcc47f4b7184bd0f22cce545bd49646b5f94f8a4705d60029",
+  "sourceMap": "2146:2382:3:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "2146:2382:3:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4257:269;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2808:174;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4257:269;4386:24;4426:21;;:::i;:::-;4450:4;:10;;:27;4461:15;4450:27;;;;;;;;;;;;;;;4426:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4506:4;:13;;;4487:32;;4257:269;;;;;:::o;2808:174::-;2916:4;2943;:10;;:16;2954:4;2943:16;;;;;;;;;;;;;;;:25;;:32;;;;2936:39;;2808:174;;;;:::o;2146:2382::-;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;:::i;:::-;;;;;:::o;:::-;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "pragma solidity ^0.4.18;\n\nimport \"../rewards/Reward.sol\";\nimport \"../rewards/RewardPayoffStrategy.sol\";\n\n/**\n * A ReferralTree is a diffusion graph of all nodes representing campaign participants.\n * Each invitee is assigned a referral tree after accepting an invitation. Following is\n * an example difussion graph.\n *\n *                                                                  +---+\n *                                                             +--> | 9 |\n *                                                             |    +---+\n *                                                             |\n *                                                             |    +---+\n *                                                 +---+       +--> |10 |\n *                                            +--> | 4 |       |    +---+\n *                                            |    +---+    +--+\n *                                            |  (inactive) |  |    +---+\n *                                            |             |  +--> |11 |\n *                                            |    +---+    |  |    +---+\n *                                       +-------> | 5 +----+  |\n *                                       |    |    +---+       |    +---+\n *                              +----    |    |                +--> |12 |\n *                        +-->  | 1 +----+    |                     +---+\n *                        |     +---+         |    +---+\n *                        |                   +--> | 6 | +------------------>\n *                        |                        +---+\n *               +---+    |     +---+\n *               | 0 | +----->  | 2 |\n *               +---+    |     +---+\n *                        |   (inactive)\n *                        |                        +---+\n *                        |     +---+         +--> | 7 |\n *                        +-->  | 3 +---------+    +---+\n *                              +---+         |\n *                                            |    +---+\n *                                            +--> | 8 |\n *                                                 +---+\n *\n */\nlibrary ReferralTree {\n    using Reward for Reward.Payment;\n\n    /**\n     * @dev A user in a referral graph\n     */\n    struct VyralNode {\n        /// Current user's address\n        address node;\n        /// This node was referred by...\n        address referrer;\n        /// Invitees of this node\n        address[] invitees;\n        /// Reward accumulated\n        Reward.Payment payment;\n    }\n\n    /**\n     * @dev A collection of seed nodes. These are nodes that don't have a referrer.\n     */\n    struct Tree { // TODO: Rename? Suggestions: Root\n        mapping (address => VyralNode) nodes;\n    }\n\n    /**\n     * @dev Returns the degree of a node\n     */\n    function degreeOf (\n        Tree storage self,\n        address node\n    )\n        constant\n        returns (uint)\n    {\n        return self.nodes[node].invitees.length;\n    }\n\n    /**\n     * @dev Creates a new node representing an invitee and adds to a node's list of invitees.\n     */\n    function addInvitee (\n        Tree storage self,\n        address _invitee,\n        address _referrer,\n        address _payoffStrategy\n    )\n        internal\n    {\n        VyralNode memory inviteeNode;\n        inviteeNode.node = _invitee;\n        inviteeNode.referrer = _referrer;\n\n        VyralNode memory referrerNode = self.nodes[_referrer];\n        referrerNode.invitees[referrerNode.invitees.length] = _invitee;\n\n        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);\n        rps.payoff(_referrer, _invitee);\n    }\n\n    /**\n     * @dev Find a referral key by an address.\n     */\n    function splitRewardWithReferrer (\n        Tree storage self,\n        address _address,\n        uint256 _referrerReward,\n        uint256 _inviteeReward\n    )\n        internal\n        returns (bytes32 _referralKey)\n    {\n        VyralNode storage inviteeNode = self.nodes[_address];\n        inviteeNode.payment.add(_address, _inviteeReward);\n\n        VyralNode storage referrerNode = self.nodes[inviteeNode.referrer];\n        referrerNode.payment.add(_address, _referrerReward);\n    }\n\n    /**\n     * @dev Find referrer of the given invitee.\n     */\n    function getReferrerAddress (\n        Tree storage self,\n        address _inviteeAddress\n    )\n        constant\n        returns (address _referrerAddress)\n    {\n        VyralNode memory node = self.nodes[_inviteeAddress];\n        _referrerAddress = node.referrer;\n    }\n}\n",
-  "sourcePath": "/home/logan/Work/vyral/contracts/referral/ReferralTree.sol",
+  "sourcePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/referral/ReferralTree.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/home/logan/Work/vyral/contracts/referral/ReferralTree.sol",
+      "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/referral/ReferralTree.sol",
       "exportedSymbols": {
         "ReferralTree": [
-          1867
+          679
         ]
       }
     },
@@ -73,39 +73,39 @@
             ".18"
           ]
         },
-        "id": 1703,
+        "id": 515,
         "name": "PragmaDirective",
-        "src": "0:24:5"
+        "src": "0:24:3"
       },
       {
         "attributes": {
-          "SourceUnit": 1912,
-          "absolutePath": "/home/logan/Work/vyral/contracts/rewards/Reward.sol",
+          "SourceUnit": 712,
+          "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/rewards/Reward.sol",
           "file": "../rewards/Reward.sol",
-          "scope": 1868,
+          "scope": 680,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1704,
+        "id": 516,
         "name": "ImportDirective",
-        "src": "26:31:5"
+        "src": "26:31:3"
       },
       {
         "attributes": {
-          "SourceUnit": 1925,
-          "absolutePath": "/home/logan/Work/vyral/contracts/rewards/RewardPayoffStrategy.sol",
+          "SourceUnit": 725,
+          "absolutePath": "/home/vkandy/workspaces/digistrat/vyral/contracts/rewards/RewardPayoffStrategy.sol",
           "file": "../rewards/RewardPayoffStrategy.sol",
-          "scope": 1868,
+          "scope": 680,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1705,
+        "id": 517,
         "name": "ImportDirective",
-        "src": "58:45:5"
+        "src": "58:45:3"
       },
       {
         "attributes": {
@@ -119,10 +119,10 @@
           "documentation": "A ReferralTree is a diffusion graph of all nodes representing campaign participants.\nEach invitee is assigned a referral tree after accepting an invitation. Following is\nan example difussion graph.\n *                                                                  +---+\n                                                            +--> | 9 |\n                                                            |    +---+\n                                                            |\n                                                            |    +---+\n                                                +---+       +--> |10 |\n                                           +--> | 4 |       |    +---+\n                                           |    +---+    +--+\n                                           |  (inactive) |  |    +---+\n                                           |             |  +--> |11 |\n                                           |    +---+    |  |    +---+\n                                      +-------> | 5 +----+  |\n                                      |    |    +---+       |    +---+\n                             +----    |    |                +--> |12 |\n                       +-->  | 1 +----+    |                     +---+\n                       |     +---+         |    +---+\n                       |                   +--> | 6 | +------------------>\n                       |                        +---+\n              +---+    |     +---+\n              | 0 | +----->  | 2 |\n              +---+    |     +---+\n                       |   (inactive)\n                       |                        +---+\n                       |     +---+         +--> | 7 |\n                       +-->  | 3 +---------+    +---+\n                             +---+         |\n                                           |    +---+\n                                           +--> | 8 |\n                                                +---+\n ",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1867
+            679
           ],
           "name": "ReferralTree",
-          "scope": 1868
+          "scope": 680
         },
         "children": [
           {
@@ -131,34 +131,34 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "Reward",
-                  "referencedDeclaration": 1911,
+                  "referencedDeclaration": 711,
                   "type": "library Reward"
                 },
-                "id": 1706,
+                "id": 518,
                 "name": "UserDefinedTypeName",
-                "src": "2179:6:5"
+                "src": "2179:6:3"
               },
               {
                 "attributes": {
                   "contractScope": null,
                   "name": "Reward.Payment",
-                  "referencedDeclaration": 1879,
+                  "referencedDeclaration": 687,
                   "type": "struct Reward.Payment storage pointer"
                 },
-                "id": 1707,
+                "id": 519,
                 "name": "UserDefinedTypeName",
-                "src": "2190:14:5"
+                "src": "2190:14:3"
               }
             ],
-            "id": 1708,
+            "id": 520,
             "name": "UsingForDirective",
-            "src": "2173:32:5"
+            "src": "2173:32:3"
           },
           {
             "attributes": {
               "canonicalName": "ReferralTree.VyralNode",
               "name": "VyralNode",
-              "scope": 1867,
+              "scope": 679,
               "visibility": "public"
             },
             "children": [
@@ -166,7 +166,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "node",
-                  "scope": 1718,
+                  "scope": 530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -179,20 +179,20 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 1709,
+                    "id": 521,
                     "name": "ElementaryTypeName",
-                    "src": "2328:7:5"
+                    "src": "2328:7:3"
                   }
                 ],
-                "id": 1710,
+                "id": 522,
                 "name": "VariableDeclaration",
-                "src": "2328:12:5"
+                "src": "2328:12:3"
               },
               {
                 "attributes": {
                   "constant": false,
                   "name": "referrer",
-                  "scope": 1718,
+                  "scope": 530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -205,20 +205,20 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 1711,
+                    "id": 523,
                     "name": "ElementaryTypeName",
-                    "src": "2391:7:5"
+                    "src": "2391:7:3"
                   }
                 ],
-                "id": 1712,
+                "id": 524,
                 "name": "VariableDeclaration",
-                "src": "2391:16:5"
+                "src": "2391:16:3"
               },
               {
                 "attributes": {
                   "constant": false,
                   "name": "invitees",
-                  "scope": 1718,
+                  "scope": 530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address[] storage pointer",
@@ -237,25 +237,25 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1713,
+                        "id": 525,
                         "name": "ElementaryTypeName",
-                        "src": "2451:7:5"
+                        "src": "2451:7:3"
                       }
                     ],
-                    "id": 1714,
+                    "id": 526,
                     "name": "ArrayTypeName",
-                    "src": "2451:9:5"
+                    "src": "2451:9:3"
                   }
                 ],
-                "id": 1715,
+                "id": 527,
                 "name": "VariableDeclaration",
-                "src": "2451:18:5"
+                "src": "2451:18:3"
               },
               {
                 "attributes": {
                   "constant": false,
                   "name": "payment",
-                  "scope": 1718,
+                  "scope": 530,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "struct Reward.Payment storage pointer",
@@ -267,28 +267,28 @@
                     "attributes": {
                       "contractScope": null,
                       "name": "Reward.Payment",
-                      "referencedDeclaration": 1879,
+                      "referencedDeclaration": 687,
                       "type": "struct Reward.Payment storage pointer"
                     },
-                    "id": 1716,
+                    "id": 528,
                     "name": "UserDefinedTypeName",
-                    "src": "2510:14:5"
+                    "src": "2510:14:3"
                   }
                 ],
-                "id": 1717,
+                "id": 529,
                 "name": "VariableDeclaration",
-                "src": "2510:22:5"
+                "src": "2510:22:3"
               }
             ],
-            "id": 1718,
+            "id": 530,
             "name": "StructDefinition",
-            "src": "2266:273:5"
+            "src": "2266:273:3"
           },
           {
             "attributes": {
               "canonicalName": "ReferralTree.Tree",
               "name": "Tree",
-              "scope": 1867,
+              "scope": 679,
               "visibility": "public"
             },
             "children": [
@@ -296,7 +296,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "nodes",
-                  "scope": 1723,
+                  "scope": 535,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(address => struct ReferralTree.VyralNode storage ref)",
@@ -314,35 +314,35 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1719,
+                        "id": 531,
                         "name": "ElementaryTypeName",
-                        "src": "2711:7:5"
+                        "src": "2711:7:3"
                       },
                       {
                         "attributes": {
                           "contractScope": null,
                           "name": "VyralNode",
-                          "referencedDeclaration": 1718,
+                          "referencedDeclaration": 530,
                           "type": "struct ReferralTree.VyralNode storage pointer"
                         },
-                        "id": 1720,
+                        "id": 532,
                         "name": "UserDefinedTypeName",
-                        "src": "2722:9:5"
+                        "src": "2722:9:3"
                       }
                     ],
-                    "id": 1721,
+                    "id": 533,
                     "name": "Mapping",
-                    "src": "2702:30:5"
+                    "src": "2702:30:3"
                   }
                 ],
-                "id": 1722,
+                "id": 534,
                 "name": "VariableDeclaration",
-                "src": "2702:36:5"
+                "src": "2702:36:3"
               }
             ],
-            "id": 1723,
+            "id": 535,
             "name": "StructDefinition",
-            "src": "2645:100:5"
+            "src": "2645:100:3"
           },
           {
             "attributes": {
@@ -354,7 +354,7 @@
               ],
               "name": "degreeOf",
               "payable": false,
-              "scope": 1867,
+              "scope": 679,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -366,7 +366,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 1740,
+                      "scope": 552,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct ReferralTree.Tree storage pointer",
@@ -378,23 +378,23 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Tree",
-                          "referencedDeclaration": 1723,
+                          "referencedDeclaration": 535,
                           "type": "struct ReferralTree.Tree storage pointer"
                         },
-                        "id": 1724,
+                        "id": 536,
                         "name": "UserDefinedTypeName",
-                        "src": "2836:4:5"
+                        "src": "2836:4:3"
                       }
                     ],
-                    "id": 1725,
+                    "id": 537,
                     "name": "VariableDeclaration",
-                    "src": "2836:17:5"
+                    "src": "2836:17:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "node",
-                      "scope": 1740,
+                      "scope": 552,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -407,19 +407,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1726,
+                        "id": 538,
                         "name": "ElementaryTypeName",
-                        "src": "2863:7:5"
+                        "src": "2863:7:3"
                       }
                     ],
-                    "id": 1727,
+                    "id": 539,
                     "name": "VariableDeclaration",
-                    "src": "2863:12:5"
+                    "src": "2863:12:3"
                   }
                 ],
-                "id": 1728,
+                "id": 540,
                 "name": "ParameterList",
-                "src": "2826:55:5"
+                "src": "2826:55:3"
               },
               {
                 "children": [
@@ -427,7 +427,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1740,
+                      "scope": 552,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -440,25 +440,25 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 1729,
+                        "id": 541,
                         "name": "ElementaryTypeName",
-                        "src": "2916:4:5"
+                        "src": "2916:4:3"
                       }
                     ],
-                    "id": 1730,
+                    "id": 542,
                     "name": "VariableDeclaration",
-                    "src": "2916:4:5"
+                    "src": "2916:4:3"
                   }
                 ],
-                "id": 1731,
+                "id": 543,
                 "name": "ParameterList",
-                "src": "2915:6:5"
+                "src": "2915:6:3"
               },
               {
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1731
+                      "functionReturnParameters": 543
                     },
                     "children": [
                       {
@@ -481,7 +481,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "invitees",
-                              "referencedDeclaration": 1715,
+                              "referencedDeclaration": 527,
                               "type": "address[] storage ref"
                             },
                             "children": [
@@ -503,7 +503,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "nodes",
-                                      "referencedDeclaration": 1722,
+                                      "referencedDeclaration": 534,
                                       "type": "mapping(address => struct ReferralTree.VyralNode storage ref)"
                                     },
                                     "children": [
@@ -513,18 +513,18 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1725,
+                                          "referencedDeclaration": 537,
                                           "type": "struct ReferralTree.Tree storage pointer",
                                           "value": "self"
                                         },
-                                        "id": 1732,
+                                        "id": 544,
                                         "name": "Identifier",
-                                        "src": "2943:4:5"
+                                        "src": "2943:4:3"
                                       }
                                     ],
-                                    "id": 1733,
+                                    "id": 545,
                                     "name": "MemberAccess",
-                                    "src": "2943:10:5"
+                                    "src": "2943:10:3"
                                   },
                                   {
                                     "attributes": {
@@ -532,43 +532,43 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1727,
+                                      "referencedDeclaration": 539,
                                       "type": "address",
                                       "value": "node"
                                     },
-                                    "id": 1734,
+                                    "id": 546,
                                     "name": "Identifier",
-                                    "src": "2954:4:5"
+                                    "src": "2954:4:3"
                                   }
                                 ],
-                                "id": 1735,
+                                "id": 547,
                                 "name": "IndexAccess",
-                                "src": "2943:16:5"
+                                "src": "2943:16:3"
                               }
                             ],
-                            "id": 1736,
+                            "id": 548,
                             "name": "MemberAccess",
-                            "src": "2943:25:5"
+                            "src": "2943:25:3"
                           }
                         ],
-                        "id": 1737,
+                        "id": 549,
                         "name": "MemberAccess",
-                        "src": "2943:32:5"
+                        "src": "2943:32:3"
                       }
                     ],
-                    "id": 1738,
+                    "id": 550,
                     "name": "Return",
-                    "src": "2936:39:5"
+                    "src": "2936:39:3"
                   }
                 ],
-                "id": 1739,
+                "id": 551,
                 "name": "Block",
-                "src": "2926:56:5"
+                "src": "2926:56:3"
               }
             ],
-            "id": 1740,
+            "id": 552,
             "name": "FunctionDefinition",
-            "src": "2808:174:5"
+            "src": "2808:174:3"
           },
           {
             "attributes": {
@@ -580,7 +580,7 @@
               ],
               "name": "addInvitee",
               "payable": false,
-              "scope": 1867,
+              "scope": 679,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "internal"
@@ -592,7 +592,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 1797,
+                      "scope": 609,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct ReferralTree.Tree storage pointer",
@@ -604,23 +604,23 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Tree",
-                          "referencedDeclaration": 1723,
+                          "referencedDeclaration": 535,
                           "type": "struct ReferralTree.Tree storage pointer"
                         },
-                        "id": 1741,
+                        "id": 553,
                         "name": "UserDefinedTypeName",
-                        "src": "3128:4:5"
+                        "src": "3128:4:3"
                       }
                     ],
-                    "id": 1742,
+                    "id": 554,
                     "name": "VariableDeclaration",
-                    "src": "3128:17:5"
+                    "src": "3128:17:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_invitee",
-                      "scope": 1797,
+                      "scope": 609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -633,20 +633,20 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1743,
+                        "id": 555,
                         "name": "ElementaryTypeName",
-                        "src": "3155:7:5"
+                        "src": "3155:7:3"
                       }
                     ],
-                    "id": 1744,
+                    "id": 556,
                     "name": "VariableDeclaration",
-                    "src": "3155:16:5"
+                    "src": "3155:16:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_referrer",
-                      "scope": 1797,
+                      "scope": 609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -659,20 +659,20 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1745,
+                        "id": 557,
                         "name": "ElementaryTypeName",
-                        "src": "3181:7:5"
+                        "src": "3181:7:3"
                       }
                     ],
-                    "id": 1746,
+                    "id": 558,
                     "name": "VariableDeclaration",
-                    "src": "3181:17:5"
+                    "src": "3181:17:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_payoffStrategy",
-                      "scope": 1797,
+                      "scope": 609,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -685,19 +685,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1747,
+                        "id": 559,
                         "name": "ElementaryTypeName",
-                        "src": "3208:7:5"
+                        "src": "3208:7:3"
                       }
                     ],
-                    "id": 1748,
+                    "id": 560,
                     "name": "VariableDeclaration",
-                    "src": "3208:23:5"
+                    "src": "3208:23:3"
                   }
                 ],
-                "id": 1749,
+                "id": 561,
                 "name": "ParameterList",
-                "src": "3118:119:5"
+                "src": "3118:119:3"
               },
               {
                 "attributes": {
@@ -706,9 +706,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1750,
+                "id": 562,
                 "name": "ParameterList",
-                "src": "3259:0:5"
+                "src": "3259:0:3"
               },
               {
                 "children": [
@@ -724,7 +724,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "inviteeNode",
-                          "scope": 1797,
+                          "scope": 609,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct ReferralTree.VyralNode memory",
@@ -736,22 +736,22 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "VyralNode",
-                              "referencedDeclaration": 1718,
+                              "referencedDeclaration": 530,
                               "type": "struct ReferralTree.VyralNode storage pointer"
                             },
-                            "id": 1751,
+                            "id": 563,
                             "name": "UserDefinedTypeName",
-                            "src": "3269:9:5"
+                            "src": "3269:9:3"
                           }
                         ],
-                        "id": 1752,
+                        "id": 564,
                         "name": "VariableDeclaration",
-                        "src": "3269:28:5"
+                        "src": "3269:28:3"
                       }
                     ],
-                    "id": 1753,
+                    "id": 565,
                     "name": "VariableDeclarationStatement",
-                    "src": "3269:28:5"
+                    "src": "3269:28:3"
                   },
                   {
                     "children": [
@@ -774,7 +774,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "node",
-                              "referencedDeclaration": 1710,
+                              "referencedDeclaration": 522,
                               "type": "address"
                             },
                             "children": [
@@ -784,18 +784,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1752,
+                                  "referencedDeclaration": 564,
                                   "type": "struct ReferralTree.VyralNode memory",
                                   "value": "inviteeNode"
                                 },
-                                "id": 1754,
+                                "id": 566,
                                 "name": "Identifier",
-                                "src": "3307:11:5"
+                                "src": "3307:11:3"
                               }
                             ],
-                            "id": 1756,
+                            "id": 568,
                             "name": "MemberAccess",
-                            "src": "3307:16:5"
+                            "src": "3307:16:3"
                           },
                           {
                             "attributes": {
@@ -803,23 +803,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1744,
+                              "referencedDeclaration": 556,
                               "type": "address",
                               "value": "_invitee"
                             },
-                            "id": 1757,
+                            "id": 569,
                             "name": "Identifier",
-                            "src": "3326:8:5"
+                            "src": "3326:8:3"
                           }
                         ],
-                        "id": 1758,
+                        "id": 570,
                         "name": "Assignment",
-                        "src": "3307:27:5"
+                        "src": "3307:27:3"
                       }
                     ],
-                    "id": 1759,
+                    "id": 571,
                     "name": "ExpressionStatement",
-                    "src": "3307:27:5"
+                    "src": "3307:27:3"
                   },
                   {
                     "children": [
@@ -842,7 +842,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "referrer",
-                              "referencedDeclaration": 1712,
+                              "referencedDeclaration": 524,
                               "type": "address"
                             },
                             "children": [
@@ -852,18 +852,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1752,
+                                  "referencedDeclaration": 564,
                                   "type": "struct ReferralTree.VyralNode memory",
                                   "value": "inviteeNode"
                                 },
-                                "id": 1760,
+                                "id": 572,
                                 "name": "Identifier",
-                                "src": "3344:11:5"
+                                "src": "3344:11:3"
                               }
                             ],
-                            "id": 1762,
+                            "id": 574,
                             "name": "MemberAccess",
-                            "src": "3344:20:5"
+                            "src": "3344:20:3"
                           },
                           {
                             "attributes": {
@@ -871,28 +871,28 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1746,
+                              "referencedDeclaration": 558,
                               "type": "address",
                               "value": "_referrer"
                             },
-                            "id": 1763,
+                            "id": 575,
                             "name": "Identifier",
-                            "src": "3367:9:5"
+                            "src": "3367:9:3"
                           }
                         ],
-                        "id": 1764,
+                        "id": 576,
                         "name": "Assignment",
-                        "src": "3344:32:5"
+                        "src": "3344:32:3"
                       }
                     ],
-                    "id": 1765,
+                    "id": 577,
                     "name": "ExpressionStatement",
-                    "src": "3344:32:5"
+                    "src": "3344:32:3"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        1767
+                        579
                       ]
                     },
                     "children": [
@@ -900,7 +900,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "referrerNode",
-                          "scope": 1797,
+                          "scope": 609,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct ReferralTree.VyralNode memory",
@@ -912,17 +912,17 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "VyralNode",
-                              "referencedDeclaration": 1718,
+                              "referencedDeclaration": 530,
                               "type": "struct ReferralTree.VyralNode storage pointer"
                             },
-                            "id": 1766,
+                            "id": 578,
                             "name": "UserDefinedTypeName",
-                            "src": "3387:9:5"
+                            "src": "3387:9:3"
                           }
                         ],
-                        "id": 1767,
+                        "id": 579,
                         "name": "VariableDeclaration",
-                        "src": "3387:29:5"
+                        "src": "3387:29:3"
                       },
                       {
                         "attributes": {
@@ -942,7 +942,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "nodes",
-                              "referencedDeclaration": 1722,
+                              "referencedDeclaration": 534,
                               "type": "mapping(address => struct ReferralTree.VyralNode storage ref)"
                             },
                             "children": [
@@ -952,18 +952,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1742,
+                                  "referencedDeclaration": 554,
                                   "type": "struct ReferralTree.Tree storage pointer",
                                   "value": "self"
                                 },
-                                "id": 1768,
+                                "id": 580,
                                 "name": "Identifier",
-                                "src": "3419:4:5"
+                                "src": "3419:4:3"
                               }
                             ],
-                            "id": 1769,
+                            "id": 581,
                             "name": "MemberAccess",
-                            "src": "3419:10:5"
+                            "src": "3419:10:3"
                           },
                           {
                             "attributes": {
@@ -971,23 +971,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1746,
+                              "referencedDeclaration": 558,
                               "type": "address",
                               "value": "_referrer"
                             },
-                            "id": 1770,
+                            "id": 582,
                             "name": "Identifier",
-                            "src": "3430:9:5"
+                            "src": "3430:9:3"
                           }
                         ],
-                        "id": 1771,
+                        "id": 583,
                         "name": "IndexAccess",
-                        "src": "3419:21:5"
+                        "src": "3419:21:3"
                       }
                     ],
-                    "id": 1772,
+                    "id": 584,
                     "name": "VariableDeclarationStatement",
-                    "src": "3387:53:5"
+                    "src": "3387:53:3"
                   },
                   {
                     "children": [
@@ -1020,7 +1020,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "invitees",
-                                  "referencedDeclaration": 1715,
+                                  "referencedDeclaration": 527,
                                   "type": "address[] memory"
                                 },
                                 "children": [
@@ -1030,18 +1030,18 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1767,
+                                      "referencedDeclaration": 579,
                                       "type": "struct ReferralTree.VyralNode memory",
                                       "value": "referrerNode"
                                     },
-                                    "id": 1773,
+                                    "id": 585,
                                     "name": "Identifier",
-                                    "src": "3450:12:5"
+                                    "src": "3450:12:3"
                                   }
                                 ],
-                                "id": 1778,
+                                "id": 590,
                                 "name": "MemberAccess",
-                                "src": "3450:21:5"
+                                "src": "3450:21:3"
                               },
                               {
                                 "attributes": {
@@ -1063,7 +1063,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "invitees",
-                                      "referencedDeclaration": 1715,
+                                      "referencedDeclaration": 527,
                                       "type": "address[] memory"
                                     },
                                     "children": [
@@ -1073,28 +1073,28 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 1767,
+                                          "referencedDeclaration": 579,
                                           "type": "struct ReferralTree.VyralNode memory",
                                           "value": "referrerNode"
                                         },
-                                        "id": 1775,
+                                        "id": 587,
                                         "name": "Identifier",
-                                        "src": "3472:12:5"
+                                        "src": "3472:12:3"
                                       }
                                     ],
-                                    "id": 1776,
+                                    "id": 588,
                                     "name": "MemberAccess",
-                                    "src": "3472:21:5"
+                                    "src": "3472:21:3"
                                   }
                                 ],
-                                "id": 1777,
+                                "id": 589,
                                 "name": "MemberAccess",
-                                "src": "3472:28:5"
+                                "src": "3472:28:3"
                               }
                             ],
-                            "id": 1779,
+                            "id": 591,
                             "name": "IndexAccess",
-                            "src": "3450:51:5"
+                            "src": "3450:51:3"
                           },
                           {
                             "attributes": {
@@ -1102,28 +1102,28 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1744,
+                              "referencedDeclaration": 556,
                               "type": "address",
                               "value": "_invitee"
                             },
-                            "id": 1780,
+                            "id": 592,
                             "name": "Identifier",
-                            "src": "3504:8:5"
+                            "src": "3504:8:3"
                           }
                         ],
-                        "id": 1781,
+                        "id": 593,
                         "name": "Assignment",
-                        "src": "3450:62:5"
+                        "src": "3450:62:3"
                       }
                     ],
-                    "id": 1782,
+                    "id": 594,
                     "name": "ExpressionStatement",
-                    "src": "3450:62:5"
+                    "src": "3450:62:3"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        1784
+                        596
                       ]
                     },
                     "children": [
@@ -1131,7 +1131,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "rps",
-                          "scope": 1797,
+                          "scope": 609,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "contract RewardPayoffStrategy",
@@ -1143,17 +1143,17 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "RewardPayoffStrategy",
-                              "referencedDeclaration": 1924,
+                              "referencedDeclaration": 724,
                               "type": "contract RewardPayoffStrategy"
                             },
-                            "id": 1783,
+                            "id": 595,
                             "name": "UserDefinedTypeName",
-                            "src": "3523:20:5"
+                            "src": "3523:20:3"
                           }
                         ],
-                        "id": 1784,
+                        "id": 596,
                         "name": "VariableDeclaration",
-                        "src": "3523:24:5"
+                        "src": "3523:24:3"
                       },
                       {
                         "attributes": {
@@ -1181,13 +1181,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1924,
+                              "referencedDeclaration": 724,
                               "type": "type(contract RewardPayoffStrategy)",
                               "value": "RewardPayoffStrategy"
                             },
-                            "id": 1785,
+                            "id": 597,
                             "name": "Identifier",
-                            "src": "3550:20:5"
+                            "src": "3550:20:3"
                           },
                           {
                             "attributes": {
@@ -1195,23 +1195,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1748,
+                              "referencedDeclaration": 560,
                               "type": "address",
                               "value": "_payoffStrategy"
                             },
-                            "id": 1786,
+                            "id": 598,
                             "name": "Identifier",
-                            "src": "3571:15:5"
+                            "src": "3571:15:3"
                           }
                         ],
-                        "id": 1787,
+                        "id": 599,
                         "name": "FunctionCall",
-                        "src": "3550:37:5"
+                        "src": "3550:37:3"
                       }
                     ],
-                    "id": 1788,
+                    "id": 600,
                     "name": "VariableDeclarationStatement",
-                    "src": "3523:64:5"
+                    "src": "3523:64:3"
                   },
                   {
                     "children": [
@@ -1247,7 +1247,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "payoff",
-                              "referencedDeclaration": 1923,
+                              "referencedDeclaration": 723,
                               "type": "function (address,address) external returns (uint256)"
                             },
                             "children": [
@@ -1257,18 +1257,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1784,
+                                  "referencedDeclaration": 596,
                                   "type": "contract RewardPayoffStrategy",
                                   "value": "rps"
                                 },
-                                "id": 1789,
+                                "id": 601,
                                 "name": "Identifier",
-                                "src": "3597:3:5"
+                                "src": "3597:3:3"
                               }
                             ],
-                            "id": 1791,
+                            "id": 603,
                             "name": "MemberAccess",
-                            "src": "3597:10:5"
+                            "src": "3597:10:3"
                           },
                           {
                             "attributes": {
@@ -1276,13 +1276,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1746,
+                              "referencedDeclaration": 558,
                               "type": "address",
                               "value": "_referrer"
                             },
-                            "id": 1792,
+                            "id": 604,
                             "name": "Identifier",
-                            "src": "3608:9:5"
+                            "src": "3608:9:3"
                           },
                           {
                             "attributes": {
@@ -1290,33 +1290,33 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1744,
+                              "referencedDeclaration": 556,
                               "type": "address",
                               "value": "_invitee"
                             },
-                            "id": 1793,
+                            "id": 605,
                             "name": "Identifier",
-                            "src": "3619:8:5"
+                            "src": "3619:8:3"
                           }
                         ],
-                        "id": 1794,
+                        "id": 606,
                         "name": "FunctionCall",
-                        "src": "3597:31:5"
+                        "src": "3597:31:3"
                       }
                     ],
-                    "id": 1795,
+                    "id": 607,
                     "name": "ExpressionStatement",
-                    "src": "3597:31:5"
+                    "src": "3597:31:3"
                   }
                 ],
-                "id": 1796,
+                "id": 608,
                 "name": "Block",
-                "src": "3259:376:5"
+                "src": "3259:376:3"
               }
             ],
-            "id": 1797,
+            "id": 609,
             "name": "FunctionDefinition",
-            "src": "3098:537:5"
+            "src": "3098:537:3"
           },
           {
             "attributes": {
@@ -1328,7 +1328,7 @@
               ],
               "name": "splitRewardWithReferrer",
               "payable": false,
-              "scope": 1867,
+              "scope": 679,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "internal"
@@ -1340,7 +1340,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 1844,
+                      "scope": 656,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct ReferralTree.Tree storage pointer",
@@ -1352,23 +1352,23 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Tree",
-                          "referencedDeclaration": 1723,
+                          "referencedDeclaration": 535,
                           "type": "struct ReferralTree.Tree storage pointer"
                         },
-                        "id": 1798,
+                        "id": 610,
                         "name": "UserDefinedTypeName",
-                        "src": "3747:4:5"
+                        "src": "3747:4:3"
                       }
                     ],
-                    "id": 1799,
+                    "id": 611,
                     "name": "VariableDeclaration",
-                    "src": "3747:17:5"
+                    "src": "3747:17:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_address",
-                      "scope": 1844,
+                      "scope": 656,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1381,20 +1381,20 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1800,
+                        "id": 612,
                         "name": "ElementaryTypeName",
-                        "src": "3774:7:5"
+                        "src": "3774:7:3"
                       }
                     ],
-                    "id": 1801,
+                    "id": 613,
                     "name": "VariableDeclaration",
-                    "src": "3774:16:5"
+                    "src": "3774:16:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_referrerReward",
-                      "scope": 1844,
+                      "scope": 656,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1407,20 +1407,20 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1802,
+                        "id": 614,
                         "name": "ElementaryTypeName",
-                        "src": "3800:7:5"
+                        "src": "3800:7:3"
                       }
                     ],
-                    "id": 1803,
+                    "id": 615,
                     "name": "VariableDeclaration",
-                    "src": "3800:23:5"
+                    "src": "3800:23:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_inviteeReward",
-                      "scope": 1844,
+                      "scope": 656,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1433,19 +1433,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1804,
+                        "id": 616,
                         "name": "ElementaryTypeName",
-                        "src": "3833:7:5"
+                        "src": "3833:7:3"
                       }
                     ],
-                    "id": 1805,
+                    "id": 617,
                     "name": "VariableDeclaration",
-                    "src": "3833:22:5"
+                    "src": "3833:22:3"
                   }
                 ],
-                "id": 1806,
+                "id": 618,
                 "name": "ParameterList",
-                "src": "3737:124:5"
+                "src": "3737:124:3"
               },
               {
                 "children": [
@@ -1453,7 +1453,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_referralKey",
-                      "scope": 1844,
+                      "scope": 656,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -1466,26 +1466,26 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 1807,
+                        "id": 619,
                         "name": "ElementaryTypeName",
-                        "src": "3896:7:5"
+                        "src": "3896:7:3"
                       }
                     ],
-                    "id": 1808,
+                    "id": 620,
                     "name": "VariableDeclaration",
-                    "src": "3896:20:5"
+                    "src": "3896:20:3"
                   }
                 ],
-                "id": 1809,
+                "id": 621,
                 "name": "ParameterList",
-                "src": "3895:22:5"
+                "src": "3895:22:3"
               },
               {
                 "children": [
                   {
                     "attributes": {
                       "assignments": [
-                        1811
+                        623
                       ]
                     },
                     "children": [
@@ -1493,7 +1493,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "inviteeNode",
-                          "scope": 1844,
+                          "scope": 656,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct ReferralTree.VyralNode storage pointer",
@@ -1505,17 +1505,17 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "VyralNode",
-                              "referencedDeclaration": 1718,
+                              "referencedDeclaration": 530,
                               "type": "struct ReferralTree.VyralNode storage pointer"
                             },
-                            "id": 1810,
+                            "id": 622,
                             "name": "UserDefinedTypeName",
-                            "src": "3932:9:5"
+                            "src": "3932:9:3"
                           }
                         ],
-                        "id": 1811,
+                        "id": 623,
                         "name": "VariableDeclaration",
-                        "src": "3932:29:5"
+                        "src": "3932:29:3"
                       },
                       {
                         "attributes": {
@@ -1535,7 +1535,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "nodes",
-                              "referencedDeclaration": 1722,
+                              "referencedDeclaration": 534,
                               "type": "mapping(address => struct ReferralTree.VyralNode storage ref)"
                             },
                             "children": [
@@ -1545,18 +1545,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1799,
+                                  "referencedDeclaration": 611,
                                   "type": "struct ReferralTree.Tree storage pointer",
                                   "value": "self"
                                 },
-                                "id": 1812,
+                                "id": 624,
                                 "name": "Identifier",
-                                "src": "3964:4:5"
+                                "src": "3964:4:3"
                               }
                             ],
-                            "id": 1813,
+                            "id": 625,
                             "name": "MemberAccess",
-                            "src": "3964:10:5"
+                            "src": "3964:10:3"
                           },
                           {
                             "attributes": {
@@ -1564,23 +1564,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1801,
+                              "referencedDeclaration": 613,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1814,
+                            "id": 626,
                             "name": "Identifier",
-                            "src": "3975:8:5"
+                            "src": "3975:8:3"
                           }
                         ],
-                        "id": 1815,
+                        "id": 627,
                         "name": "IndexAccess",
-                        "src": "3964:20:5"
+                        "src": "3964:20:3"
                       }
                     ],
-                    "id": 1816,
+                    "id": 628,
                     "name": "VariableDeclarationStatement",
-                    "src": "3932:52:5"
+                    "src": "3932:52:3"
                   },
                   {
                     "children": [
@@ -1616,7 +1616,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 1910,
+                              "referencedDeclaration": 710,
                               "type": "function (struct Reward.Payment storage pointer,address,uint256)"
                             },
                             "children": [
@@ -1628,7 +1628,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "payment",
-                                  "referencedDeclaration": 1717,
+                                  "referencedDeclaration": 529,
                                   "type": "struct Reward.Payment storage ref"
                                 },
                                 "children": [
@@ -1638,23 +1638,23 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1811,
+                                      "referencedDeclaration": 623,
                                       "type": "struct ReferralTree.VyralNode storage pointer",
                                       "value": "inviteeNode"
                                     },
-                                    "id": 1817,
+                                    "id": 629,
                                     "name": "Identifier",
-                                    "src": "3994:11:5"
+                                    "src": "3994:11:3"
                                   }
                                 ],
-                                "id": 1820,
+                                "id": 632,
                                 "name": "MemberAccess",
-                                "src": "3994:19:5"
+                                "src": "3994:19:3"
                               }
                             ],
-                            "id": 1821,
+                            "id": 633,
                             "name": "MemberAccess",
-                            "src": "3994:23:5"
+                            "src": "3994:23:3"
                           },
                           {
                             "attributes": {
@@ -1662,13 +1662,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1801,
+                              "referencedDeclaration": 613,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1822,
+                            "id": 634,
                             "name": "Identifier",
-                            "src": "4018:8:5"
+                            "src": "4018:8:3"
                           },
                           {
                             "attributes": {
@@ -1676,28 +1676,28 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1805,
+                              "referencedDeclaration": 617,
                               "type": "uint256",
                               "value": "_inviteeReward"
                             },
-                            "id": 1823,
+                            "id": 635,
                             "name": "Identifier",
-                            "src": "4028:14:5"
+                            "src": "4028:14:3"
                           }
                         ],
-                        "id": 1824,
+                        "id": 636,
                         "name": "FunctionCall",
-                        "src": "3994:49:5"
+                        "src": "3994:49:3"
                       }
                     ],
-                    "id": 1825,
+                    "id": 637,
                     "name": "ExpressionStatement",
-                    "src": "3994:49:5"
+                    "src": "3994:49:3"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        1827
+                        639
                       ]
                     },
                     "children": [
@@ -1705,7 +1705,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "referrerNode",
-                          "scope": 1844,
+                          "scope": 656,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct ReferralTree.VyralNode storage pointer",
@@ -1717,17 +1717,17 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "VyralNode",
-                              "referencedDeclaration": 1718,
+                              "referencedDeclaration": 530,
                               "type": "struct ReferralTree.VyralNode storage pointer"
                             },
-                            "id": 1826,
+                            "id": 638,
                             "name": "UserDefinedTypeName",
-                            "src": "4054:9:5"
+                            "src": "4054:9:3"
                           }
                         ],
-                        "id": 1827,
+                        "id": 639,
                         "name": "VariableDeclaration",
-                        "src": "4054:30:5"
+                        "src": "4054:30:3"
                       },
                       {
                         "attributes": {
@@ -1747,7 +1747,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "nodes",
-                              "referencedDeclaration": 1722,
+                              "referencedDeclaration": 534,
                               "type": "mapping(address => struct ReferralTree.VyralNode storage ref)"
                             },
                             "children": [
@@ -1757,18 +1757,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1799,
+                                  "referencedDeclaration": 611,
                                   "type": "struct ReferralTree.Tree storage pointer",
                                   "value": "self"
                                 },
-                                "id": 1828,
+                                "id": 640,
                                 "name": "Identifier",
-                                "src": "4087:4:5"
+                                "src": "4087:4:3"
                               }
                             ],
-                            "id": 1829,
+                            "id": 641,
                             "name": "MemberAccess",
-                            "src": "4087:10:5"
+                            "src": "4087:10:3"
                           },
                           {
                             "attributes": {
@@ -1778,7 +1778,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "referrer",
-                              "referencedDeclaration": 1712,
+                              "referencedDeclaration": 524,
                               "type": "address"
                             },
                             "children": [
@@ -1788,28 +1788,28 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1811,
+                                  "referencedDeclaration": 623,
                                   "type": "struct ReferralTree.VyralNode storage pointer",
                                   "value": "inviteeNode"
                                 },
-                                "id": 1830,
+                                "id": 642,
                                 "name": "Identifier",
-                                "src": "4098:11:5"
+                                "src": "4098:11:3"
                               }
                             ],
-                            "id": 1831,
+                            "id": 643,
                             "name": "MemberAccess",
-                            "src": "4098:20:5"
+                            "src": "4098:20:3"
                           }
                         ],
-                        "id": 1832,
+                        "id": 644,
                         "name": "IndexAccess",
-                        "src": "4087:32:5"
+                        "src": "4087:32:3"
                       }
                     ],
-                    "id": 1833,
+                    "id": 645,
                     "name": "VariableDeclarationStatement",
-                    "src": "4054:65:5"
+                    "src": "4054:65:3"
                   },
                   {
                     "children": [
@@ -1845,7 +1845,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "add",
-                              "referencedDeclaration": 1910,
+                              "referencedDeclaration": 710,
                               "type": "function (struct Reward.Payment storage pointer,address,uint256)"
                             },
                             "children": [
@@ -1857,7 +1857,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "payment",
-                                  "referencedDeclaration": 1717,
+                                  "referencedDeclaration": 529,
                                   "type": "struct Reward.Payment storage ref"
                                 },
                                 "children": [
@@ -1867,23 +1867,23 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1827,
+                                      "referencedDeclaration": 639,
                                       "type": "struct ReferralTree.VyralNode storage pointer",
                                       "value": "referrerNode"
                                     },
-                                    "id": 1834,
+                                    "id": 646,
                                     "name": "Identifier",
-                                    "src": "4129:12:5"
+                                    "src": "4129:12:3"
                                   }
                                 ],
-                                "id": 1837,
+                                "id": 649,
                                 "name": "MemberAccess",
-                                "src": "4129:20:5"
+                                "src": "4129:20:3"
                               }
                             ],
-                            "id": 1838,
+                            "id": 650,
                             "name": "MemberAccess",
-                            "src": "4129:24:5"
+                            "src": "4129:24:3"
                           },
                           {
                             "attributes": {
@@ -1891,13 +1891,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1801,
+                              "referencedDeclaration": 613,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 1839,
+                            "id": 651,
                             "name": "Identifier",
-                            "src": "4154:8:5"
+                            "src": "4154:8:3"
                           },
                           {
                             "attributes": {
@@ -1905,33 +1905,33 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1803,
+                              "referencedDeclaration": 615,
                               "type": "uint256",
                               "value": "_referrerReward"
                             },
-                            "id": 1840,
+                            "id": 652,
                             "name": "Identifier",
-                            "src": "4164:15:5"
+                            "src": "4164:15:3"
                           }
                         ],
-                        "id": 1841,
+                        "id": 653,
                         "name": "FunctionCall",
-                        "src": "4129:51:5"
+                        "src": "4129:51:3"
                       }
                     ],
-                    "id": 1842,
+                    "id": 654,
                     "name": "ExpressionStatement",
-                    "src": "4129:51:5"
+                    "src": "4129:51:3"
                   }
                 ],
-                "id": 1843,
+                "id": 655,
                 "name": "Block",
-                "src": "3922:265:5"
+                "src": "3922:265:3"
               }
             ],
-            "id": 1844,
+            "id": 656,
             "name": "FunctionDefinition",
-            "src": "3704:483:5"
+            "src": "3704:483:3"
           },
           {
             "attributes": {
@@ -1943,7 +1943,7 @@
               ],
               "name": "getReferrerAddress",
               "payable": false,
-              "scope": 1867,
+              "scope": 679,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -1955,7 +1955,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "self",
-                      "scope": 1866,
+                      "scope": 678,
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "type": "struct ReferralTree.Tree storage pointer",
@@ -1967,23 +1967,23 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Tree",
-                          "referencedDeclaration": 1723,
+                          "referencedDeclaration": 535,
                           "type": "struct ReferralTree.Tree storage pointer"
                         },
-                        "id": 1845,
+                        "id": 657,
                         "name": "UserDefinedTypeName",
-                        "src": "4295:4:5"
+                        "src": "4295:4:3"
                       }
                     ],
-                    "id": 1846,
+                    "id": 658,
                     "name": "VariableDeclaration",
-                    "src": "4295:17:5"
+                    "src": "4295:17:3"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "name": "_inviteeAddress",
-                      "scope": 1866,
+                      "scope": 678,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1996,19 +1996,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1847,
+                        "id": 659,
                         "name": "ElementaryTypeName",
-                        "src": "4322:7:5"
+                        "src": "4322:7:3"
                       }
                     ],
-                    "id": 1848,
+                    "id": 660,
                     "name": "VariableDeclaration",
-                    "src": "4322:23:5"
+                    "src": "4322:23:3"
                   }
                 ],
-                "id": 1849,
+                "id": 661,
                 "name": "ParameterList",
-                "src": "4285:66:5"
+                "src": "4285:66:3"
               },
               {
                 "children": [
@@ -2016,7 +2016,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_referrerAddress",
-                      "scope": 1866,
+                      "scope": 678,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2029,26 +2029,26 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1850,
+                        "id": 662,
                         "name": "ElementaryTypeName",
-                        "src": "4386:7:5"
+                        "src": "4386:7:3"
                       }
                     ],
-                    "id": 1851,
+                    "id": 663,
                     "name": "VariableDeclaration",
-                    "src": "4386:24:5"
+                    "src": "4386:24:3"
                   }
                 ],
-                "id": 1852,
+                "id": 664,
                 "name": "ParameterList",
-                "src": "4385:26:5"
+                "src": "4385:26:3"
               },
               {
                 "children": [
                   {
                     "attributes": {
                       "assignments": [
-                        1854
+                        666
                       ]
                     },
                     "children": [
@@ -2056,7 +2056,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "node",
-                          "scope": 1866,
+                          "scope": 678,
                           "stateVariable": false,
                           "storageLocation": "memory",
                           "type": "struct ReferralTree.VyralNode memory",
@@ -2068,17 +2068,17 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "VyralNode",
-                              "referencedDeclaration": 1718,
+                              "referencedDeclaration": 530,
                               "type": "struct ReferralTree.VyralNode storage pointer"
                             },
-                            "id": 1853,
+                            "id": 665,
                             "name": "UserDefinedTypeName",
-                            "src": "4426:9:5"
+                            "src": "4426:9:3"
                           }
                         ],
-                        "id": 1854,
+                        "id": 666,
                         "name": "VariableDeclaration",
-                        "src": "4426:21:5"
+                        "src": "4426:21:3"
                       },
                       {
                         "attributes": {
@@ -2098,7 +2098,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "nodes",
-                              "referencedDeclaration": 1722,
+                              "referencedDeclaration": 534,
                               "type": "mapping(address => struct ReferralTree.VyralNode storage ref)"
                             },
                             "children": [
@@ -2108,18 +2108,18 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1846,
+                                  "referencedDeclaration": 658,
                                   "type": "struct ReferralTree.Tree storage pointer",
                                   "value": "self"
                                 },
-                                "id": 1855,
+                                "id": 667,
                                 "name": "Identifier",
-                                "src": "4450:4:5"
+                                "src": "4450:4:3"
                               }
                             ],
-                            "id": 1856,
+                            "id": 668,
                             "name": "MemberAccess",
-                            "src": "4450:10:5"
+                            "src": "4450:10:3"
                           },
                           {
                             "attributes": {
@@ -2127,23 +2127,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1848,
+                              "referencedDeclaration": 660,
                               "type": "address",
                               "value": "_inviteeAddress"
                             },
-                            "id": 1857,
+                            "id": 669,
                             "name": "Identifier",
-                            "src": "4461:15:5"
+                            "src": "4461:15:3"
                           }
                         ],
-                        "id": 1858,
+                        "id": 670,
                         "name": "IndexAccess",
-                        "src": "4450:27:5"
+                        "src": "4450:27:3"
                       }
                     ],
-                    "id": 1859,
+                    "id": 671,
                     "name": "VariableDeclarationStatement",
-                    "src": "4426:51:5"
+                    "src": "4426:51:3"
                   },
                   {
                     "children": [
@@ -2164,13 +2164,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1851,
+                              "referencedDeclaration": 663,
                               "type": "address",
                               "value": "_referrerAddress"
                             },
-                            "id": 1860,
+                            "id": 672,
                             "name": "Identifier",
-                            "src": "4487:16:5"
+                            "src": "4487:16:3"
                           },
                           {
                             "attributes": {
@@ -2180,7 +2180,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "referrer",
-                              "referencedDeclaration": 1712,
+                              "referencedDeclaration": 524,
                               "type": "address"
                             },
                             "children": [
@@ -2190,54 +2190,60 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1854,
+                                  "referencedDeclaration": 666,
                                   "type": "struct ReferralTree.VyralNode memory",
                                   "value": "node"
                                 },
-                                "id": 1861,
+                                "id": 673,
                                 "name": "Identifier",
-                                "src": "4506:4:5"
+                                "src": "4506:4:3"
                               }
                             ],
-                            "id": 1862,
+                            "id": 674,
                             "name": "MemberAccess",
-                            "src": "4506:13:5"
+                            "src": "4506:13:3"
                           }
                         ],
-                        "id": 1863,
+                        "id": 675,
                         "name": "Assignment",
-                        "src": "4487:32:5"
+                        "src": "4487:32:3"
                       }
                     ],
-                    "id": 1864,
+                    "id": 676,
                     "name": "ExpressionStatement",
-                    "src": "4487:32:5"
+                    "src": "4487:32:3"
                   }
                 ],
-                "id": 1865,
+                "id": 677,
                 "name": "Block",
-                "src": "4416:110:5"
+                "src": "4416:110:3"
               }
             ],
-            "id": 1866,
+            "id": 678,
             "name": "FunctionDefinition",
-            "src": "4257:269:5"
+            "src": "4257:269:3"
           }
         ],
-        "id": 1867,
+        "id": 679,
         "name": "ContractDefinition",
-        "src": "2146:2382:5"
+        "src": "2146:2382:3"
       }
     ],
-    "id": 1868,
+    "id": 680,
     "name": "SourceUnit",
-    "src": "0:4529:5"
+    "src": "0:4529:3"
   },
   "compiler": {
     "name": "solc",
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1510455002438": {
+      "events": {},
+      "links": {},
+      "address": "0xafbbbdf998403811953a9835576d993cd1926f91"
+    }
+  },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-10T18:37:07.798Z"
+  "updatedAt": "2017-11-12T04:47:57.704Z"
 }
