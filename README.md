@@ -31,7 +31,7 @@ $ NODE_ENV=test DEBUG=vyral:* npm test
     - [X] Fallback to exchange ETH for SHARE
     - [X] Minting and token allocation
     - [X] Add Consensys MultiSig wallet    
-    - [ ] Vesting
+    - [X] Vesting
     - [ ] Tests
         - [ ] Invalid MultiSig
         - [ ] Total supply must match sum of all allocations

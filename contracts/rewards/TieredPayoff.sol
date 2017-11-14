@@ -1,9 +1,9 @@
 pragma solidity ^0.4.18;
 
-import "../referral/ReferralTree.sol";
-import "./RewardPayoffStrategy.sol";
+import "contracts/referral/ReferralTree.sol";
+import "contracts/rewards/RewardPayoffStrategy.sol";
 
-import '../../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
+import 'contracts/math/SafeMath.sol';
 
 /**
  * Bonus tiers

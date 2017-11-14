@@ -8,7 +8,7 @@ Implements ERC 20 Token standard: https://github.com/ethereum/EIPs/issues/20
 .*/
 pragma solidity ^0.4.8;
 
-import "./Token.sol";
+import "installed_contracts/tokens/contracts/Token.sol";
 
 contract StandardToken is Token {
 

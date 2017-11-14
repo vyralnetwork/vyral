@@ -2,7 +2,7 @@ pragma solidity ^0.4.18;
 
 import './math/SafeMath.sol';
 import "./Campaign.sol";
-import "tokens/HumanStandardToken.sol";
+import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
 
 
 /**

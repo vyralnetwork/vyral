@@ -1,4 +1,4 @@
-import "./HumanStandardToken.sol";
+import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
 
 pragma solidity ^0.4.8;
 

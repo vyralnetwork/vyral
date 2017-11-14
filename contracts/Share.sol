@@ -1,13 +1,13 @@
 pragma solidity ^0.4.18;
 
-import '../node_modules/zeppelin-solidity/contracts/token/StandardToken.sol';
-import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
-import '../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
+import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
+import 'contracts/Ownable.sol';
+import 'contracts/math/SafeMath.sol';
 
 /**
  * Vyral Token
  */
-contract Share is StandardToken, Ownable {
+contract Share is HumanStandardToken, Ownable {
     using SafeMath for uint;
 
     string public constant name = "Vyral Token";

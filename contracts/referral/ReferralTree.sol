@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
-import "../rewards/Reward.sol";
-import "../rewards/RewardPayoffStrategy.sol";
+import "contracts/rewards/Reward.sol";
+import "contracts/rewards/RewardPayoffStrategy.sol";
 
 /**
  * A ReferralTree is a diffusion graph of all nodes representing campaign participants.

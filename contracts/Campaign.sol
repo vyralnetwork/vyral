@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import "./rewards/Reward.sol";
-import "./referral/ReferralTree.sol";
-import "tokens/HumanStandardToken.sol";
+import "contracts/rewards/Reward.sol";
+import "contracts/referral/ReferralTree.sol";
+import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
 
 /**
  * A {Campaign} represents an advertising campaign.

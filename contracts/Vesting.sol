@@ -24,7 +24,7 @@ contract Vesting is Ownable {
 
     /// @dev Assigns a token to be vested in this contract.
     /// @param _token Address of the token to be vested.
-    function Vesting(address _token) {
+    function Vesting(address _token) public {
         vestingToken = Token(_token);
     }
 
@@ -172,10 +172,19 @@ contract Vesting is Ownable {
     }
 
     /// @dev Changes the address for a schedule in the case of lost keys or other emergency events.
-    function changeVestAddress(address _oldAddress, address _newAddress)
+    function changeVestingAddress(address _oldAddress, address _newAddress)
         public onlyOwner
     {
-        
+        VestingSchedule storage vestingSchedule = vestingSchedules[_oldAddress];
+
+        require( vestingSchedule.isConfirmed == true );
+        require( _newAddress != 0x0 );
+
+        VestingSchedule memory newVestingSchedule = vestingSchedule;
+        delete vestingSchedules[_oldAddress];
+        vestingSchedules[_newAddress] = newVestingSchedule;
+
+        VestingAddressChanged(_oldAddress, _newAddress);
     }
 
     event VestingScheduleRegistered(
@@ -196,6 +205,7 @@ contract Vesting is Ownable {
     );
     event Withdraw(address registeredAddress, uint amountWithdrawn);
     event VestingRevoked(address revokedAddress, uint amountWithdrawn, uint amountRefunded);
+    event VestingAddressChanged(address oldAddress, address newAddress);
 }
 
 
