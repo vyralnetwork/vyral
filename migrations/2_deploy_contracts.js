@@ -1,4 +1,3 @@
-let Lockable = artifacts.require("./Lockable.sol");
 let Ownable  = artifacts.require("./Ownable.sol");
 
 let Reward       = artifacts.require("./rewards/Reward.sol");
@@ -11,7 +10,7 @@ let VyralSale    = artifacts.require("./VyralSale.sol");
 
 
 module.exports = function(deployer) {
-    deployer.deploy(Lockable);
+    // deployer.deploy(Lockable);
     deployer.deploy(Ownable);
     // deployer.deploy(Stoppable);
 
