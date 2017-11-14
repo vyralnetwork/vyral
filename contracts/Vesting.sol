@@ -138,6 +138,46 @@ contract Vesting is Ownable {
         return vestedAmount;
     }
 
+    /** ADMIN FUNCTIONS */
+
+    function revokeSchedule(address _addressToRevoke, address _addressToRefund)
+        public onlyOwner
+    {
+        VestingSchedule storage vestingSchedule = vestingSchedules[_addressToRevoke];
+
+        require( vestingSchedule.isConfirmed == true );
+        require( _addressToRefund != 0x0 );
+
+        uint amountWithdrawable;
+        uint amountRefundable;
+
+        if (now < vestingSchedule.cliffTimestamp) {
+            // Vesting hasn't started yet, return the whole amount
+            amountRefundable = vestingSchedule.totalAmount;
+
+            delete vestingSchedules[_addressToRevoke];
+            require( vestingToken.transfer(_addressToRefund, amountRefundable) );
+        } else {
+            // Vesting has started, need to figure out how much hasn't been vested yet
+            uint totalAmountVested = calculateTotalAmountVested(vestingSchedule);
+            amountWithdrawable = totalAmountVested.sub(vestingSchedule.amountWithdrawn);
+            amountRefundable = totalAmountVested.sub(vestingSchedule.amountWithdrawn);
+
+            delete vestingSchedules[_addressToRevoke];
+            require( vestingToken.transfer(_addressToRevoke, amountWithdrawable) );
+            require( vestingToken.transfer(_addressToRefund, amountRefundable) );
+        }
+
+        VestingRevoked(_addressToRevoke, amountWithdrawable, amountRefundable);
+    }
+
+    /// @dev Changes the address for a schedule in the case of lost keys or other emergency events.
+    function changeVestAddress(address _oldAddress, address _newAddress)
+        public onlyOwner
+    {
+        
+    }
+
     event VestingScheduleRegistered(
         address registeredAddress,
         address depositor,
@@ -155,6 +195,7 @@ contract Vesting is Ownable {
         uint totalAmount
     );
     event Withdraw(address registeredAddress, uint amountWithdrawn);
+    event VestingRevoked(address revokedAddress, uint amountWithdrawn, uint amountRefunded);
 }
 
 
