@@ -12,6 +12,7 @@ contract Vesting is Ownable {
     struct VestingSchedule {
         uint startTimestamp;            // Timestamp of when vesting begins.
         uint cliffTimestamp;            // Timestamp of when the cliff begins.
+        uint lockPeriod;                // Amount of time in seconds between withdrawal periods. (EG. 6 months or 1 month)
         uint endTimestamp;              // Timestamp of when vesting ends and tokens are completely available.
         uint totalAmount;               // Total amount of tokens to be vested.
         uint amountWithdrawn;           // The amount that has been withdrawn.
@@ -32,6 +33,7 @@ contract Vesting is Ownable {
                                     address _depositor,
                                     uint _startTimestamp,
                                     uint _cliffTimestamp,
+                                    uint _lockPeriod,
                                     uint _endTimestamp,
                                     uint _totalAmount)
         public onlyOwner
@@ -45,10 +47,15 @@ contract Vesting is Ownable {
         require( _cliffTimestamp > _startTimestamp );
         require( _endTimestamp > _cliffTimestamp );
 
+        // Some lock period sanity checks.
+        require( _lockPeriod != 0 ); 
+        require( _endTimestamp.sub(_startTimestamp) < _lockPeriod );
+
         // Register the new address.
         vestingSchedules[_newAddress] = VestingSchedule({
             startTimestamp: _startTimestamp,
             cliffTimestamp: _cliffTimestamp,
+            lockPeriod: _lockPeriod,
             endTimestamp: _endTimestamp,
             totalAmount: _totalAmount,
             amountWithdrawn: 0,
@@ -61,6 +68,7 @@ contract Vesting is Ownable {
             _newAddress,
             _depositor,
             _startTimestamp,
+            _lockPeriod,
             _cliffTimestamp,
             _endTimestamp,
             _totalAmount
@@ -69,6 +77,7 @@ contract Vesting is Ownable {
 
     function confirmVestingSchedule(uint _startTimestamp,
                                     uint _cliffTimestamp,
+                                    uint _lockPeriod,
                                     uint _endTimestamp,
                                     uint _totalAmount)
         public
@@ -82,6 +91,7 @@ contract Vesting is Ownable {
         // Validate the same information was registered that is being confirmed.
         require( vestingSchedule.startTimestamp == _startTimestamp );
         require( vestingSchedule.cliffTimestamp == _cliffTimestamp );
+        require( vestingSchedule.lockPeriod == _lockPeriod );
         require( vestingSchedule.endTimestamp == _endTimestamp );
         require( vestingSchedule.totalAmount == _totalAmount );
 
@@ -95,6 +105,7 @@ contract Vesting is Ownable {
             vestingSchedule.depositor,
             vestingSchedule.startTimestamp,
             vestingSchedule.cliffTimestamp,
+            vestingSchedule.lockPeriod,
             vestingSchedule.endTimestamp,
             vestingSchedule.totalAmount
         );
@@ -114,6 +125,7 @@ contract Vesting is Ownable {
         vestingSchedule.amountWithdrawn = totalAmountVested;
 
         if (amountWithdrawable > 0) {
+            canWithdraw(vestingSchedule, amountWithdrawable);
             require( vestingToken.transfer(msg.sender, amountWithdrawable) );
             Withdraw(msg.sender, amountWithdrawable);
         }
@@ -136,6 +148,18 @@ contract Vesting is Ownable {
         );
 
         return vestedAmount;
+    }
+
+    /// @dev Checks to see if the amount is greater than the total amount divided by the lock periods.
+    function canWithdraw(VestingSchedule _vestingSchedule, uint _amountWithdrawable)
+        internal
+    {
+        uint lockPeriods = (_vestingSchedule.endTimestamp.sub(_vestingSchedule.startTimestamp))
+                                                         .div(_vestingSchedule.lockPeriod);
+
+        if (now < _vestingSchedule.endTime) {
+            assert( amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
+        }
     }
 
     /** ADMIN FUNCTIONS */
@@ -192,6 +216,7 @@ contract Vesting is Ownable {
         address depositor,
         uint startTimestamp,
         uint cliffTimestamp,
+        uint lockPeriod,
         uint endTimestamp,
         uint totalAmount
     );
@@ -200,6 +225,7 @@ contract Vesting is Ownable {
         address depositor,
         uint startTimestamp,
         uint cliffTimestamp,
+        uint lockPeriod,
         uint endTimestamp,
         uint totalAmount
     );
