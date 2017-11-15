@@ -70,10 +70,26 @@ library ReferralTree {
         Tree storage self,
         address node
     )
+        public
         constant
         returns (uint)
     {
         return self.nodes[node].invitees.length;
+    }
+
+    /**
+     * @dev Find referrer of the given invitee.
+     */
+    function getReferrerAddress (
+        Tree storage self,
+        address _inviteeAddress
+    )
+        public
+        constant
+        returns (address _referrerAddress)
+    {
+        VyralNode memory node = self.nodes[_inviteeAddress];
+        _referrerAddress = node.referrer;
     }
 
     /**
@@ -117,17 +133,5 @@ library ReferralTree {
         referrerNode.payment.add(_address, _referrerReward);
     }
 
-    /**
-     * @dev Find referrer of the given invitee.
-     */
-    function getReferrerAddress (
-        Tree storage self,
-        address _inviteeAddress
-    )
-        constant
-        returns (address _referrerAddress)
-    {
-        VyralNode memory node = self.nodes[_inviteeAddress];
-        _referrerAddress = node.referrer;
-    }
+
 }

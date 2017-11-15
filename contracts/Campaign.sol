@@ -113,6 +113,7 @@ contract Campaign {
      * Return referral key of caller.
      */
     function getReferrer()
+        public
         constant
         returns (address _referrer)
     {
@@ -125,6 +126,7 @@ contract Campaign {
      * @dev Returns Reward as a tuple.
      */
     function getBudget()
+        public
         constant
         returns (address _token, uint _amount)
     {
@@ -136,6 +138,7 @@ contract Campaign {
      * @dev Return (budget - cost)
      */
     function getAvailableBalance()
+        public
         constant
         returns (uint _balance)
     {
@@ -145,6 +148,6 @@ contract Campaign {
     /**
      * Fallback. Don't send ETH to a campaign.
      */
-    function() {
+    function() public {
     }
 }
