@@ -1,7 +1,5 @@
 pragma solidity ^0.4.18;
 
-import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
-
 /**
  * @dev Represents an incentive for joining a campaign.
  */
@@ -12,7 +10,7 @@ library Reward {
      */
     struct Payment {
         /// Token as payment
-        HumanStandardToken token;
+        address token;
         /// The amount being offered
         uint256 amount;
     }

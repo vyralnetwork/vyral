@@ -3,6 +3,8 @@ pragma solidity ^0.4.18;
 import "./traits/Ownable.sol";
 import './math/SafeMath.sol';
 import "./Campaign.sol";
+import "tokens/HumanStandardToken.sol";
+
 
 /**
  * @title Vyral Sale
