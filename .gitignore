@@ -1,13 +1,10 @@
 !.gitkeep
 .DS_Store
 .idea
-node_modules/
-bower_components/
-tmp/
-dist/
-logs/*
 .notes
 build
-build/*
+bower_components
+dist
+logs
+node_modules
 tmp
-tmp/*

@@ -4,15 +4,17 @@
 ## Testing
 
 #### Development
-Start a test client: `testrpc -u1 -u2 -u3`
-
 ```
-$ DEBUG=vyral:* npm test
+$ truffle develop
+
+truffle(develop)> migrate
+
+truffle(develop)> test
 ```
 
 #### Testnet
 ```
-$ NODE_ENV=test DEBUG=vyral:* npm test
+$ truffle migrate --network kovan
 ```
 
 #### ToDo
@@ -38,6 +40,6 @@ $ NODE_ENV=test DEBUG=vyral:* npm test
 
 
 - [ ] SHARE Token
-    - [X] Standard token implementation
-    - [X] Minting
+    - [X] HumanStandardToken
+    - [X] Remove minting
     - [ ] Tests

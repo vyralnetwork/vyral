@@ -1,5 +1,6 @@
 pragma solidity ^0.4.18;
 
+import "./traits/Ownable.sol";
 import './math/SafeMath.sol';
 import "./Campaign.sol";
 import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
@@ -9,7 +10,7 @@ import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
  * @title Vyral Sale
  * @dev The driver contract.
  */
-contract VyralSale {
+contract VyralSale is Ownable {
     using SafeMath for uint;
 
     /// Some useful constants

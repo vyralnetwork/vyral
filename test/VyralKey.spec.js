@@ -1,7 +1,9 @@
-// var abi = require('ethereumjs-abi')
+// let abi = require('ethereumjs-abi');
+// let referrer = "0x9a72a6bbf876ed464f18bee2d1951c8b8ef6d0ab";
+// let key = abi.methodID('buyTokens', ['address']).toString('hex') +
+//           abi.rawEncode(['address'], [referrer]).toString('hex');
 //
-// var a = abi.methodID('join', ['address']).toString('hex') + abi.rawEncode(['address'], ["0x94dc1cf66c8fd62ef3bd7da53f47423862839823"]).toString('hex');
 // console.log(a)
 //
-// var b = abi.methodID('purchaseTokens', []).toString('hex');// + abi.rawEncode([], []).toString('hex');
+// var b = abi.methodID('buyTokens', []).toString('hex');// + abi.rawEncode([], []).toString('hex');
 // console.log(b)
