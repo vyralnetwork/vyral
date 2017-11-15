@@ -158,7 +158,7 @@ contract Vesting is Ownable {
                                                          .div(_vestingSchedule.lockPeriod);
 
         if (now < _vestingSchedule.endTime) {
-            assert( amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
+            assert( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
         }
     }
 
