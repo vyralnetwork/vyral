@@ -157,7 +157,7 @@ contract Vesting is Ownable {
         uint lockPeriods = (_vestingSchedule.endTimestamp.sub(_vestingSchedule.startTimestamp))
                                                          .div(_vestingSchedule.lockPeriod);
 
-        if (now < _vestingSchedule.endTime) {
+        if (now < _vestingSchedule.endTimestamp) {
             assert( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
         }
     }

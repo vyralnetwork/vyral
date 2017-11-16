@@ -120,6 +120,7 @@ contract VyralSale is Ownable {
      *      D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
      */
     function VyralSale(
+        address _wallet,
         address _payoffStrategy,
         address _team,
         address _partnerships
@@ -130,6 +131,7 @@ contract VyralSale is Ownable {
         uint twoSevenths = 222222222 * (10 ** uint(18));
         uint threeSevenths = 333333333 * (10 ** uint(18));
 
+        wallet = _wallet;
         team = _team;
         partnerships = _partnerships;
 
@@ -175,9 +177,7 @@ contract VyralSale is Ownable {
         address _referrer
     )
         public
-        ifBelowHardCap
-        ifExceedsMinPurchase
-        inStatus(Status.SaleStarted)
+        payable
     {
         address buyer = msg.sender;
         uint weiReceived = msg.value;

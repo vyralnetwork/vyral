@@ -7,11 +7,10 @@ const {assert} = require('chai');
 
 contract('MultiSigWallet usage', function(accounts) {
 
-    let coinbase = accounts[0];
-    let owner1   = accounts[1];
-    let owner2   = accounts[2];
+    const [owner1, owner2, owner3] = accounts;
 
     it('should create a new token and transfer ownership', async () => {
-        let wallet = await MultiSigWallet.new([owner1, owner2], 2, {from: coinbase});
+        let wallet = await MultiSigWallet.new([owner2, owner3], 2, {from: owner1});
+        console.log("wallet.address", wallet.address)
     });
 });

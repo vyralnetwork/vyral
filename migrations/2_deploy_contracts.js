@@ -1,14 +1,18 @@
-let Ownable = artifacts.require("./Ownable.sol");
+const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 
-let Reward       = artifacts.require("./rewards/Reward.sol");
-let TieredPayoff = artifacts.require("./rewards/TieredPayoff.sol");
+const Ownable = artifacts.require("./Ownable.sol");
 
-let ReferralTree = artifacts.require("./ReferralTree.sol");
-let Campaign     = artifacts.require("./Campaign.sol");
-let VyralSale    = artifacts.require("./VyralSale.sol");
+const Reward       = artifacts.require("./rewards/Reward.sol");
+const TieredPayoff = artifacts.require("./rewards/TieredPayoff.sol");
+
+const ReferralTree = artifacts.require("./ReferralTree.sol");
+const Campaign     = artifacts.require("./Campaign.sol");
+const VyralSale    = artifacts.require("./VyralSale.sol");
 
 
 module.exports = function(deployer) {
+    // deployer.deploy(MultiSigWallet);
+
     deployer.deploy(Ownable);
 
     deployer.deploy(Reward);
