@@ -12,9 +12,14 @@ truffle(develop)> migrate
 truffle(develop)> test
 ```
 
+*NOTE:* After checking tell git not to track `secrets.json` and `truffle.js` like so:
+```
+$ git update-index --assume-unchanged secrets.json truffle.js
+```
+
 #### Testnet
 ```
-$ truffle migrate --network kovan
+$ truffle migrate --network rinkeby
 ```
 
 #### ToDo
@@ -43,3 +48,4 @@ $ truffle migrate --network kovan
     - [X] HumanStandardToken
     - [X] Remove minting
     - [ ] Tests
+
