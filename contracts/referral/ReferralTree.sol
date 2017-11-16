@@ -57,7 +57,7 @@ library ReferralTree {
     }
 
     /**
-     * @dev A collection of seed nodes. These are nodes that don't have a referrer.
+     * @dev A referral tree is a collection of VyralNodes.
      */
     struct Tree { // TODO: Rename? Suggestions: Root
         mapping (address => VyralNode) nodes;
@@ -124,7 +124,6 @@ library ReferralTree {
         uint256 _inviteeReward
     )
         internal
-        returns (bytes32 _referralKey)
     {
         VyralNode storage inviteeNode = self.nodes[_address];
         inviteeNode.payment.add(_address, _inviteeReward);

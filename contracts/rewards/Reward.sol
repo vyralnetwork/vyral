@@ -12,7 +12,7 @@ library Reward {
      */
     struct Payment {
         /// Token as payment
-        HumanStandardToken token;
+        address token;
         /// The amount being offered
         uint256 amount;
     }

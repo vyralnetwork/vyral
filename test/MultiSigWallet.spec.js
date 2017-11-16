@@ -1,8 +1,7 @@
 /**
  * MultiSigWallet usage
  */
-const ShareToken     = artifacts.require('./Share.sol');
-const MultiSigWallet = artifacts.require('./MultiSigWallet.sol');
+const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 
 const {assert} = require('chai');
 
@@ -14,6 +13,5 @@ contract('MultiSigWallet usage', function(accounts) {
 
     it('should create a new token and transfer ownership', async () => {
         let wallet = await MultiSigWallet.new([owner1, owner2], 2, {from: coinbase});
-        let token  = await ShareToken.new();
     });
 });

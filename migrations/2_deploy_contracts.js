@@ -22,6 +22,7 @@ module.exports = function(deployer) {
     deployer.deploy(Campaign);
 
     deployer.link(Ownable, VyralSale);
+    deployer.link(TieredPayoff, VyralSale);
     deployer.link(ReferralTree, VyralSale);
     deployer.deploy(VyralSale);
 };

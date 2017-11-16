@@ -1,10 +1,9 @@
 /**
  * Vyral contract scenarios.
  */
-let VyralSale    = artifacts.require("./VyralSale.sol");
-let Campaign = artifacts.require("./Campaign.sol");
+let VyralSale = artifacts.require("./VyralSale.sol");
 
-const {assert}  = require('chai');
+const {assert} = require('chai');
 
 contract('Vyral agreements', function(accounts) {
 

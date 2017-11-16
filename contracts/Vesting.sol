@@ -1,8 +1,8 @@
 pragma solidity ^0.4.17;
 
-import 'contracts/Ownable.sol';
+import 'contracts/traits/Ownable.sol';
 import 'contracts/math/SafeMath.sol';
-import 'tokens/contracts/Token.sol';
+import 'tokens/Token.sol';
 
 contract Vesting is Ownable {
     using SafeMath for uint;
