@@ -5,14 +5,14 @@ const Share          = artifacts.require("tokens/HumanStandardToken.sol");
 const TieredPayoff   = artifacts.require("./rewards/TieredPayoff.sol");
 const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
-const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
+const MultiSigWallet = artifacts.require("multisig-wallet/MultiSigWallet.sol");
 
-const Web3     = require('web3');
-const {assert} = require('chai');
+const BigNumber = require("bignumber.js");
+const {assert}  = require("chai");
 
-let web3 = new Web3();
+const config = require("../config");
 
-contract('Vyral agreements', (accounts) => {
+contract("Vyral agreements", (accounts) => {
 
     const [owner, team, partnerships, grace, julia, kevin] = accounts;
 
@@ -37,10 +37,13 @@ contract('Vyral agreements', (accounts) => {
     describe("Basic sale", () => {
 
         it("should execute a sale and transfer tokens", async () => {
-            await this.vyralSale.buyTokens(grace, {from: julia, value: 1000000000000000});
+            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
             let juliaBalance = await this.share.balanceOf.call(julia);
-            console.log(juliaBalance.toNumber())
-            assert.equal(4825, web3.fromWei(juliaBalance, "ether"));
+            let saleBalance = await this.share.balanceOf.call(this.vyralSale.address);
+            let campaignBalance = await this.vyralSale.THREE_SEVENTHS.call();
+
+            assert.equal(4285, juliaBalance.toNumber());
+            assert.isTrue(campaignBalance.equals(juliaBalance.plus(saleBalance)));
         });
 
     });

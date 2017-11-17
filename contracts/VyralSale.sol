@@ -17,22 +17,28 @@ contract VyralSale is Ownable {
     uint public constant SALE_MIN = 1 ether;
 
     /// Maximum contribtuion amount.
-    uint public constant SALE_MAX = 50000 ether;
+    uint public constant SALE_MAX = 77777 ether;
 
     /// Exchange rate 1 Ether = this many SHAREs
-    uint public constant SHARES_PER_ETH = 4825;
+    uint public constant SHARES_PER_ETH = 4285;
 
     /*
      * Token constants
      */
-
-    uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
 
     string public constant TOKEN_NAME = "Vyral Token";
 
     string public constant TOKEN_SYMBOL = "SHARE";
 
     uint8 public constant TOKEN_DECIMALS = 18;
+
+    uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(TOKEN_DECIMALS));
+
+    uint public constant ONE_SEVENTH = 111111111 * (10 ** uint(TOKEN_DECIMALS));
+
+    uint public constant TWO_SEVENTHS = 222222222 * (10 ** uint(TOKEN_DECIMALS));
+
+    uint public constant THREE_SEVENTHS = 333333333 * (10 ** uint(TOKEN_DECIMALS));
 
     /*
      * Storage
@@ -127,10 +133,6 @@ contract VyralSale is Ownable {
     )
         public
     {
-        uint oneSeventh = 111111111 * (10 ** uint(18));
-        uint twoSevenths = 222222222 * (10 ** uint(18));
-        uint threeSevenths = 333333333 * (10 ** uint(18));
-
         wallet = _wallet;
         team = _team;
         partnerships = _partnerships;
@@ -139,19 +141,19 @@ contract VyralSale is Ownable {
         token = new HumanStandardToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL);
 
         // Create a campaign and set 28.6% (2/7) of tokens as budget
-        campaign = new Campaign(address(token), twoSevenths, _payoffStrategy);
+        campaign = new Campaign(address(token), TWO_SEVENTHS, _payoffStrategy);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(team, oneSeventh);
+        token.transfer(team, ONE_SEVENTH);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(partnerships, oneSeventh);
+        token.transfer(partnerships, ONE_SEVENTH);
 
         // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
-        token.transfer(campaign, twoSevenths);
+        token.transfer(campaign, TWO_SEVENTHS);
 
         // D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
-        token.transfer(this, threeSevenths);
+        token.transfer(this, THREE_SEVENTHS);
 
         saleStatus = Status.Ready;
     }

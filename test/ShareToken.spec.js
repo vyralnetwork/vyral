@@ -7,14 +7,14 @@ const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
 const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 
-const Web3     = require('web3');
-const {assert} = require('chai');
+const BigNumber = require("bignumber.js");
+const {assert}  = require("chai");
 
-let web3 = new Web3();
+const config = require("../config");
 
 contract('Token API', (accounts) => {
 
-    const [owner, team, partnerships, grace, julia, kevin] = accounts;
+    const [grace, julia, kevin] = accounts;
 
     before(async () => {
         this.wallet = await MultiSigWallet.new([owner], 1, {from: owner});
@@ -23,8 +23,8 @@ contract('Token API', (accounts) => {
         this.vyralSale = await VyralSale.new([
             this.wallet.address,
             this.strategy.address,
-            team,
-            partnerships
+            config.get("crowdsale:team"),
+            config.get("crowdsale:partnerships")
         ]);
 
         let tokenAddr = await this.vyralSale.token.call();
@@ -55,30 +55,43 @@ contract('Token API', (accounts) => {
     describe('Balance allocations', () => {
 
         it("should report 777,777,777 SHARE as total supply", async () => {
-            let total = await this.share.totalSupply.call();
-            assert.equal(777777777, web3.fromWei(total, "ether"));
+            let total        = await this.share.totalSupply.call();
+            let TOTAL_SUPPLY = await this.vyralSale.TOTAL_SUPPLY.call();
+
+            assert.isTrue(total.equals(TOTAL_SUPPLY));
         });
 
         it('should allocate 111,111,111 SHARE to team', async () => {
-            let teamBalance = await this.share.balanceOf.call(team);
-            assert.equal(111111111, web3.fromWei(teamBalance, "ether"));
+            let teamBalance = await this.share.balanceOf.call(config.get("crowdsale:team"));
+            let ONE_SEVENTH = await this.vyralSale.ONE_SEVENTH.call();
+
+            assert.isTrue(teamBalance.equals(ONE_SEVENTH));
         });
 
         it('should allocate 111,111,111 SHARE to partnerships', async () => {
-            let partnershipsAddr = await this.vyralSale.partnerships.call();
-            console.log(partnershipsAddr);
-            let partnershipsBalance = await this.share.balanceOf.call(partnerships);
-            assert.equal(111111111, web3.fromWei(partnershipsBalance, "ether"));
+            let partnersBalance = await this.share.balanceOf.call(config.get("crowdsale:partnerships"));
+            let ONE_SEVENTH     = await this.vyralSale.ONE_SEVENTH.call();
+
+            let teamAddress = await this.vyralSale.wallet.call();
+
+            console.log(teamAddress)
+            console.log(ONE_SEVENTH.toString(10))
+            console.log(partnersBalance.toString(10))
+            assert.isTrue(partnersBalance.equals(ONE_SEVENTH));
         });
 
         it('should transfer 222,222,222 SHARE to campaign rewards', async () => {
             let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
-            assert.equal(222222222, web3.fromWei(campaignBalance, "ether"));
+            let TWO_SEVENTHS    = await this.vyralSale.TWO_SEVENTHS.call();
+
+            assert.isTrue(campaignBalance.equals(TWO_SEVENTHS));
         });
 
         it('should allocate 333,333,333 SHARE to crowdsale', async () => {
-            let saleBalance = await this.share.balanceOf.call(this.vyralSale.address);
-            assert.equal(333333333, web3.fromWei(saleBalance, "ether"));
+            let saleBalance    = await this.share.balanceOf.call(this.vyralSale.address);
+            let THREE_SEVENTHS = await this.vyralSale.THREE_SEVENTHS.call();
+
+            assert.isTrue(saleBalance.equals(THREE_SEVENTHS));
         });
     });
 });

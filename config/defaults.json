@@ -1,0 +1,26 @@
+{
+    "wallet": {
+        "owners": [
+            "0x01ce371ee58eb48a6403ee35b0cd0d44bd145241",
+            "0x1b8940a8f7b422c433e3d9b4681be0e6cdd8a945",
+            "0x3a14d737f1f4f7c0ec313baf5666f5a13351b6b5"
+        ],
+        "required": 2
+    },
+    "crowdsale": {
+        "owner": "0x8a07ad080aaf0c4baa8e3e492a1c837380183d64",
+        "team": "0xc7be223f52fd94b4e5637b0ce950e74811520fb1",
+        "partnerships": "0x3a885f77df95583aa86df1e77e0da91dc7e04c96",
+        "rate": "4285",
+        "period": {
+            "first": {
+                "startBlock": "50",
+                "endBlock": "60"
+            },
+            "second": {
+                "startBlock": "50",
+                "endBlock": "60"
+            }
+        }
+    }
+}
