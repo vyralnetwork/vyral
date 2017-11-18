@@ -57,13 +57,20 @@ contract VyralSale is Ownable {
     // Current state of the sale
     Status public saleStatus;
 
+    /// In case of emergency
+    bool public halted;
+
     /// Funds collected so far.
     uint public weiRaised = 0;
 
-    /// Sale start date (December 1, 2017)
-    uint64 public saleBeginsAt = 1512086400;
+    /// Presale period
+    uint public presaleStartTime;
+    uint public presaleEndTime;
+    uint public presaleDuration = 23 days;
 
-    /// Sale duration
+    /// Sale period
+    uint public saleStartTime;
+    uint public saleEndTime;
     uint public saleDuration = 30 days;
 
     /// Set after sale is over and tokens are allocated
@@ -91,13 +98,28 @@ contract VyralSale is Ownable {
      * Modifiers
      */
 
-    modifier ifExceedsMinPurchase {
+    modifier isAtLeastMinPurchase {
         require(msg.value >= SALE_MIN);
         _;
     }
 
-    modifier ifBelowHardCap {
+    modifier isBelowHardCap {
         require(weiRaised.add(msg.value) <= SALE_MAX);
+        _;
+    }
+
+    modifier isNotHalted {
+        assert(!halted);
+        _;
+    }
+
+    modifier isAfter(uint timestamp) {
+        assert(now >= timestamp);
+        _;
+    }
+
+    modifier isBefore(uint timestamp) {
+        assert(now < timestamp);
         _;
     }
 
@@ -127,9 +149,10 @@ contract VyralSale is Ownable {
      */
     function VyralSale(
         address _wallet,
-        address _payoffStrategy,
         address _team,
-        address _partnerships
+        address _partnerships,
+        uint _presaleStartTime,
+        uint _saleStartTime
     )
         public
     {
@@ -137,11 +160,17 @@ contract VyralSale is Ownable {
         team = _team;
         partnerships = _partnerships;
 
+        presaleStartTime = _presaleStartTime;
+        presaleEndTime = presaleStartTime + presaleDuration;
+
+        saleStartTime = _saleStartTime;
+        saleEndTime = saleStartTime + saleDuration;
+
         // Create SHARE token
         token = new HumanStandardToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL);
 
         // Create a campaign and set 28.6% (2/7) of tokens as budget
-        campaign = new Campaign(address(token), TWO_SEVENTHS, _payoffStrategy);
+        campaign = new Campaign(address(token), TWO_SEVENTHS);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
         token.transfer(team, ONE_SEVENTH);
@@ -165,6 +194,10 @@ contract VyralSale is Ownable {
     function()
         public
         payable
+        isAtLeastMinPurchase
+        isBelowHardCap
+        isNotHalted
+        inStatus(Status.SaleStarted)
     {
         // Called without referral key
         buyTokens(0x0);
@@ -180,6 +213,12 @@ contract VyralSale is Ownable {
     )
         public
         payable
+//        isAtLeastMinPurchase
+//        isBelowHardCap
+//        isAfter(saleStartTime)
+//        isBefore(saleEndTime)
+//        isNotHalted
+//        inStatus(Status.SaleStarted)
     {
         address buyer = msg.sender;
         uint weiReceived = msg.value;

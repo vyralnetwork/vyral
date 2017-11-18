@@ -1,31 +1,20 @@
 /**
  * SHARE token scenarios.
  */
-const Share          = artifacts.require("tokens/HumanStandardToken.sol");
-const TieredPayoff   = artifacts.require("./rewards/TieredPayoff.sol");
+const Share          = artifacts.require("./HumanStandardToken.sol");
 const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
-const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
+const MultiSigWallet = artifacts.require("./MultiSigWallet.sol");
 
-const BigNumber = require("bignumber.js");
-const {assert}  = require("chai");
+const moment   = require("moment");
+const {assert} = require("chai");
 
 const config = require("../config");
 
-contract('Token API', (accounts) => {
-
-    const [grace, julia, kevin] = accounts;
+contract('Token API', () => {
 
     before(async () => {
-        this.wallet = await MultiSigWallet.new([owner], 1, {from: owner});
-
-        this.strategy  = await TieredPayoff.deployed();
-        this.vyralSale = await VyralSale.new([
-            this.wallet.address,
-            this.strategy.address,
-            config.get("crowdsale:team"),
-            config.get("crowdsale:partnerships")
-        ]);
+        this.vyralSale = await VyralSale.deployed();
 
         let tokenAddr = await this.vyralSale.token.call();
         this.share    = Share.at(tokenAddr);
@@ -62,21 +51,20 @@ contract('Token API', (accounts) => {
         });
 
         it('should allocate 111,111,111 SHARE to team', async () => {
+            let teamAddress = await this.vyralSale.team.call();
             let teamBalance = await this.share.balanceOf.call(config.get("crowdsale:team"));
             let ONE_SEVENTH = await this.vyralSale.ONE_SEVENTH.call();
 
+            assert.equal(teamAddress, config.get("crowdsale:team"));
             assert.isTrue(teamBalance.equals(ONE_SEVENTH));
         });
 
         it('should allocate 111,111,111 SHARE to partnerships', async () => {
+            let partnersAddress = await this.vyralSale.partnerships.call();
             let partnersBalance = await this.share.balanceOf.call(config.get("crowdsale:partnerships"));
             let ONE_SEVENTH     = await this.vyralSale.ONE_SEVENTH.call();
 
-            let teamAddress = await this.vyralSale.wallet.call();
-
-            console.log(teamAddress)
-            console.log(ONE_SEVENTH.toString(10))
-            console.log(partnersBalance.toString(10))
+            assert.equal(partnersAddress, config.get("crowdsale:partnerships"));
             assert.isTrue(partnersBalance.equals(ONE_SEVENTH));
         });
 

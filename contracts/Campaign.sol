@@ -1,20 +1,23 @@
 pragma solidity ^0.4.18;
 
-import "contracts/rewards/Reward.sol";
-import "contracts/referral/ReferralTree.sol";
+import "./referral/TieredPayoff.sol";
+import "./referral/ReferralTree.sol";
 
 /**
  * A {Campaign} represents an advertising campaign.
  */
 contract Campaign {
-    using Reward for Reward.Payment;
     using ReferralTree for ReferralTree.Tree;
-
-    /// Budget from which rewards are paid out
-    Reward.Payment budget;
+    using TieredPayoff for ReferralTree.Tree;
 
     /// The referral tree (k-ary tree)
     ReferralTree.Tree vyralTree;
+
+    /// Token in use
+    address public token;
+
+    /// Token in use
+    uint public budget;
 
     /// Which payoff method to use?
     address payoffStrategy;
@@ -78,17 +81,12 @@ contract Campaign {
      */
     function Campaign(
         address _token,
-        uint256 _budgetAmount,
-        address _payoffStrategy
+        uint256 _budgetAmount
     )
         public
     {
-        budget = Reward.Payment({
-            token: _token,
-            amount: _budgetAmount
-        });
-
-        payoffStrategy = _payoffStrategy;
+        token = _token;
+        budget = _budgetAmount;
 
         state = CampaignState.Ready;
     }
@@ -106,6 +104,7 @@ contract Campaign {
         onlyIfFundsAvailable()
     {
         vyralTree.addInvitee(msg.sender, _referrer, payoffStrategy);
+        vyralTree.payoff(_referrer);
     }
 
     /**
@@ -129,8 +128,8 @@ contract Campaign {
         constant
         returns (address _token, uint _amount)
     {
-        _token = address(budget.token);
-        _amount = budget.amount;
+        _token = token;
+        _amount = budget;
     }
 
     /**

@@ -24,6 +24,7 @@
         "ethereumjs-util": "^5.1.2",
         "int64-buffer": "^0.1.9",
         "lodash": "^4.17.4",
+        "moment": "^2.19.2",
         "multi-hash": "^0.1.1",
         "nconf": "^0.8.5",
         "web3": "^0.19.1"

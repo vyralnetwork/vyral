@@ -14,12 +14,12 @@
         "rate": "4285",
         "period": {
             "first": {
-                "startBlock": "50",
-                "endBlock": "60"
+                "startTime": 1512144000,
+                "durationInDays": 23
             },
             "second": {
-                "startBlock": "50",
-                "endBlock": "60"
+                "startTime": 1516032000,
+                "durationInDays": 30
             }
         }
     }

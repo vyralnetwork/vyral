@@ -1,8 +1,5 @@
 pragma solidity ^0.4.18;
 
-import "contracts/rewards/Reward.sol";
-import "contracts/rewards/RewardPayoffStrategy.sol";
-
 /**
  * A ReferralTree is a diffusion graph of all nodes representing campaign participants.
  * Each invitee is assigned a referral tree after accepting an invitation. Following is
@@ -40,7 +37,6 @@ import "contracts/rewards/RewardPayoffStrategy.sol";
  *
  */
 library ReferralTree {
-    using Reward for Reward.Payment;
 
     /**
      * @dev A user in a referral graph
@@ -52,8 +48,10 @@ library ReferralTree {
         address referrer;
         /// Invitees of this node
         address[] invitees;
+        /// Wei offered
+        uint contribution;
         /// Reward accumulated
-        Reward.Payment payment;
+        uint reward;
     }
 
     /**
@@ -110,27 +108,7 @@ library ReferralTree {
         VyralNode memory referrerNode = self.nodes[_referrer];
         referrerNode.invitees[referrerNode.invitees.length] = _invitee;
 
-        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
-        rps.payoff(_referrer, _invitee);
+//        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
+//        rps.payoff(_referrer, _invitee);
     }
-
-    /**
-     * @dev Find a referral key by an address.
-     */
-    function splitRewardWithReferrer (
-        Tree storage self,
-        address _address,
-        uint256 _referrerReward,
-        uint256 _inviteeReward
-    )
-        internal
-    {
-        VyralNode storage inviteeNode = self.nodes[_address];
-        inviteeNode.payment.add(_address, _inviteeReward);
-
-        VyralNode storage referrerNode = self.nodes[inviteeNode.referrer];
-        referrerNode.payment.add(_address, _referrerReward);
-    }
-
-
 }

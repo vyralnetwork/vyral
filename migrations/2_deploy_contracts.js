@@ -1,13 +1,13 @@
 const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 
-const Ownable = artifacts.require("./Ownable.sol");
+const SafeMath = artifacts.require("./math/SafeMath.sol");
+const Ownable  = artifacts.require("./traits/Ownable.sol");
 
-const Reward       = artifacts.require("./rewards/Reward.sol");
-const TieredPayoff = artifacts.require("./rewards/TieredPayoff.sol");
+const ReferralTree = artifacts.require("./referral/ReferralTree.sol");
+const TieredPayoff = artifacts.require("./referral/TieredPayoff.sol");
 
-const ReferralTree = artifacts.require("./ReferralTree.sol");
-const Campaign     = artifacts.require("./Campaign.sol");
-const VyralSale    = artifacts.require("./VyralSale.sol");
+const Campaign  = artifacts.require("./Campaign.sol");
+const VyralSale = artifacts.require("./VyralSale.sol");
 
 const config = require("../config");
 
@@ -16,26 +16,36 @@ module.exports = function(deployer) {
     config.get("wallet:owners"),
     config.get("wallet:required"))
     .then(() => {
-        return deployer.deploy([Ownable, Reward, TieredPayoff]);
+        return deployer.deploy([SafeMath, Ownable]);
     })
     .then(() => {
-        deployer.link(Reward, ReferralTree);
         return deployer.deploy(ReferralTree);
     })
     .then(() => {
-        deployer.link(Reward, Campaign);
-        deployer.link(ReferralTree, Campaign);
-        return deployer.deploy(Campaign);
+        return deployer.deploy(TieredPayoff);
     })
     .then(() => {
         deployer.link(Ownable, VyralSale);
         deployer.link(TieredPayoff, VyralSale);
         deployer.link(ReferralTree, VyralSale);
 
-        deployer.deploy(VyralSale,
-        config.get("crowdsale:owner"),
+        // console.log([
+        // MultiSigWallet.address,
+        // config.get("crowdsale:team"),
+        // config.get("crowdsale:partnerships"),
+        // config.get("crowdsale:period:first:startTime"),
+        // config.get("crowdsale:period:second:startTime")
+        // ]);
+
+        return deployer.deploy(VyralSale,
         MultiSigWallet.address,
         config.get("crowdsale:team"),
-        config.get("crowdsale:partnerships"));
-    });
+        config.get("crowdsale:partnerships"),
+        config.get("crowdsale:period:first:startTime"),
+        config.get("crowdsale:period:second:startTime")
+        );
+    })
+    .catch((err) => {
+        console.error("Deployment failed", err);
+    })
 };

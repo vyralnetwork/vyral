@@ -1,9 +1,7 @@
 pragma solidity ^0.4.18;
 
-import "contracts/referral/ReferralTree.sol";
-import "contracts/rewards/RewardPayoffStrategy.sol";
-
-import 'contracts/math/SafeMath.sol';
+import "./ReferralTree.sol";
+import '../math/SafeMath.sol';
 
 /**
  * Bonus tiers
@@ -35,22 +33,22 @@ import 'contracts/math/SafeMath.sol';
  * 26 Vyral Referrals - 32% bonus
  * 27 Vyral Referrals - 33% bonus
  */
-contract TieredPayoff is RewardPayoffStrategy {
-    using SafeMath for uint256;
+library TieredPayoff {
+    using SafeMath for uint;
 
-    mapping (uint8 => uint8) public tiers;
-
-    function TieredPayoff() {
-    }
-
+    /**
+     * Tiered payoff computes reward based on number of invitees a referrer has brought in.
+     * Returns the reward or the number of tokens referrer should be awarded.
+     */
     function payoff(
-        address referrer,
-        address invitee
+        ReferralTree.Tree storage self,
+        address referrer
     )
         public
-        returns (uint256)
+        returns (uint)
     {
-        return 0;
+        ReferralTree.VyralNode memory node = self.nodes[referrer];
+        return 1000;
     }
 
     /**
@@ -60,7 +58,9 @@ contract TieredPayoff is RewardPayoffStrategy {
     function getBonusPercentage(
         uint8 _referrals
     )
-        public constant returns (uint256)
+        public
+        pure
+        returns (uint256)
     {
         if (_referrals == 0) {
             return 0;
