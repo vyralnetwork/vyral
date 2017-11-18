@@ -3,7 +3,7 @@ const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 const SafeMath = artifacts.require("./math/SafeMath.sol");
 const Ownable  = artifacts.require("./traits/Ownable.sol");
 
-const ReferralTree = artifacts.require("./referral/ReferralTree.sol");
+const Referral = artifacts.require("./referral/Referral.sol");
 const TieredPayoff = artifacts.require("./referral/TieredPayoff.sol");
 
 const Campaign  = artifacts.require("./Campaign.sol");
@@ -19,7 +19,7 @@ module.exports = function(deployer) {
         return deployer.deploy([SafeMath, Ownable]);
     })
     .then(() => {
-        return deployer.deploy(ReferralTree);
+        return deployer.deploy(Referral);
     })
     .then(() => {
         return deployer.deploy(TieredPayoff);
@@ -27,7 +27,7 @@ module.exports = function(deployer) {
     .then(() => {
         deployer.link(Ownable, VyralSale);
         deployer.link(TieredPayoff, VyralSale);
-        deployer.link(ReferralTree, VyralSale);
+        deployer.link(Referral, VyralSale);
 
         // console.log([
         // MultiSigWallet.address,

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 /**
- * A ReferralTree is a diffusion graph of all nodes representing campaign participants.
+ * A referral tree is a diffusion graph of all nodes representing campaign participants.
  * Each invitee is assigned a referral tree after accepting an invitation. Following is
  * an example difussion graph.
  *
@@ -36,43 +36,27 @@ pragma solidity ^0.4.18;
  *                                                 +---+
  *
  */
-library ReferralTree {
+library Referral {
 
     /**
      * @dev A user in a referral graph
      */
-    struct VyralNode {
-        /// Current user's address
-        address node;
+    struct Node {
         /// This node was referred by...
         address referrer;
-        /// Invitees of this node
-        address[] invitees;
-        /// Wei offered
-        uint contribution;
+        /// Invitees (and their shares) of this node
+        mapping (address => uint) invitees;
+        /// Number of children (invitees)
+        uint16 degree;
         /// Reward accumulated
-        uint reward;
+        uint shares;
     }
 
     /**
-     * @dev A referral tree is a collection of VyralNodes.
+     * @dev A referral tree is a collection of Nodes.
      */
-    struct Tree { // TODO: Rename? Suggestions: Root
-        mapping (address => VyralNode) nodes;
-    }
-
-    /**
-     * @dev Returns the degree of a node
-     */
-    function degreeOf (
-        Tree storage self,
-        address node
-    )
-        public
-        constant
-        returns (uint)
-    {
-        return self.nodes[node].invitees.length;
+    struct Tree {
+        mapping (address => Node) nodes;
     }
 
     /**
@@ -80,14 +64,13 @@ library ReferralTree {
      */
     function getReferrerAddress (
         Tree storage self,
-        address _inviteeAddress
+        address _invitee
     )
         public
         constant
-        returns (address _referrerAddress)
+        returns (address _referrer)
     {
-        VyralNode memory node = self.nodes[_inviteeAddress];
-        _referrerAddress = node.referrer;
+        _referrer = self.nodes[_invitee].referrer;
     }
 
     /**
@@ -95,20 +78,17 @@ library ReferralTree {
      */
     function addInvitee (
         Tree storage self,
-        address _invitee,
         address _referrer,
-        address _payoffStrategy
+        address _invitee,
+        uint _shares
     )
         internal
     {
-        VyralNode memory inviteeNode;
-        inviteeNode.node = _invitee;
+        Node memory inviteeNode;
         inviteeNode.referrer = _referrer;
+        self.nodes[_invitee] = inviteeNode;
 
-        VyralNode memory referrerNode = self.nodes[_referrer];
-        referrerNode.invitees[referrerNode.invitees.length] = _invitee;
-
-//        RewardPayoffStrategy rps = RewardPayoffStrategy(_payoffStrategy);
-//        rps.payoff(_referrer, _invitee);
+        self.nodes[_referrer].invitees[_invitee] = _shares;
+        self.nodes[_referrer].degree += 1;
     }
 }

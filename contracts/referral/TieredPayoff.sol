@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import "./ReferralTree.sol";
+import "./Referral.sol";
 import '../math/SafeMath.sol';
 
 /**
@@ -41,14 +41,18 @@ library TieredPayoff {
      * Returns the reward or the number of tokens referrer should be awarded.
      */
     function payoff(
-        ReferralTree.Tree storage self,
-        address referrer
+        Referral.Tree storage self,
+        address _referrer,
+        uint _shares
     )
         public
         returns (uint)
     {
-        ReferralTree.VyralNode memory node = self.nodes[referrer];
-        return 1000;
+        Referral.Node memory node = self.nodes[_referrer];
+        uint16 bonusPercentage = getBonusPercentage(node.degree);
+        uint reward = _shares.mul(bonusPercentage).div(100);
+
+        return reward;
     }
 
     /**
@@ -56,11 +60,11 @@ library TieredPayoff {
      * based on comments above.
      */
     function getBonusPercentage(
-        uint8 _referrals
+        uint16 _referrals
     )
         public
         pure
-        returns (uint256)
+        returns (uint16)
     {
         if (_referrals == 0) {
             return 0;

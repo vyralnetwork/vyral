@@ -137,7 +137,7 @@ contract VyralSale is Ownable {
     /*
      * Events
      */
-    event LogPurchase(address buyer, uint amount);
+    event LogPurchase(address referrer, uint reward, address buyer, uint amount);
 
 
     /**
@@ -194,10 +194,9 @@ contract VyralSale is Ownable {
     function()
         public
         payable
-        isAtLeastMinPurchase
-        isBelowHardCap
-        isNotHalted
-        inStatus(Status.SaleStarted)
+//        isBelowHardCap
+//        isNotHalted
+//        inStatus(Status.SaleStarted)
     {
         // Called without referral key
         buyTokens(0x0);
@@ -233,11 +232,17 @@ contract VyralSale is Ownable {
         // Cannot purchase more tokens than this contract has available to sell
         require(shares <= token.balanceOf(this));
 
+        // Running totals
+        weiRaised = weiRaised.add(weiReceived);
+
         // Transfer tokens to buyer
         token.transfer(buyer, shares);
 
+        // Add to referral tree to payout rewards
+        uint reward = campaign.join(_referrer, buyer, shares);
+
         // Log event
-        LogPurchase(buyer, weiReceived);
+        LogPurchase(_referrer, reward, buyer, weiReceived);
     }
 
     /**

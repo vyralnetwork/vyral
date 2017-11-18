@@ -1,26 +1,26 @@
 pragma solidity ^0.4.18;
 
+import "./traits/Ownable.sol";
 import "./referral/TieredPayoff.sol";
-import "./referral/ReferralTree.sol";
+import "./referral/Referral.sol";
+import "tokens/HumanStandardToken.sol";
+
 
 /**
  * A {Campaign} represents an advertising campaign.
  */
-contract Campaign {
-    using ReferralTree for ReferralTree.Tree;
-    using TieredPayoff for ReferralTree.Tree;
+contract Campaign is Ownable {
+    using Referral for Referral.Tree;
+    using TieredPayoff for Referral.Tree;
 
     /// The referral tree (k-ary tree)
-    ReferralTree.Tree vyralTree;
+    Referral.Tree vyralTree;
 
     /// Token in use
-    address public token;
+    HumanStandardToken public token;
 
     /// Token in use
     uint public budget;
-
-    /// Which payoff method to use?
-    address payoffStrategy;
 
     /// Campaign is always in one of the following states
     enum CampaignState {
@@ -54,8 +54,8 @@ contract Campaign {
         _;
     }
 
-    modifier onlyOnReferral(address _referrer) {
-        require(getReferrer() != 0x0);
+    modifier onlyOnReferral(address _invitee) {
+        require(getReferrer(_invitee) != 0x0);
         _;
     }
 
@@ -70,10 +70,13 @@ contract Campaign {
      */
 
     /// A new campaign was created
-    event CampaignCreated(address campaign);
+    event LogCampaignCreated(address campaign);
 
     /// A campaign's state changed
-    event CampaignStateChanged(address campaign, CampaignState previousState, CampaignState currentState);
+    event LogCampaignStateChanged(address campaign, CampaignState previousState, CampaignState currentState);
+
+    /// Reward allocated
+    event LogRewardAllocated(address referrer, uint inviteeShares, uint referralReward);
 
 
     /**
@@ -85,37 +88,63 @@ contract Campaign {
     )
         public
     {
-        token = _token;
+        token = HumanStandardToken(_token);
         budget = _budgetAmount;
 
         state = CampaignState.Ready;
     }
 
     /**
-     * Accept invitation and join contract.
+     * @dev Accept invitation and join contract. If referrer address is non-zero,
+     * calculate reward and transfer tokens to referrer. Referrer address will be
+     * zero if referrer is not found in the referral tree. Don't throw in such a
+     * scenario.
      */
     function join(
-        address _referrer
+        address _referrer,
+        address _invitee,
+        uint _shares
     )
         public
-        inState(CampaignState.Started)
-        onlyNonZeroAddress(_referrer)
-        onlyOnReferral(_referrer)
+//        inState(CampaignState.Started)
+        onlyNonZeroAddress(_invitee)
+//        onlyOnReferral(_invitee)
         onlyIfFundsAvailable()
+        returns(uint reward)
     {
-        vyralTree.addInvitee(msg.sender, _referrer, payoffStrategy);
-        vyralTree.payoff(_referrer);
+        address referrer = vyralTree.getReferrerAddress(_invitee);
+
+        // Referrer was not found, add referrer as a new node
+        if(referrer != _referrer) {
+            vyralTree.addInvitee(_referrer, owner, 0);
+        }
+
+        // Add invitee to the tree
+        vyralTree.addInvitee(referrer, _invitee, _shares);
+
+        if(referrer != 0x0) {
+            // Referrer exists in the tree
+            reward = vyralTree.payoff(referrer, _shares);
+
+            // Transfer reward
+            token.transfer(referrer, reward);
+
+            // Log event
+            LogRewardAllocated(referrer, _shares, reward);
+        }
     }
 
     /**
      * Return referral key of caller.
      */
-    function getReferrer()
+    function getReferrer(
+        address _invitee
+    )
         public
         constant
         returns (address _referrer)
     {
-        _referrer = vyralTree.getReferrerAddress(msg.sender);
+        _referrer = vyralTree.getReferrerAddress(_invitee);
     }
 
     // Update budget
@@ -140,7 +169,7 @@ contract Campaign {
         constant
         returns (uint _balance)
     {
-        _balance = 56789;
+        _balance = token.balanceOf(this);
     }
 
     /**

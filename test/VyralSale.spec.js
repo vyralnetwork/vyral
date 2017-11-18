@@ -55,21 +55,52 @@ contract("Vyral Presale Agreements", (accounts) => {
         });
 
         it("should execute a sale and transfer tokens", async () => {
-            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
-            let juliaBalance    = await this.share.balanceOf.call(julia);
+            await this.vyralSale.sendTransaction({from: grace, value: 1});
+            let graceBalance    = await this.share.balanceOf.call(grace);
             let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
-            let campaignBalance = await this.vyralSale.THREE_SEVENTHS.call();
+            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
+            let campaignBudget  = await this.vyralSale.THREE_SEVENTHS.call();
+
+            assert.equal(4285, graceBalance.toNumber());
+            assert.isTrue(campaignBudget.equals(graceBalance.plus(saleBalance)));
+        });
+
+        // it("should reject contributions less than 1 ETH ", async () => {
+        //     try {
+        //         await this.vyralSale.buyTokens(grace, {from: julia, value: 0.5});
+        //     } catch(err) {
+        //         assert(isReverted(err), err.toString());
+        //     }
+        // });
+
+        it("should reward referrer 7% bonus when a new node joins", async () => {
+            let result1 = await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+            let result2 = await this.vyralSale.buyTokens(grace, {from: kevin, value: 1});
+
+            let gracesReferrer = await this.campaign.getReferrer.call(grace);
+            let juliasReferrer = await this.campaign.getReferrer.call(julia);
+            let kevinsReferrer = await this.campaign.getReferrer.call(kevin);
+
+            console.log("gracesReferrer", gracesReferrer)
+            console.log("juliasReferrer", juliasReferrer)
+            console.log("kevinsReferrer", kevinsReferrer)
+
+            let graceBalance    = await this.share.balanceOf.call(grace);
+            let juliaBalance    = await this.share.balanceOf.call(julia);
+            let kevinBalance    = await this.share.balanceOf.call(kevin);
+            let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
+            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
+            let lostBalance     = await this.share.balanceOf.call("0x0");
+
+            console.log("graceBalance", graceBalance.toString(10))
+            console.log("juliaBalance", juliaBalance.toString(10))
+            console.log("kevinBalance", kevinBalance.toString(10))
+            console.log("saleBalance", saleBalance.toString(10))
+            console.log("campaignBalance", campaignBalance.toString(10))
+            console.log("lostBalance", lostBalance.toString(10))
 
             assert.equal(4285, juliaBalance.toNumber());
-            assert.isTrue(campaignBalance.equals(juliaBalance.plus(saleBalance)));
         });
 
-        it("should reject contributions less than 1 ETH ", async () => {
-            try {
-                await this.vyralSale.buyTokens(grace, {from: julia, value: 0.5});
-            } catch(err) {
-                assert(isReverted(err), err.toString());
-            }
-        });
     });
 });

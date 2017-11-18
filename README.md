@@ -6,13 +6,11 @@
 #### Development
 ```
 $ truffle develop
-
 truffle(develop)> migrate
-
 truffle(develop)> test
 ```
 
-*NOTE:* After checking tell git not to track `secrets.json` and `truffle.js` like so:
+**NOTE:** Tell git not to track `secrets.json` and `truffle.js` like so:
 ```
 $ git update-index --assume-unchanged secrets.json truffle.js
 ```
