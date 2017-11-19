@@ -112,7 +112,7 @@ contract Campaign is Ownable {
         onlyIfFundsAvailable()
         returns(uint reward)
     {
-        address referrer = vyralTree.getReferrerAddress(_invitee);
+        address referrer = vyralTree.getReferrer(_invitee);
 
         // Referrer was not found, add referrer as a new node
         if(referrer != _referrer) {
@@ -144,7 +144,7 @@ contract Campaign is Ownable {
         constant
         returns (address _referrer)
     {
-        _referrer = vyralTree.getReferrerAddress(_invitee);
+        _referrer = vyralTree.getReferrer(_invitee);
     }
 
     // Update budget

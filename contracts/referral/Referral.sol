@@ -62,7 +62,7 @@ library Referral {
     /**
      * @dev Find referrer of the given invitee.
      */
-    function getReferrerAddress (
+    function getReferrer (
         Tree storage self,
         address _invitee
     )
