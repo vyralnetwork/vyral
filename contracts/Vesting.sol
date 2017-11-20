@@ -49,7 +49,7 @@ contract Vesting is Ownable {
 
         // Some lock period sanity checks.
         require( _lockPeriod != 0 ); 
-        require( _endTimestamp.sub(_startTimestamp) < _lockPeriod );
+        require( _endTimestamp.sub(_startTimestamp) > _lockPeriod );
 
         // Register the new address.
         vestingSchedules[_newAddress] = VestingSchedule({
