@@ -53,11 +53,13 @@ contract('Vesting implementation', async function(accounts) {
             isConfirmed: false, 
         }
             
-        const crowdsale = await VyralSale.new(Owner,
-                                  Team,
-                                  Partnerships,
-                                  now,
-                                  now)
+        const crowdsale = await VyralSale.new(
+            Owner,
+            Team,
+            Partnerships,
+            now,
+            now
+        )
         
         expect(crowdsale.address).to.exist
         
