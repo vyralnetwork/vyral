@@ -36,7 +36,7 @@ contract("Vyral Presale Agreements", (accounts) => {
 
     const [grace, julia, kevin] = accounts;
 
-    before(async () => {
+    beforeEach(async () => {
         this.vyralSale = await VyralSale.deployed();
 
         let tokenAddr = await this.vyralSale.token.call();
@@ -74,17 +74,63 @@ contract("Vyral Presale Agreements", (accounts) => {
         // });
 
         it("should reward referrer 7% bonus when a new node joins", async () => {
+            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+
+            let gracesReferrer = await this.campaign.getReferrer.call(grace);
+            let juliasReferrer = await this.campaign.getReferrer.call(julia);
+            assert.equal("0x0000000000000000000000000000000000000000", gracesReferrer);
+            assert.equal(grace, juliasReferrer);
+
+            let graceBalance    = await this.share.balanceOf.call(grace);
+            let juliaBalance    = await this.share.balanceOf.call(julia);
+            let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
+            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
+            let lostBalance     = await this.share.balanceOf.call("0x0");
+
+            assert.equal(4584, graceBalance.toNumber());
+            assert.equal(4285, juliaBalance.toNumber());
+            assert.isTrue(saleBalance.equals(new BigNumber("333333332999999999999991430")));
+            assert.isTrue(campaignBalance.equals(new BigNumber("222222221999999999999999701")));
+            assert.isTrue(lostBalance.equals(new BigNumber("0")));
+        });
+
+        it("should reward referrer 8% bonus when a new node joins", async () => {
+            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+
+            let gracesReferrer = await this.campaign.getReferrer.call(grace);
+            let juliasReferrer = await this.campaign.getReferrer.call(julia);
+            let kevinsReferrer = await this.campaign.getReferrer.call(kevin);
+            assert.equal("0x0000000000000000000000000000000000000000", gracesReferrer);
+            assert.equal(grace, juliasReferrer);
+            assert.equal(grace, kevinsReferrer);
+
+            let graceBalance    = await this.share.balanceOf.call(grace);
+            let juliaBalance    = await this.share.balanceOf.call(julia);
+            let kevinBalance    = await this.share.balanceOf.call(kevin);
+            let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
+            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
+            let lostBalance     = await this.share.balanceOf.call("0x0");
+
+            assert.equal(4584, graceBalance.toNumber());
+            assert.equal(4285, juliaBalance.toNumber());
+            assert.equal(4285, juliaBalance.toNumber());
+            assert.isTrue(saleBalance.equals(new BigNumber("333333332999999999999982860")));
+            assert.isTrue(campaignBalance.equals(new BigNumber("222222221999999999999998974")));
+            assert.isTrue(lostBalance.equals(new BigNumber("0")));
+        });
+
+        it("should reward referrer 8% bonus when a new node joins", async () => {
             let treeSize = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
             let result1 = await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
-            treeSize = await this.campaign.getTreeSize.call();
+            treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
             console.log(result1.logs)
 
             let result2 = await this.vyralSale.buyTokens(grace, {from: kevin, value: 1});
-            treeSize = await this.campaign.getTreeSize.call();
+            treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
             console.log(result2.logs)

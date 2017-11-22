@@ -17,7 +17,7 @@ contract VyralSale is Ownable {
     uint public constant SALE_MIN = 1 ether;
 
     /// Maximum contribtuion amount.
-    uint public constant SALE_MAX = 77777 ether;
+    uint public constant SALE_MAX = 47777 ether;
 
     /// Exchange rate 1 Ether = this many SHAREs
     uint public constant SHARES_PER_ETH = 4285;

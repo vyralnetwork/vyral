@@ -115,14 +115,14 @@ contract Campaign is Ownable {
         Referral.Node referrerNode = vyralTree.nodes[_referrer];
 
         // Referrer was not found, add referrer as a new node
-//        if(referrerNode.shares == 0x0) {
+        if(referrerNode.shares == 0x0) {
             vyralTree.addInvitee(owner, _referrer, 0);
-//        }
+        }
 
         // Add invitee to the tree
         vyralTree.addInvitee(_referrer, _invitee, _shares);
 
-//        if(referrer != 0x0) {
+        if(_referrer != 0x0) {
             // Referrer exists in the tree
             reward = vyralTree.payoff(_referrer, _shares);
 
@@ -131,7 +131,7 @@ contract Campaign is Ownable {
 
             // Log event
             LogRewardAllocated(_referrer, _shares, reward);
-//        }
+        }
     }
 
     /**
