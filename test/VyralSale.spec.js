@@ -74,8 +74,21 @@ contract("Vyral Presale Agreements", (accounts) => {
         // });
 
         it("should reward referrer 7% bonus when a new node joins", async () => {
+            let treeSize = await this.campaign.getTreeSize.call();
+            console.log("treeSize", treeSize.toString(10))
+
             let result1 = await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+            treeSize = await this.campaign.getTreeSize.call();
+            console.log("treeSize", treeSize.toString(10))
+
+            console.log(result1.logs)
+
             let result2 = await this.vyralSale.buyTokens(grace, {from: kevin, value: 1});
+            treeSize = await this.campaign.getTreeSize.call();
+            console.log("treeSize", treeSize.toString(10))
+
+            console.log(result2.logs)
+
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
             let juliasReferrer = await this.campaign.getReferrer.call(julia);
@@ -98,6 +111,7 @@ contract("Vyral Presale Agreements", (accounts) => {
             console.log("saleBalance", saleBalance.toString(10))
             console.log("campaignBalance", campaignBalance.toString(10))
             console.log("lostBalance", lostBalance.toString(10))
+
 
             assert.equal(4285, juliaBalance.toNumber());
         });

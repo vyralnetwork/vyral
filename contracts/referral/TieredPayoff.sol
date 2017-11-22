@@ -49,7 +49,7 @@ library TieredPayoff {
         returns (uint)
     {
         Referral.Node memory node = self.nodes[_referrer];
-        uint16 bonusPercentage = getBonusPercentage(node.degree);
+        uint bonusPercentage = getBonusPercentage(node.inviteeIndex.length);
         uint reward = _shares.mul(bonusPercentage).div(100);
 
         return reward;
@@ -60,11 +60,11 @@ library TieredPayoff {
      * based on comments above.
      */
     function getBonusPercentage(
-        uint16 _referrals
+        uint _referrals
     )
         public
         pure
-        returns (uint16)
+        returns (uint)
     {
         if (_referrals == 0) {
             return 0;

@@ -112,26 +112,26 @@ contract Campaign is Ownable {
         onlyIfFundsAvailable()
         returns(uint reward)
     {
-        address referrer = vyralTree.getReferrer(_invitee);
+        Referral.Node referrerNode = vyralTree.nodes[_referrer];
 
         // Referrer was not found, add referrer as a new node
-        if(referrer != _referrer) {
-            vyralTree.addInvitee(_referrer, owner, 0);
-        }
+//        if(referrerNode.shares == 0x0) {
+            vyralTree.addInvitee(owner, _referrer, 0);
+//        }
 
         // Add invitee to the tree
-        vyralTree.addInvitee(referrer, _invitee, _shares);
+        vyralTree.addInvitee(_referrer, _invitee, _shares);
 
-        if(referrer != 0x0) {
+//        if(referrer != 0x0) {
             // Referrer exists in the tree
-            reward = vyralTree.payoff(referrer, _shares);
+            reward = vyralTree.payoff(_referrer, _shares);
 
             // Transfer reward
-            token.transfer(referrer, reward);
+            token.transfer(_referrer, reward);
 
             // Log event
-            LogRewardAllocated(referrer, _shares, reward);
-        }
+            LogRewardAllocated(_referrer, _shares, reward);
+//        }
     }
 
     /**
@@ -145,6 +145,30 @@ contract Campaign is Ownable {
         returns (address _referrer)
     {
         _referrer = vyralTree.getReferrer(_invitee);
+    }
+
+    /**
+     * Return referral key of caller.
+     */
+    function getNode(
+        address _invitee
+    )
+        public
+        constant
+        returns (address _referrer)
+    {
+        _referrer = vyralTree.getReferrer(_invitee);
+    }
+
+    /**
+     * @dev Find referrer of the given invitee.
+     */
+    function getTreeSize()
+        public
+        constant
+        returns (uint _size)
+    {
+        _size = vyralTree.getTreeSize();
     }
 
     // Update budget
