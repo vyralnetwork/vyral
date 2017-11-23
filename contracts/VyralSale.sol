@@ -3,8 +3,7 @@ pragma solidity ^0.4.18;
 import "./traits/Ownable.sol";
 import './math/SafeMath.sol';
 import "./Campaign.sol";
-import "tokens/HumanStandardToken.sol";
-
+import "./Share.sol";
 
 /**
  * @title Vyral Sale
@@ -82,14 +81,11 @@ contract VyralSale is Ownable {
     /// Holds ETH deposits for Vyral
     address public wallet;
 
-    /// Address at which to hold tokens for team and advisors
-    address public team;
-
-    /// Address at which to hold tokens for partnerships and development
-    address public partnerships;
+    /// Address that will hold the tokens to be vested to both Team and Partnerships
+    address public vestingWallet;
 
     /// Token in use
-    HumanStandardToken public token;
+    Share public share;
 
     /// Vyral sale campaign
     Campaign public campaign;
@@ -149,16 +145,14 @@ contract VyralSale is Ownable {
      */
     function VyralSale(
         address _wallet,
-        address _team,
-        address _partnerships,
+        address _vestingWallet,
         uint _presaleStartTime,
         uint _saleStartTime
     )
         public
     {
         wallet = _wallet;
-        team = _team;
-        partnerships = _partnerships;
+        vestingWallet = _vestingWallet;
 
         presaleStartTime = _presaleStartTime;
         presaleEndTime = presaleStartTime + presaleDuration;
@@ -167,22 +161,22 @@ contract VyralSale is Ownable {
         saleEndTime = saleStartTime + saleDuration;
 
         // Create SHARE token
-        token = new HumanStandardToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL);
+        share = new Share(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL);
 
         // Create a campaign and set 28.6% (2/7) of tokens as budget
         campaign = new Campaign(address(token), TWO_SEVENTHS);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(team, ONE_SEVENTH);
+        token.transfer(address(this), ONE_SEVENTH);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(partnerships, ONE_SEVENTH);
+        token.transfer(address(this), ONE_SEVENTH);
 
         // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
         token.transfer(campaign, TWO_SEVENTHS);
 
         // D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
-        token.transfer(this, THREE_SEVENTHS);
+        token.transfer(address(this), THREE_SEVENTHS);
 
         saleStatus = Status.Ready;
     }
@@ -251,10 +245,37 @@ contract VyralSale is Ownable {
     function finalize()
         external
         onlyOwner
-        inStatus(Status.SaleEnded)
+        // inStatus(Status.SaleEnded)
         notInStatus(Status.Finalized)
     {
         saleStatus = Status.Finalized;
         saleFinalizedAt = now;
+    }
+
+    /**
+     * This function is to be called after finalization of the sale and will approve the vestingWallet
+     * to pull the funds which are allocated to vest out to the team and partnerships wallets.
+     * See test/Vesting.spec.js for example of the vesting flow.
+     */
+    function approveVestTokens()
+        external
+        onlyOwner
+        inStatus(Status.Finalized)
+        returns (bool)
+    {
+        /// Approves team tokens
+        require( token.approve(vestingWallet, ONE_SEVENTH) );
+        /// Approves partnership tokens
+        require( token.approve(vestingWallet, ONE_SEVENTH) );
+
+        return true;
+    }
+
+    /// Proxy function that enables the transfers of the Vyral Token
+    function enableTransfers()
+        external onlyOwner returns (bool)
+    {   
+        require( share.enableTransfers() );
+        return true;
     }
 }

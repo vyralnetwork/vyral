@@ -7,7 +7,7 @@ const config = require('../config')
 const { wait, waitUntilBlock } = require('@digix/tempo')(web3);
 
 /// Contracts
-const StandardToken = artifacts.require('./StandardToken.sol')
+const Share = artifacts.require('./Share.sol')
 const Vesting = artifacts.require('./Vesting.sol')
 const VyralSale = artifacts.require('./VyralSale.sol')
 
@@ -63,15 +63,16 @@ contract('Vesting implementation', async function(accounts) {
         
         expect(crowdsale.address).to.exist
         
-        const tokenAddr = await crowdsale.token()
-        const token = StandardToken.at(tokenAddr)
+        const shareAddr = await crowdsale.share()
+        const share = StandardToken.at(shareAddr)
 
-        const vesting = await Vesting.new(token.address)
+        const vesting = await Vesting.new(share.address)
         expect(vesting.address).to.exist
 
         /// Approve the vesting wallets of the correct amounts
-        await token.approve(vesting.address, amount, {from: Team})
-        await token.approve(vesting.address, amount, {from: Partnerships})
+        await crowdsale.finalize()
+        await crowdsale.approveVestTokens()
+        await crowdsale.enableTransfers()
 
         /// Create the vesting schedules
         const teamVestTx = await vesting.registerVestingSchedule(
