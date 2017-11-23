@@ -1,7 +1,7 @@
 /**
  * SHARE token scenarios.
  */
-const Share          = artifacts.require("./HumanStandardToken.sol");
+const Share          = artifacts.require("./Share.sol");
 const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
 const MultiSigWallet = artifacts.require("./MultiSigWallet.sol");

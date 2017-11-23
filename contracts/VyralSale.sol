@@ -85,7 +85,7 @@ contract VyralSale is Ownable {
     address public vestingWallet;
 
     /// Token in use
-    Share public share;
+    Share public token;
 
     /// Vyral sale campaign
     Campaign public campaign;
@@ -161,16 +161,16 @@ contract VyralSale is Ownable {
         saleEndTime = saleStartTime + saleDuration;
 
         // Create SHARE token
-        share = new Share(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL);
+        token = new Share();
 
         // Create a campaign and set 28.6% (2/7) of tokens as budget
         campaign = new Campaign(address(token), TWO_SEVENTHS);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(address(this), ONE_SEVENTH);
+        token.transfer(team, ONE_SEVENTH);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(address(this), ONE_SEVENTH);
+        token.transfer(partnerships, ONE_SEVENTH);
 
         // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
         token.transfer(campaign, TWO_SEVENTHS);
@@ -223,7 +223,7 @@ contract VyralSale is Ownable {
         // Enough to buy any tokens?
         require(shares > 0);
 
-        // Cannot purchase more tokens than this contract has available to sell
+        // Cannot purchTOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOLase more tokens than this contract has available to sell
         require(shares <= token.balanceOf(this));
 
         // Running totals
@@ -257,25 +257,27 @@ contract VyralSale is Ownable {
      * to pull the funds which are allocated to vest out to the team and partnerships wallets.
      * See test/Vesting.spec.js for example of the vesting flow.
      */
-    function approveVestTokens()
-        external
-        onlyOwner
-        inStatus(Status.Finalized)
-        returns (bool)
-    {
-        /// Approves team tokens
-        require( token.approve(vestingWallet, ONE_SEVENTH) );
-        /// Approves partnership tokens
-        require( token.approve(vestingWallet, ONE_SEVENTH) );
-
-        return true;
-    }
-
-    /// Proxy function that enables the transfers of the Vyral Token
-    function enableTransfers()
-        external onlyOwner returns (bool)
-    {   
-        require( share.enableTransfers() );
-        return true;
-    }
+//    function approveVestTokens()
+//        external
+//        onlyOwner
+//        inStatus(Status.Finalized)
+//        returns (bool)
+//    {
+//        /// Approves team tokens
+//        require(token.approve(vestingWallet, ONE_SEVENTH));
+//        /// Approves partnership tokens
+//        require(token.approve(vestingWallet, ONE_SEVENTH));
+//
+//        return true;
+//    }
+//
+//    /// Proxy function that enables the transfers of the Vyral Token
+//    function enableTransfers()
+//        external
+//        onlyOwner
+//        returns (bool)
+//    {
+//        require(token.enableTransfers());
+//        return true;
+//    }
 }

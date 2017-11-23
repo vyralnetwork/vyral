@@ -46,6 +46,7 @@ library TieredPayoff {
         uint _shares
     )
         public
+        view
         returns (uint)
     {
         Referral.Node memory node = self.nodes[_referrer];

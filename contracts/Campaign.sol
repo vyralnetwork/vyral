@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import "./traits/Ownable.sol";
 import "./referral/TieredPayoff.sol";
 import "./referral/Referral.sol";
-import "tokens/HumanStandardToken.sol";
+import "./Share.sol";
 
 
 /**
@@ -88,7 +88,7 @@ contract Campaign is Ownable {
     )
         public
     {
-        token = HumanStandardToken(_token);
+        token = Share(_token);
         budget = _budgetAmount;
 
         state = CampaignState.Ready;
