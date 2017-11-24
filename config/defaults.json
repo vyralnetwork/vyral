@@ -1,4 +1,7 @@
 {
+    "owner": "0x8a07ad080aaf0c4baa8e3e492a1c837380183d64",
+    "team": "0xc7be223f52fd94b4e5637b0ce950e74811520fb1",
+    "partnerships": "0x3a885f77df95583aa86df1e77e0da91dc7e04c96",
     "wallet": {
         "owners": [
             "0x01ce371ee58eb48a6403ee35b0cd0d44bd145241",
@@ -7,20 +10,15 @@
         ],
         "required": 2
     },
+    "rate": "7000",
+    "presale": {
+        "startTime": 1512144000,
+        "endTime": 1512144000,
+        "durationInDays": 23,
+        "cap": 40000
+    },
     "crowdsale": {
-        "owner": "0x8a07ad080aaf0c4baa8e3e492a1c837380183d64",
-        "team": "0xc7be223f52fd94b4e5637b0ce950e74811520fb1",
-        "partnerships": "0x3a885f77df95583aa86df1e77e0da91dc7e04c96",
-        "rate": "4285",
-        "period": {
-            "first": {
-                "startTime": 1512144000,
-                "durationInDays": 23
-            },
-            "second": {
-                "startTime": 1516032000,
-                "durationInDays": 30
-            }
-        }
+        "startTime": 1512144000,
+        "endTime": 1512144000
     }
 }
