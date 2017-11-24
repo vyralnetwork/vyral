@@ -18,6 +18,8 @@ contract Share is HumanStandardToken, Ownable {
 
     uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(TOKEN_DECIMALS));
 
+    mapping (address => uint256) lockedBalances;
+
     mapping (address => bool) public transferrers;
 
     /**
@@ -35,46 +37,73 @@ contract Share is HumanStandardToken, Ownable {
     /// Off on deployment.
     bool isTransferable = false;
 
+    /// Bonus tokens are locked on deployment
+    bool isBonusLocked = true;
+
     /// Allows the owner to transfer tokens whenever, but others to only transfer after owner says so.
     modifier canBeTransfered {
         require(transferrers[msg.sender] || isTransferable);
         _;
     }
-//
-//    function transfer(
-//        address _to,
-//        uint _value
-//    )
-//        canBeTransfered
-//        public
-//        returns (bool)
-//    {
-//        require(balances[msg.sender] >= _value);
-//
-//        balances[msg.sender] = balances[msg.sender].sub(_value);
-//        balances[_to] = balances[_to].add(_value);
-//        Transfer(msg.sender, _to, _value);
-//        return true;
-//    }
-//
-//    function transferFrom(
-//        address _from,
-//        address _to,
-//        uint _value
-//    )
-//        canBeTransfered
-//        public
-//        returns (bool)
-//    {
-//        require(balances[_from] >= _value);
-//        require(allowed[_from][msg.sender] >= _value);
-//
-//        allowed[_from][msg.sender] = allowed[_from][_to].sub(_value);
-//        balances[_from] = balances[_from].sub(_value);
-//        balances[_to] = balances[_to].add(_value);
-//        Transfer(_from, _to, _value);
-//        return true;
-//    }
+
+    function transferReward(
+        address _to,
+        uint _value
+    )
+        canBeTransfered
+        public
+        returns (bool)
+    {
+        require(balances[msg.sender] >= _value);
+
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+
+        lockedBalances[_to] = lockedBalances[_to].add(_value);
+
+        Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function transfer(
+        address _to,
+        uint _value
+    )
+        canBeTransfered
+        public
+        returns (bool)
+    {
+        require(balances[msg.sender] >= _value);
+
+        /// Only tansfer unlocked balance
+        if(isBonusLocked) {
+            require(lockedBalances[msg.sender] < _value);
+        }
+
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+        Transfer(msg.sender, _to, _value);
+        return true;
+    }
+
+    function transferFrom(
+        address _from,
+        address _to,
+        uint _value
+    )
+        canBeTransfered
+        public
+        returns (bool)
+    {
+        require(balances[_from] >= _value);
+        require(allowed[_from][msg.sender] >= _value);
+
+        allowed[_from][msg.sender] = allowed[_from][_to].sub(_value);
+        balances[_from] = balances[_from].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+        Transfer(_from, _to, _value);
+        return true;
+    }
 
     ///-----------------
     /// Admin
@@ -94,8 +123,20 @@ contract Share is HumanStandardToken, Ownable {
         address _transferrer
     )
         public
-//        onlyOwner
+        onlyOwner
     {
         transferrers[_transferrer] = true;
     }
+
+
+    /**
+     * @dev Allow bonus tokens to be withdrawn
+     */
+    function releaseBonus()
+        public
+        onlyOwner
+    {
+        isBonusLocked = false;
+    }
+
 }
