@@ -167,7 +167,7 @@ contract VyralSale is Ownable {
         campaign = new Campaign(address(token), TWO_SEVENTHS);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(team, ONE_SEVENTH);
+        token.transfer(, ONE_SEVENTH);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
         token.transfer(partnerships, ONE_SEVENTH);
