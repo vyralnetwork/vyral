@@ -1,10 +1,10 @@
-pragma soldity ^0.4.18;
+pragma solidity ^0.4.18;
 
-import "./traits/Ownable.sol";
-import "./math/Safemath.sol";
+import {Ownable} from "./traits/Ownable.sol";
+import "./math/SafeMath.sol";
 import "./Campaign.sol";
 import "./Share.sol";
-import "./Vesting.sol";
+import {Vesting} from "./Vesting.sol";
 
 import "../lib/ethereum-datetime/contracts/DateTime.sol";
 
@@ -67,7 +67,7 @@ contract VyralSale is Ownable {
     }
 
     modifier canBuy(Phase _phase) {
-        require(phase == Phase.Presale || phase = Phase.Crowdsale);
+        require(phase == Phase.Presale || phase == Phase.Crowdsale);
 
         if (_phase == Phase.Presale) {
             require(block.timestamp >= presaleStartTimestamp);
@@ -89,7 +89,8 @@ contract VyralSale is Ownable {
     function VyralSale() {
         phase = Phase.Deployed;
 
-        shareToken = new Share(TOTAL_SUPPLY);
+        shareToken = new Share();
+        // shareToken = new Share(TOTAL_SUPPLY);
         dateTime = new DateTime();
     }
 
@@ -114,7 +115,7 @@ contract VyralSale is Ownable {
         vestingWallet = new Vesting(address(shareToken));
 
         shareToken.approve(vestingWallet, TEAM.add(PARTNERS));
-        shareToken.whitelist(vestingWallet);
+        shareToken.addTransferrer(vestingWallet);
 
         phase = Phase.Initialized;
         return true;
@@ -212,7 +213,7 @@ contract VyralSale is Ownable {
 
         uint contribution = msg.value;
 
-        uint purchased = contribtuion.mul(presaleRate);
+        uint purchased = contribution.mul(presaleRate);
 
         uint totalSold = soldPresale.add(purchased);
         uint excess;
