@@ -37,19 +37,21 @@ module.exports = function(deployer) {
         deployer.link(TieredPayoff, VyralSale);
         deployer.link(Referral, VyralSale);
 
-        return deployer.deploy(VyralSale,
-        MultiSigWallet.address,
-        Vesting.address,
-        config.get("crowdsale:period:first:startTime"),
-        config.get("crowdsale:period:second:startTime")
-        );
+        return deployer.deploy(VyralSale);
     })
-    .then(() => {
-        return Share.deployed();
-    })
-    .then((share) => {
-        return share.addTransferrer(VyralSale.address);
-    })
+    // .then((vyralSale) => {
+    //     return vyralSale.initialize(Vesting.address,
+    //     config.get("presale:startTime"),
+    //     config.get("presale:endTime"),
+    //     web3.toWei(config.get("presale:cap")),
+    //     config.get("rate"));
+    // })
+    // .then(() => {
+    //     return Share.deployed();
+    // })
+    // .then((share) => {
+    //     return share.addTransferrer(VyralSale.address);
+    // })
     .catch((err) => {
         console.error("Deployment failed", err);
     })
