@@ -18,11 +18,15 @@ contract Share is HumanStandardToken, Ownable {
 
     uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(TOKEN_DECIMALS));
 
+    mapping (address => bool) public transferrers;
+
     /**
      * Init this contract with the same params as a HST.
      */
     function Share() HumanStandardToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL)
-    {}
+    {
+        transferrers[msg.sender] = true;
+    }
 
     ///-----------------
     /// Overrides
@@ -33,44 +37,44 @@ contract Share is HumanStandardToken, Ownable {
 
     /// Allows the owner to transfer tokens whenever, but others to only transfer after owner says so.
     modifier canBeTransfered {
-        require((msg.sender == owner) || isTransferable);
+        require(transferrers[msg.sender] || isTransferable);
         _;
     }
-
-    function transfer(
-        address _to,
-        uint _value
-    )
-        canBeTransfered
-        public
-        returns (bool)
-    {
-        require(balances[msg.sender] >= _value);
-
-        balances[msg.sender] = balances[msg.sender].sub(_value);
-        balances[_to] = balances[_to].add(_value);
-        Transfer(msg.sender, _to, _value);
-        return true;
-    }
-
-    function transferFrom(
-        address _from,
-        address _to,
-        uint _value
-    )
-        canBeTransfered
-        public
-        returns (bool)
-    {
-        require(balances[_from] >= _value);
-        require(allowed[_from][msg.sender] >= _value);
-
-        allowed[_from][msg.sender] = allowed[_from][_to].sub(_value);
-        balances[_from] = balances[_from].sub(_value);
-        balances[_to] = balances[_to].add(_value);
-        Transfer(_from, _to, _value);
-        return true;
-    }
+//
+//    function transfer(
+//        address _to,
+//        uint _value
+//    )
+//        canBeTransfered
+//        public
+//        returns (bool)
+//    {
+//        require(balances[msg.sender] >= _value);
+//
+//        balances[msg.sender] = balances[msg.sender].sub(_value);
+//        balances[_to] = balances[_to].add(_value);
+//        Transfer(msg.sender, _to, _value);
+//        return true;
+//    }
+//
+//    function transferFrom(
+//        address _from,
+//        address _to,
+//        uint _value
+//    )
+//        canBeTransfered
+//        public
+//        returns (bool)
+//    {
+//        require(balances[_from] >= _value);
+//        require(allowed[_from][msg.sender] >= _value);
+//
+//        allowed[_from][msg.sender] = allowed[_from][_to].sub(_value);
+//        balances[_from] = balances[_from].sub(_value);
+//        balances[_to] = balances[_to].add(_value);
+//        Transfer(_from, _to, _value);
+//        return true;
+//    }
 
     ///-----------------
     /// Admin
@@ -84,5 +88,14 @@ contract Share is HumanStandardToken, Ownable {
         isTransferable = true;
 
         return isTransferable;
+    }
+
+    function addTransferrer(
+        address _transferrer
+    )
+        public
+//        onlyOwner
+    {
+        transferrers[_transferrer] = true;
     }
 }

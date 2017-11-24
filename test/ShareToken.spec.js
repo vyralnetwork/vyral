@@ -15,9 +15,7 @@ contract('Token API', () => {
 
     before(async () => {
         this.vyralSale = await VyralSale.deployed();
-
-        let tokenAddr = await this.vyralSale.token.call();
-        this.share    = Share.at(tokenAddr);
+        this.share     = await Share.deployed();
 
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
@@ -50,7 +48,7 @@ contract('Token API', () => {
             assert.isTrue(total.equals(TOTAL_SUPPLY));
         });
 
-        it('should allocate 111,111,111 SHARE to team', async () => {
+        /*it('should allocate 111,111,111 SHARE to team', async () => {
             let teamAddress = await this.vyralSale.team.call();
             let teamBalance = await this.share.balanceOf.call(config.get("crowdsale:team"));
             let ONE_SEVENTH = await this.vyralSale.ONE_SEVENTH.call();
@@ -66,7 +64,7 @@ contract('Token API', () => {
 
             assert.equal(partnersAddress, config.get("crowdsale:partnerships"));
             assert.isTrue(partnersBalance.equals(ONE_SEVENTH));
-        });
+        });*/
 
         it('should transfer 222,222,222 SHARE to campaign rewards', async () => {
             let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
