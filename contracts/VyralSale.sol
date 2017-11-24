@@ -1,342 +1,291 @@
 pragma solidity ^0.4.18;
 
-import "./traits/Ownable.sol";
-import './math/SafeMath.sol';
-import "./Campaign.sol";
+import {Ownable} from "./traits/Ownable.sol";
+import "./math/SafeMath.sol";
+import {Campaign} from "./Campaign.sol";
 import "./Share.sol";
+import {Vesting} from "./Vesting.sol";
 
-/**
- * @title Vyral Sale
- * @dev The driver contract.
- */
+import "../lib/ethereum-datetime/contracts/DateTime.sol";
+
 contract VyralSale is Ownable {
     using SafeMath for uint;
 
-    /// Minimum contribution amount.
-    uint public constant SALE_MIN = 1 ether;
+    uint public constant MIN_CONTRIBUTION = 1 ether;
 
-    /// Maximum contribtuion amount.
-    uint public constant SALE_MAX = 47777 ether;
-
-    /// Exchange rate 1 Ether = this many SHAREs
-    uint public constant SHARES_PER_ETH = 4285;
-
-    /*
-     * Budget constants
-     */
-
-    uint8 public constant TOKEN_DECIMALS = 18;
-
-    uint public constant ONE_SEVENTH = 111111111 * (10 ** uint(TOKEN_DECIMALS));
-
-    uint public constant TWO_SEVENTHS = 222222222 * (10 ** uint(TOKEN_DECIMALS));
-
-    uint public constant THREE_SEVENTHS = 333333333 * (10 ** uint(TOKEN_DECIMALS));
-
-    /*
-     * Storage
-     */
-
-    /// The sale can be in one of the following states
-    enum Status {
-        Ready,
-        PresaleStarted,
-        PresaleEnded,
-        SaleStarted,
-        SaleEnded,
-        Finalized
+    enum Phase {
+        Deployed,       //0
+        Initialized,    //1
+        Presale,        //2
+        Freeze,         //3
+        Ready,          //4
+        Crowdsale,      //5
+        Finalized,      //6
+        Decomissioned   //7
     }
 
-    // Current state of the sale
-    Status public saleStatus;
+    Phase public phase;
 
-    /// In case of emergency
-    bool public halted;
+    /** PRESALE PARAMS */
+    uint public presaleStartTimestamp;
+    uint public presaleEndTimestamp;
+    uint public presaleRate;
+    uint public presaleAllocation;
 
-    /// Funds collected so far.
-    uint public weiRaised = 0;
+    bool public presaleCapReached;
+    uint public soldPresale;
 
-    /// Presale period
-    uint public presaleStartTime;
-    uint public presaleEndTime;
-    uint public presaleDuration = 23 days;
+    /** CROWDSALE PARAMS */
+    uint public saleStartTimestamp;
+    uint public saleEndTimestamp;
+    uint public saleRate;
+    uint public saleAllocation;
 
-    /// Sale period
-    uint public saleStartTime;
-    uint public saleEndTime;
-    uint public saleDuration = 30 days;
+    bool public saleCapReached;
+    uint public soldSale;
 
-    /// Set after sale is over and tokens are allocated
-    uint public saleFinalizedAt;
-
-    /// Mapping from purchaser address to amount of ether spent
-    mapping (address => uint) public purchases;
-
-    /// Holds ETH deposits for Vyral
+    /** GLOBAL PARAMS */
     address public wallet;
-
-    /// Address that will hold the tokens to be vested to both Team and Partnerships
     address public vestingWallet;
-
-    /// Token in use
-    Share public token;
-
-    /// Vyral sale campaign
+    Share public shareToken;
     Campaign public campaign;
+    DateTime public dateTime;
 
-    /*
-     * Modifiers
-     */
+    bool public vestingRegistered;
 
-    modifier isAtLeastMinPurchase {
-        require(msg.value >= SALE_MIN);
+    uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
+
+    uint public constant TEAM = TOTAL_SUPPLY.div(7);
+    uint public constant PARTNERS = TOTAL_SUPPLY.div(7);
+    uint public constant VYRAL_REWARDS = TOTAL_SUPPLY.div(7).mul(2);
+    uint public constant SALE_ALLOCATION = TOTAL_SUPPLY.div(7).mul(3);
+
+    /** MODIFIERS */
+    modifier inPhase(Phase _phase) {
+        require(phase == _phase);
         _;
     }
 
-    modifier isBelowHardCap {
-        require(weiRaised.add(msg.value) <= SALE_MAX);
+    modifier canBuy(Phase _phase) {
+        require(phase == Phase.Presale || phase == Phase.Crowdsale);
+
+        if (_phase == Phase.Presale) {
+            require(block.timestamp >= presaleStartTimestamp);
+        }
+        if (_phase == Phase.Crowdsale) {
+            require(block.timestamp >= saleStartTimestamp);
+        }
         _;
     }
 
-    modifier isNotHalted {
-        assert(!halted);
+    modifier presaleOpenHours {
+        uint8 hourUTC = dateTime.getHour(block.timestamp);
+        require(hourUTC < 5 || hourUTC >= 16);
         _;
     }
 
-    modifier isAfter(uint timestamp) {
-        assert(now >= timestamp);
-        _;
+    /** PHASES */
+
+    function VyralSale() {
+        phase = Phase.Deployed;
+
+        shareToken = new Share();
+        dateTime = new DateTime();
     }
 
-    modifier isBefore(uint timestamp) {
-        assert(now < timestamp);
-        _;
-    }
-
-    modifier inStatus(Status _status) {
-        require(saleStatus == _status);
-        _;
-    }
-
-    modifier notInStatus(Status _status) {
-        require(saleStatus != _status);
-        _;
-    }
-
-
-    /*
-     * Events
-     */
-    event LogPurchase(address referrer, uint reward, address buyer, uint amount);
-
-
-    /**
-     * @dev Begin sale. Tokens are allocated as follows:
-     *      A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-     *      B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-     *      C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
-     *      D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
-     */
-    function VyralSale(
-        address _token,
-        address _wallet,
-        address _vestingWallet,
-        uint _presaleStartTime,
-        uint _saleStartTime
-    )
-        public
+    function initialize(address _wallet,
+                        uint _presaleStartTimestamp,
+                        uint _presaleEndTimestamp,
+                        uint _presaleAllocation)
+        inPhase(Phase.Deployed)
+        onlyOwner
+        external returns (bool)
     {
+        require(_wallet != 0x0);
+        require(_presaleStartTimestamp > block.timestamp);
+        require(_presaleEndTimestamp > _presaleStartTimestamp);
+        require(_presaleAllocation < SALE_ALLOCATION);
+
         wallet = _wallet;
-        vestingWallet = _vestingWallet;
+        presaleStartTimestamp = _presaleStartTimestamp;
+        presaleEndTimestamp = _presaleEndTimestamp;
+        presaleAllocation = _presaleAllocation;
 
-        presaleStartTime = _presaleStartTime;
-        presaleEndTime = presaleStartTime + presaleDuration;
+        vestingWallet = new Vesting(address(shareToken));
 
-        saleStartTime = _saleStartTime;
-        saleEndTime = saleStartTime + saleDuration;
+        campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
 
-        // SHARE token
-        token = Share(_token);
-//        token.transfer(address(this), token.totalSupply());
+        shareToken.approve(vestingWallet, TEAM.add(PARTNERS));
+        shareToken.addTransferrer(vestingWallet);
+        shareToken.addTransferrer(campaign);
 
-        // Create a campaign and set 28.6% (2/7) of tokens as budget
-        campaign = new Campaign(address(token), TWO_SEVENTHS);
-
-        // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        //token.transfer(address(this), ONE_SEVENTH);
-
-        // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        //token.transfer(address(this), ONE_SEVENTH);
-
-        // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
-//        token.transfer(campaign, TWO_SEVENTHS);
-
-        // D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
-        //token.transfer(address(this), THREE_SEVENTHS);
-
-        saleStatus = Status.Ready;
+        phase = Phase.Initialized;
+        return true;
     }
 
+    /// Step 1.5 - Register Vesting Schedules
 
-    /**
-     * @dev By default, SHAREs are allocated if ETH is sent to this contract.
-     */
-    function()
-        public
-        payable
-//        isBelowHardCap
+    function startPresale()
+        inPhase(Phase.Initialized)
+        onlyOwner
+        external returns (bool)
     {
-        // Called without referral key
-        if(isSaleOn()) {
-            crowdsale(0x0);
-        } else if(isPresaleOn()) {
-            presale(0x0);
+
+        phase = Phase.Presale;
+        return true;
+    }
+
+    function endPresale()
+        inPhase(Phase.Presale)
+        onlyOwner
+        external returns (bool)
+    {
+        phase = Phase.Freeze;
+
+        return true;
+    }
+
+    function readySale(uint _saleStartTimestamp,
+                       uint _saleEndTimestamp)
+        inPhase(Phase.Freeze)
+        onlyOwner
+        external returns (bool)
+    {
+        require(_saleStartTimestamp > block.timestamp);
+        require(_saleEndTimestamp > _saleStartTimestamp);
+
+        saleStartTimestamp = _saleStartTimestamp;
+        saleEndTimestamp = _saleEndTimestamp;
+        saleAllocation = SALE_ALLOCATION.sub(soldPresale);
+
+        phase = Phase.Ready;
+        return true;
+    }
+
+    function startSale()
+        inPhase(Phase.Ready)
+        onlyOwner
+        external returns (bool)
+    {
+        phase = Phase.Crowdsale;
+        return true;
+    }
+
+    function finalizeSale()
+        inPhase(Phase.Crowdsale)
+        onlyOwner
+        external returns (bool)
+    {
+        phase = Phase.Finalized;
+        return true;
+    }
+
+    function decomission()
+        inPhase(Phase.Finalized)
+        onlyOwner
+        external returns (bool)
+    {
+        phase = Phase.Decomissioned;
+        return true;
+    }
+
+    /** BUY TOKENS */
+
+    function ()
+        public payable
+    {
+        if (phase == Phase.Presale) {
+            buyPresale(0x0);
+        }
+        if (phase == Phase.Crowdsale) {
+            buySale(0x0);
+        }
+        //else
+        revert();
+    }
+
+    function buyPresale(address _referrer)
+        inPhase(Phase.Presale)
+        canBuy(Phase.Presale)
+        presaleOpenHours
+        public payable
+    {
+        require(msg.value >= MIN_CONTRIBUTION);
+        require(!presaleCapReached);
+
+        uint contribution = msg.value;
+
+        uint purchased = contribution.mul(presaleRate);
+
+        uint totalSold = soldPresale.add(purchased);
+        uint excess;
+        if (totalSold >= presaleAllocation) {
+            excess = totalSold.sub(presaleAllocation);
+            if (excess > 0) {
+                purchased = purchased.sub(excess);
+                contribution - contribution.sub(excess.div(presaleRate));
+                msg.sender.transfer(excess.div(presaleRate));
+            }
+            presaleCapReached = true;
+        }
+
+        wallet.transfer(contribution);
+        shareToken.transfer(msg.sender, purchased);
+
+        if (_referrer != address(0x0)) {
+            campaign.join(_referrer, msg.sender, purchased);
         }
     }
 
-    /**
-     * @dev Send Ether, receive SHARE.
-     *
-     * @param _referrer Address of referrer
-     */
-    function crowdsale(
-        address _referrer
-    )
-        public
-        payable
-//        isAtLeastMinPurchase
-//        isBelowHardCap
-//        isAfter(saleStartTime)
-//        isBefore(saleEndTime)
-//        isNotHalted
-//        inStatus(Status.SaleStarted)
+    function buySale(address _referrer)
+        inPhase(Phase.Crowdsale)
+        canBuy(Phase.Crowdsale)
+        public payable
     {
-        address buyer = msg.sender;
-        uint weiReceived = msg.value;
-        uint shares = weiReceived * SHARES_PER_ETH;
+        require(msg.value >= MIN_CONTRIBUTION);
+        require(!saleCapReached);
 
-        // Transfer funds to wallet
-        wallet.transfer(msg.value);
+        uint contribution = msg.value;
 
-        // Enough to buy any tokens?
-        require(shares > 0);
+        uint purchased = contribution.mul(saleRate);
 
-        // Cannot purchTOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOLase more tokens than this contract has available to sell
-        require(shares <= token.balanceOf(this));
+        uint totalSold = soldSale.add(purchased);
+        uint excess;
+        if (totalSold >= saleAllocation) {
+            excess = totalSold.sub(saleAllocation);
+            if (excess > 0) {
+                purchased = purchased.sub(excess);
+                contribution = contribution.sub(excess.div(saleRate));
+                msg.sender.transfer(excess.div(saleRate));
+            }
+            saleCapReached = true;
+        }
 
-        // Running totals
-        weiRaised = weiRaised.add(weiReceived);
+        wallet.transfer(contribution);
+        shareToken.transfer(msg.sender, purchased);
 
-        // Transfer tokens to buyer
-        //token.transfer(buyer, shares);
-
-        // Add to referral tree to payout rewards
-        uint reward = campaign.join(_referrer, buyer, shares);
-
-        // Log event
-        LogPurchase(_referrer, reward, buyer, weiReceived);
+        if (_referrer != address(0x0)) {
+            campaign.join(_referrer, msg.sender, purchased);
+        }
     }
 
+    /** ADMIN SETTERS */
 
-    /**
-     * @dev Send Ether, receive SHARE.
-     *
-     * @param _referrer Address of referrer
-     */
-    function presale(
-        address _referrer
-    )
-        public
-        payable
-        isAtLeastMinPurchase
-        isBelowHardCap
-        isAfter(saleStartTime)
-        isBefore(saleEndTime)
-        isNotHalted
-        inStatus(Status.PresaleStarted)
-    {
-        address buyer = msg.sender;
-        uint weiReceived = msg.value;
-        uint shares = weiReceived * SHARES_PER_ETH;
+    /// TODO
 
-        // Transfer funds to wallet
-        wallet.transfer(msg.value);
+    /** EMERGENCY SWITCH */
+    bool public HALT;
 
-        // Enough to buy any tokens?
-        require(shares > 0);
-
-        // Cannot purchTOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOLase more tokens than this contract has available to sell
-        require(shares <= token.balanceOf(this));
-
-        // Running totals
-        weiRaised = weiRaised.add(weiReceived);
-
-        // Transfer tokens to buyer
-        token.transfer(buyer, shares);
-
-        // Add to referral tree to payout rewards
-        uint reward = campaign.join(_referrer, buyer, shares);
-
-        // Log event
-        LogPurchase(_referrer, reward, buyer, weiReceived);
-    }
-
-    /**
-     *
-     */
-    function finalize()
-        external
+    function toggleHALT(bool _on)
         onlyOwner
-        // inStatus(Status.SaleEnded)
-        notInStatus(Status.Finalized)
+        external returns (bool)
     {
-        saleStatus = Status.Finalized;
-        saleFinalizedAt = now;
+        HALT = _on;
+        return HALT;
     }
 
-    /**
-     * This function is to be called after finalization of the sale and will approve the vestingWallet
-     * to pull the funds which are allocated to vest out to the team and partnerships wallets.
-     * See test/Vesting.spec.js for example of the vesting flow.
-     */
-//    function approveVestTokens()
-//        external
-//        onlyOwner
-//        inStatus(Status.Finalized)
-//        returns (bool)
-//    {
-//        /// Approves team tokens
-//        require(token.approve(vestingWallet, ONE_SEVENTH));
-//        /// Approves partnership tokens
-//        require(token.approve(vestingWallet, ONE_SEVENTH));
-//
-//        return true;
-//    }
-//
-//    /// Proxy function that enables the transfers of the Vyral Token
-//    function enableTransfers()
-//        external
-//        onlyOwner
-//        returns (bool)
-//    {
-//        require(token.enableTransfers());
-//        return true;
-//    }
-
-    function isPresaleOn()
-        public
-        view
-        returns (bool)
-    {
-        return now >= presaleStartTime && now <= presaleEndTime && !halted;
-    }
-
-    function isSaleOn()
-        public
-        view
-        returns (bool)
-    {
-        return now >= saleStartTime && now <= saleEndTime && !halted;
-    }
-
+    /** LOGS */
+    event PhaseShift(Phase phase);
+    event Contribution(Phase phase, address buyer, uint contribtuion);
+    event Referral(address referrer, address referree, uint reward);
 }
