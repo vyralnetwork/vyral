@@ -6,6 +6,8 @@ import "./Campaign.sol";
 import "./Share.sol";
 import "./Vesting.sol";
 
+import "../lib/ethereum-datetime/contracts/DateTime.sol";
+
 contract VyralSale is Ownable {
     using SafeMath for uint;
 
@@ -47,6 +49,7 @@ contract VyralSale is Ownable {
     address public vestingWallet;
     Share public shareToken;
     Campaign public campaign;
+    DateTime public dateTime;
 
     bool public vestingRegistered;
 
@@ -75,12 +78,19 @@ contract VyralSale is Ownable {
         _;
     }
 
+    modifier presaleOpenHours {
+        uint8 hourUTC = dateTime.getHour(block.timestamp);
+        require(hourUTC < 5 || hourUTC >= 16);
+        _;
+    }
+
     /** PHASES */
 
     function VyralSale() {
         phase = Phase.Deployed;
 
         shareToken = new Share(TOTAL_SUPPLY);
+        dateTime = new DateTime();
     }
 
     function initialize(address _wallet,
@@ -194,6 +204,7 @@ contract VyralSale is Ownable {
     function buyPresale(address _vyralKey)
         inPhase(Phase.Presale)
         canBuy(Phase.Presale)
+        presaleOpenHours
         public payable
     {
         require(msg.value >= MIN_CONTRIBUTION);
