@@ -30,7 +30,7 @@ contract VyralSale is Ownable {
     uint public presaleStartTimestamp;
     uint public presaleEndTimestamp;
     uint public presaleRate;
-    uint public presaleAllocation;
+    uint public presaleCap;
 
     bool public presaleCapReached;
     uint public soldPresale;
@@ -39,7 +39,7 @@ contract VyralSale is Ownable {
     uint public saleStartTimestamp;
     uint public saleEndTimestamp;
     uint public saleRate;
-    uint public saleAllocation;
+    uint public saleCap;
 
     bool public saleCapReached;
     uint public soldSale;
@@ -96,7 +96,8 @@ contract VyralSale is Ownable {
     function initialize(address _wallet,
                         uint _presaleStartTimestamp,
                         uint _presaleEndTimestamp,
-                        uint _presaleAllocation)
+                        uint _presaleCap,
+                        uint _presaleRate)
         inPhase(Phase.Deployed)
         onlyOwner
         external returns (bool)
@@ -104,12 +105,12 @@ contract VyralSale is Ownable {
         require(_wallet != 0x0);
         require(_presaleStartTimestamp > block.timestamp);
         require(_presaleEndTimestamp > _presaleStartTimestamp);
-        require(_presaleAllocation < SALE_ALLOCATION);
+        require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
 
         wallet = _wallet;
         presaleStartTimestamp = _presaleStartTimestamp;
         presaleEndTimestamp = _presaleEndTimestamp;
-        presaleAllocation = _presaleAllocation;
+        presaleCap = _presaleCap;
 
         vestingWallet = new Vesting(address(shareToken));
 
@@ -146,7 +147,8 @@ contract VyralSale is Ownable {
     }
 
     function readySale(uint _saleStartTimestamp,
-                       uint _saleEndTimestamp)
+                       uint _saleEndTimestamp,
+                       uint _saleRate)
         inPhase(Phase.Freeze)
         onlyOwner
         external returns (bool)
@@ -156,7 +158,7 @@ contract VyralSale is Ownable {
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
-        saleAllocation = SALE_ALLOCATION.sub(soldPresale);
+        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(_presaleCap);
 
         phase = Phase.Ready;
         return true;
@@ -217,18 +219,19 @@ contract VyralSale is Ownable {
 
         uint purchased = contribution.mul(presaleRate);
 
-        uint totalSold = soldPresale.add(purchased);
-        uint excess;
-        if (totalSold >= presaleAllocation) {
-            excess = totalSold.sub(presaleAllocation);
+        uint totalSold = soldPresale.add(contribution);
+        uint excess; // extra ether sent
+        if (totalSold >= presaleCap) {
+            excess = totalSold.sub(presaleCap);
             if (excess > 0) {
-                purchased = purchased.sub(excess);
-                contribution - contribution.sub(excess.div(presaleRate));
-                msg.sender.transfer(excess.div(presaleRate));
+                purchased = purchased.sub(excess.mul(presaleRate));
+                contribution = contribution.sub(excess);
+                msg.sender.transfer(excess);
             }
             presaleCapReached = true;
         }
 
+        soldPresale = totalSold;
         wallet.transfer(contribution);
         shareToken.transfer(msg.sender, purchased);
 
@@ -249,18 +252,19 @@ contract VyralSale is Ownable {
 
         uint purchased = contribution.mul(saleRate);
 
-        uint totalSold = soldSale.add(purchased);
-        uint excess;
-        if (totalSold >= saleAllocation) {
-            excess = totalSold.sub(saleAllocation);
+        uint totalSold = soldSale.add(contribution);
+        uint excess; // extra ether sent
+        if (totalSold >= saleCap) {
+            excess = totalSold.sub(saleCap);
             if (excess > 0) {
-                purchased = purchased.sub(excess);
-                contribution = contribution.sub(excess.div(saleRate));
-                msg.sender.transfer(excess.div(saleRate));
+                purchased = purchased.sub(excess.mul(saleRate));
+                contribution = contribution.sub(excess);
+                msg.sender.transfer(excess);
             }
             saleCapReached = true;
         }
 
+        soldSale = totalSold;
         wallet.transfer(contribution);
         shareToken.transfer(msg.sender, purchased);
 
@@ -286,6 +290,6 @@ contract VyralSale is Ownable {
 
     /** LOGS */
     event PhaseShift(Phase phase);
-    event Contribution(Phase phase, address buyer, uint contribtuion);
+    event Contribution(Phase phase, address buyer, uint contribution);
     event Referral(address referrer, address referree, uint reward);
 }
