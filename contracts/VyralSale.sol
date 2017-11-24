@@ -22,16 +22,10 @@ contract VyralSale is Ownable {
     uint public constant SHARES_PER_ETH = 4285;
 
     /*
-     * Token constants
+     * Budget constants
      */
 
-    string public constant TOKEN_NAME = "Vyral Token";
-
-    string public constant TOKEN_SYMBOL = "SHARE";
-    
     uint8 public constant TOKEN_DECIMALS = 18;
-
-    uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(TOKEN_DECIMALS));
 
     uint public constant ONE_SEVENTH = 111111111 * (10 ** uint(TOKEN_DECIMALS));
 
@@ -144,6 +138,7 @@ contract VyralSale is Ownable {
      *      D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
      */
     function VyralSale(
+        address _token,
         address _wallet,
         address _vestingWallet,
         uint _presaleStartTime,
@@ -160,23 +155,24 @@ contract VyralSale is Ownable {
         saleStartTime = _saleStartTime;
         saleEndTime = saleStartTime + saleDuration;
 
-        // Create SHARE token
-        token = new Share();
+        // SHARE token
+        token = Share(_token);
+//        token.transfer(address(this), token.totalSupply());
 
         // Create a campaign and set 28.6% (2/7) of tokens as budget
         campaign = new Campaign(address(token), TWO_SEVENTHS);
 
         // A. Team & Advisor 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(, ONE_SEVENTH);
+        //token.transfer(address(this), ONE_SEVENTH);
 
         // B. Partnerships + Development + Sharing Bounties 14.3% (1/7) - 111,111,111 SHARE
-        token.transfer(partnerships, ONE_SEVENTH);
+        //token.transfer(address(this), ONE_SEVENTH);
 
         // C. Crowdsale Vyral Rewards & Remainder for Future Vyral Sales 28.6% (2/7) - 222,222,222 SHARE
-        token.transfer(campaign, TWO_SEVENTHS);
+//        token.transfer(campaign, TWO_SEVENTHS);
 
         // D. Crowdsale 42.8% (3/7) - 333,333,333 SHARE
-        token.transfer(address(this), THREE_SEVENTHS);
+        //token.transfer(address(this), THREE_SEVENTHS);
 
         saleStatus = Status.Ready;
     }
@@ -189,11 +185,13 @@ contract VyralSale is Ownable {
         public
         payable
 //        isBelowHardCap
-//        isNotHalted
-//        inStatus(Status.SaleStarted)
     {
         // Called without referral key
-        buyTokens(0x0);
+        if(isSaleOn()) {
+            crowdsale(0x0);
+        } else if(isPresaleOn()) {
+            presale(0x0);
+        }
     }
 
     /**
@@ -201,7 +199,7 @@ contract VyralSale is Ownable {
      *
      * @param _referrer Address of referrer
      */
-    function buyTokens(
+    function crowdsale(
         address _referrer
     )
         public
@@ -212,6 +210,50 @@ contract VyralSale is Ownable {
 //        isBefore(saleEndTime)
 //        isNotHalted
 //        inStatus(Status.SaleStarted)
+    {
+        address buyer = msg.sender;
+        uint weiReceived = msg.value;
+        uint shares = weiReceived * SHARES_PER_ETH;
+
+        // Transfer funds to wallet
+        wallet.transfer(msg.value);
+
+        // Enough to buy any tokens?
+        require(shares > 0);
+
+        // Cannot purchTOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOLase more tokens than this contract has available to sell
+        require(shares <= token.balanceOf(this));
+
+        // Running totals
+        weiRaised = weiRaised.add(weiReceived);
+
+        // Transfer tokens to buyer
+        //token.transfer(buyer, shares);
+
+        // Add to referral tree to payout rewards
+        uint reward = campaign.join(_referrer, buyer, shares);
+
+        // Log event
+        LogPurchase(_referrer, reward, buyer, weiReceived);
+    }
+
+
+    /**
+     * @dev Send Ether, receive SHARE.
+     *
+     * @param _referrer Address of referrer
+     */
+    function presale(
+        address _referrer
+    )
+        public
+        payable
+        isAtLeastMinPurchase
+        isBelowHardCap
+        isAfter(saleStartTime)
+        isBefore(saleEndTime)
+        isNotHalted
+        inStatus(Status.PresaleStarted)
     {
         address buyer = msg.sender;
         uint weiReceived = msg.value;
@@ -280,4 +322,21 @@ contract VyralSale is Ownable {
 //        require(token.enableTransfers());
 //        return true;
 //    }
+
+    function isPresaleOn()
+        public
+        view
+        returns (bool)
+    {
+        return now >= presaleStartTime && now <= presaleEndTime && !halted;
+    }
+
+    function isSaleOn()
+        public
+        view
+        returns (bool)
+    {
+        return now >= saleStartTime && now <= saleEndTime && !halted;
+    }
+
 }

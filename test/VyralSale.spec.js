@@ -1,7 +1,7 @@
 /**
  * Vyral contract scenarios.
  */
-const Share          = artifacts.require("./HumanStandardToken.sol");
+const Share          = artifacts.require("./Share.sol");
 const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
 const MultiSigWallet = artifacts.require("./MultiSigWallet.sol");
@@ -38,9 +38,7 @@ contract("Vyral Presale Agreements", (accounts) => {
 
     beforeEach(async () => {
         this.vyralSale = await VyralSale.deployed();
-
-        let tokenAddr = await this.vyralSale.token.call();
-        this.share    = Share.at(tokenAddr);
+        this.share     = await Share.deployed();
 
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
@@ -56,10 +54,9 @@ contract("Vyral Presale Agreements", (accounts) => {
 
         it("should execute a sale and transfer tokens", async () => {
             await this.vyralSale.sendTransaction({from: grace, value: 1});
-            let graceBalance    = await this.share.balanceOf.call(grace);
-            let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
-            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
-            let campaignBudget  = await this.vyralSale.THREE_SEVENTHS.call();
+            let graceBalance   = await this.share.balanceOf.call(grace);
+            let saleBalance    = await this.share.balanceOf.call(this.vyralSale.address);
+            let campaignBudget = await this.vyralSale.THREE_SEVENTHS.call();
 
             assert.equal(4285, graceBalance.toNumber());
             assert.isTrue(campaignBudget.equals(graceBalance.plus(saleBalance)));
@@ -67,14 +64,14 @@ contract("Vyral Presale Agreements", (accounts) => {
 
         // it("should reject contributions less than 1 ETH ", async () => {
         //     try {
-        //         await this.vyralSale.buyTokens(grace, {from: julia, value: 0.5});
+        //         await this.vyralSale.crowdsale(grace, {from: julia, value: 0.5});
         //     } catch(err) {
         //         assert(isReverted(err), err.toString());
         //     }
         // });
 
         it("should reward referrer 7% bonus when a new node joins", async () => {
-            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+            await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
             let juliasReferrer = await this.campaign.getReferrer.call(julia);
@@ -95,7 +92,7 @@ contract("Vyral Presale Agreements", (accounts) => {
         });
 
         it("should reward referrer 8% bonus when a new node joins", async () => {
-            await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+            await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
             let juliasReferrer = await this.campaign.getReferrer.call(julia);
@@ -123,13 +120,13 @@ contract("Vyral Presale Agreements", (accounts) => {
             let treeSize = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
-            let result1 = await this.vyralSale.buyTokens(grace, {from: julia, value: 1});
+            let result1 = await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
             treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
             console.log(result1.logs)
 
-            let result2 = await this.vyralSale.buyTokens(grace, {from: kevin, value: 1});
+            let result2 = await this.vyralSale.crowdsale(grace, {from: kevin, value: 1});
             treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
