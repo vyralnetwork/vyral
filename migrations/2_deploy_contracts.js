@@ -17,7 +17,9 @@ const PresaleBonuses = artifacts.require("./PresaleBonuses.sol");
 const config = require("../config");
 const moment = require("moment");
 
-module.exports = function(deployer) {
+let saleInstance, shareInstance;
+
+module.exports = function test(deployer) {
     deployer.deploy(MultiSigWallet,
     config.get("wallet:owners"),
     config.get("wallet:required"))
@@ -57,6 +59,7 @@ module.exports = function(deployer) {
         return VyralSale.deployed();
     })
     .then((vyralSale) => {
+        saleInstance = vyralSale;
 
         console.log("Sale deployed with these arguments",
         MultiSigWallet.address,
@@ -75,10 +78,19 @@ module.exports = function(deployer) {
         return Share.deployed();
     })
     .then((share) => {
+        shareInstance = share;
         return Promise.all([
+            share.addTransferrer(Share.address),
             share.addTransferrer(VyralSale.address),
             share.addTransferrer(Vesting.address)
         ]);
+    })
+    .then((txs) => {
+        console.log(txs);
+        return saleInstance.campaign.call();
+    })
+    .then((campaignAddress) => {
+        return shareInstance.addTransferrer(campaignAddress);
     })
     .then((txs) => {
         console.log(txs);

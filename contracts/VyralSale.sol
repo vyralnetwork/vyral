@@ -159,6 +159,8 @@ contract VyralSale is Ownable {
 
         shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
 
+        // shareToken.transfer(campaign, VYRAL_REWARDS);
+
         phase = Phase.Initialized;
         return true;
     }
@@ -193,8 +195,8 @@ contract VyralSale is Ownable {
         onlyOwner
         external returns (bool)
     {
-        require(_saleStartTimestamp > block.timestamp);
-        require(_saleEndTimestamp > _saleStartTimestamp);
+        //require(_saleStartTimestamp > block.timestamp);
+        //require(_saleEndTimestamp > _saleStartTimestamp);
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;

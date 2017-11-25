@@ -43,13 +43,32 @@ contract("Vyral Presale Agreements", (accounts) => {
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
 
-        //await this.vyralSale.startPresale({from: owner});
-        // await this.vyralSale.endPresale({from: owner});
-        //
-        // await this.vyralSale.initSale(
-        // moment().minute(1).unix(),
-        // moment().day(1).unix(),
-        // config.get("rate"), {from: owner});
+        let phase = await this.vyralSale.phase.call();
+        console.log("phase", phase)
+
+        await this.vyralSale.startPresale({from: owner});
+
+        phase = await this.vyralSale.phase.call();
+        console.log("phase", phase)
+
+        await this.vyralSale.endPresale({from: owner});
+        phase = await this.vyralSale.phase.call();
+        console.log("phase", phase)
+
+        await this.vyralSale.initSale(
+        moment().minute(1).unix(),
+        moment().day(1).unix(),
+        config.get("rate"), {from: owner});
+
+        phase = await this.vyralSale.phase.call();
+        console.log("phase", phase)
+
+        await this.vyralSale.startSale({from: owner});
+
+        phase = await this.vyralSale.phase.call();
+        console.log("phase", phase)
+
+
     });
 
     describe("Basic sale", () => {
