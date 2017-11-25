@@ -10,6 +10,7 @@ const Share     = artifacts.require("./Share.sol");
 const Vesting   = artifacts.require("./Vesting.sol");
 const Campaign  = artifacts.require("./Campaign.sol");
 const VyralSale = artifacts.require("./VyralSale.sol");
+const PresaleBonuses = artifacts.require("./PresaleBonuses.sol");
 
 const config = require("../config");
 
@@ -33,9 +34,13 @@ module.exports = function(deployer) {
         return deployer.deploy(TieredPayoff);
     })
     .then(() => {
+        return deployer.deploy(PresaleBonuses);
+    })
+    .then(() => {
         deployer.link(Ownable, VyralSale);
         deployer.link(TieredPayoff, VyralSale);
         deployer.link(Referral, VyralSale);
+        deployer.link(PresaleBonuses, VyralSale);
 
         return deployer.deploy(VyralSale);
     })
