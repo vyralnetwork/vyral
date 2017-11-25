@@ -1,5 +1,6 @@
 pragma solidity ^0.4.18;
 
+
 import {Ownable} from "./traits/Ownable.sol";
 import "./math/SafeMath.sol";
 import {Campaign} from "./Campaign.sol";
@@ -8,6 +9,7 @@ import {Vesting} from "./Vesting.sol";
 import "./PresaleBonuses.sol";
 
 import "../lib/ethereum-datetime/contracts/DateTime.sol";
+
 
 contract VyralSale is Ownable {
     using SafeMath for uint;
@@ -27,50 +29,70 @@ contract VyralSale is Ownable {
 
     Phase public phase;
 
-    /** PRESALE PARAMS */
-    // struct Presale {
-    //     uint public presaleStartTimestamp;
-    //     uint public presaleEndTimestamp;
-    //     uint public presaleRate;
-    //     uint public presaleCap;
+    /**
+     * PRESALE PARAMS
+     */
 
-    //     bool public presaleCapReached;
-    //     uint public soldPresale;
-    // }
     uint public presaleStartTimestamp;
+
     uint public presaleEndTimestamp;
+
     uint public presaleRate;
+
     uint public presaleCap;
 
     bool public presaleCapReached;
+
     uint public soldPresale;
 
-    /** CROWDSALE PARAMS */
+    /**
+     * CROWDSALE PARAMS
+     */
+
     uint public saleStartTimestamp;
+
     uint public saleEndTimestamp;
+
     uint public saleRate;
+
     uint public saleCap;
 
     bool public saleCapReached;
+
     uint public soldSale;
 
-    /** GLOBAL PARAMS */
+    /**
+     * GLOBAL PARAMS
+     */
     address public wallet;
+
     address public vestingWallet;
+
     Share public shareToken;
+
     Campaign public campaign;
+
     DateTime public dateTime;
 
     bool public vestingRegistered;
 
+    /**
+     * Token and budget allocation constants
+     */
     uint public constant TOTAL_SUPPLY = 777777777 * (10 ** uint(18));
 
     uint public constant TEAM = TOTAL_SUPPLY.div(7);
+
     uint public constant PARTNERS = TOTAL_SUPPLY.div(7);
+
     uint public constant VYRAL_REWARDS = TOTAL_SUPPLY.div(7).mul(2);
+
     uint public constant SALE_ALLOCATION = TOTAL_SUPPLY.div(7).mul(3);
 
-    /** MODIFIERS */
+    /**
+     * MODIFIERS
+     */
+
     modifier inPhase(Phase _phase) {
         require(phase == _phase);
         _;
@@ -94,7 +116,9 @@ contract VyralSale is Ownable {
         _;
     }
 
-    /** PHASES */
+    /**
+     * PHASES
+     */
 
      function VyralSale(address _share,
                         address _vesting,
@@ -107,19 +131,21 @@ contract VyralSale is Ownable {
          vestingWallet = Vesting(_vesting);
     }
 
-    function initialize(address _wallet,
-                        uint _presaleStartTimestamp,
-                        uint _presaleEndTimestamp,
-                        uint _presaleCap,
-                        uint _presaleRate)
+    function initPresale(
+        address _wallet,
+        uint _presaleStartTimestamp,
+        uint _presaleEndTimestamp,
+        uint _presaleCap,
+        uint _presaleRate
+    )
         inPhase(Phase.Deployed)
         onlyOwner
         external returns (bool)
     {
         require(_wallet != 0x0);
-        require(_presaleStartTimestamp > block.timestamp);
-        require(_presaleEndTimestamp > _presaleStartTimestamp);
-        require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
+        //        require(_presaleStartTimestamp >= block.timestamp);
+        //        require(_presaleEndTimestamp > _presaleStartTimestamp);
+        //        require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
 
         wallet = _wallet;
         presaleStartTimestamp = _presaleStartTimestamp;
@@ -128,9 +154,9 @@ contract VyralSale is Ownable {
 
         campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
 
-    //    shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
-    //    shareToken.addTransferrer(vestingWallet);
-    //    shareToken.addTransferrer(campaign);
+        shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
+
+        // shareToken.transfer(campaign, VYRAL_REWARDS);
 
         phase = Phase.Initialized;
         return true;
@@ -143,7 +169,6 @@ contract VyralSale is Ownable {
         onlyOwner
         external returns (bool)
     {
-
         phase = Phase.Presale;
         return true;
     }
@@ -158,15 +183,17 @@ contract VyralSale is Ownable {
         return true;
     }
 
-    function readySale(uint _saleStartTimestamp,
-                       uint _saleEndTimestamp,
-                       uint _saleRate)
-        inPhase(Phase.Freeze)
+    function initSale(
+        uint _saleStartTimestamp,
+        uint _saleEndTimestamp,
+        uint _saleRate)
+        inPhase(Phase.Freeze
+    )
         onlyOwner
         external returns (bool)
     {
-        require(_saleStartTimestamp > block.timestamp);
-        require(_saleEndTimestamp > _saleStartTimestamp);
+        //require(_saleStartTimestamp > block.timestamp);
+        //require(_saleEndTimestamp > _saleStartTimestamp);
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
@@ -205,7 +232,7 @@ contract VyralSale is Ownable {
 
     /** BUY TOKENS */
 
-    function ()
+    function()
         public payable
     {
         if (phase == Phase.Presale) {
@@ -228,11 +255,12 @@ contract VyralSale is Ownable {
         require(!presaleCapReached);
 
         uint contribution = msg.value;
-
         uint purchased = contribution.mul(presaleRate);
-
         uint totalSold = soldPresale.add(contribution);
-        uint excess; // extra ether sent
+
+        uint excess;
+
+        // extra ether sent
         if (totalSold >= presaleCap) {
             excess = totalSold.sub(presaleCap);
             if (excess > 0) {
@@ -247,7 +275,7 @@ contract VyralSale is Ownable {
         wallet.transfer(contribution);
         shareToken.transfer(msg.sender, purchased);
 
-        ///Calculate presale bonus
+        // Calculate presale bonus
         uint reward = PresaleBonuses.presaleBonusApplicator(contribution, presaleStartTimestamp);
         shareToken.transferReward(msg.sender, reward);
 
@@ -265,11 +293,12 @@ contract VyralSale is Ownable {
         require(!saleCapReached);
 
         uint contribution = msg.value;
-
         uint purchased = contribution.mul(saleRate);
-
         uint totalSold = soldSale.add(contribution);
-        uint excess; // extra ether sent
+
+        uint excess;
+
+        // extra ether sent
         if (totalSold >= saleCap) {
             excess = totalSold.sub(saleCap);
             if (excess > 0) {
@@ -289,11 +318,15 @@ contract VyralSale is Ownable {
         }
     }
 
-    /** ADMIN SETTERS */
+    /**
+     * ADMIN SETTERS
+     */
 
     /// TODO
 
-    /** EMERGENCY SWITCH */
+    /**
+     * EMERGENCY SWITCH
+     */
     bool public HALT;
 
     function toggleHALT(bool _on)
@@ -304,8 +337,12 @@ contract VyralSale is Ownable {
         return HALT;
     }
 
-    /** LOGS */
-    event PhaseShift(Phase phase);
-    event Contribution(Phase phase, address buyer, uint contribution);
-    event Referral(address referrer, address referree, uint reward);
+    /**
+     * LOGS
+     */
+    event LogPhaseShift(Phase phase);
+
+    event LogContribution(Phase phase, address buyer, uint contribution);
+
+    event LogReferral(address referrer, address referree, uint reward);
 }

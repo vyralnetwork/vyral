@@ -8,16 +8,18 @@ const Ownable  = artifacts.require("./traits/Ownable.sol");
 const Referral     = artifacts.require("./referral/Referral.sol");
 const TieredPayoff = artifacts.require("./referral/TieredPayoff.sol");
 
-const Share     = artifacts.require("./Share.sol");
-const Vesting   = artifacts.require("./Vesting.sol");
-const Campaign  = artifacts.require("./Campaign.sol");
-const VyralSale = artifacts.require("./VyralSale.sol");
+const Share          = artifacts.require("./Share.sol");
+const Vesting        = artifacts.require("./Vesting.sol");
+const Campaign       = artifacts.require("./Campaign.sol");
+const VyralSale      = artifacts.require("./VyralSale.sol");
 const PresaleBonuses = artifacts.require("./PresaleBonuses.sol");
 
 const config = require("../config");
 const moment = require("moment");
 
-module.exports = function(deployer) {
+let saleInstance, shareInstance;
+
+module.exports = function test(deployer) {
     deployer.deploy(MultiSigWallet,
     config.get("wallet:owners"),
     config.get("wallet:required"))
@@ -57,8 +59,17 @@ module.exports = function(deployer) {
         return VyralSale.deployed();
     })
     .then((vyralSale) => {
-        return vyralSale.initialize(MultiSigWallet.address,
-        moment.unix(),
+        saleInstance = vyralSale;
+
+        console.log("Sale deployed with these arguments",
+        MultiSigWallet.address,
+        moment().unix(),
+        moment().day(1).unix(),
+        web3.toWei(config.get("presale:cap")),
+        config.get("rate"));
+
+        return vyralSale.initPresale(MultiSigWallet.address,
+        moment().minute(1).unix(),
         moment().day(1).unix(),
         web3.toWei(config.get("presale:cap")),
         config.get("rate"));
@@ -67,7 +78,22 @@ module.exports = function(deployer) {
         return Share.deployed();
     })
     .then((share) => {
-        return share.addTransferrer(VyralSale.address);
+        shareInstance = share;
+        return Promise.all([
+            share.addTransferrer(Share.address),
+            share.addTransferrer(VyralSale.address),
+            share.addTransferrer(Vesting.address)
+        ]);
+    })
+    .then((txs) => {
+        console.log(txs);
+        return saleInstance.campaign.call();
+    })
+    .then((campaignAddress) => {
+        return shareInstance.addTransferrer(campaignAddress);
+    })
+    .then((txs) => {
+        console.log(txs);
     })
     .catch((err) => {
         console.error("Deployment failed", err);

@@ -22,32 +22,10 @@ contract Campaign is Ownable {
     /// Token in use
     uint public budget;
 
-    /// Campaign is always in one of the following states
-    enum CampaignState {
-        Ready,
-        Started,
-        Stopped,
-        Canceled,
-        Completed
-    }
-
-    // Current state of the contract
-    CampaignState public state;
-
 
     /*
      * Modifiers
      */
-
-    modifier inState(CampaignState _state) {
-        require(state == _state);
-        _;
-    }
-
-    modifier notInState(CampaignState _state) {
-        require(state != _state);
-        _;
-    }
 
     modifier onlyNonZeroAddress(address _a) {
         require(_a != 0);
@@ -72,9 +50,6 @@ contract Campaign is Ownable {
     /// A new campaign was created
     event LogCampaignCreated(address campaign);
 
-    /// A campaign's state changed
-    event LogCampaignStateChanged(address campaign, CampaignState previousState, CampaignState currentState);
-
     /// Reward allocated
     event LogRewardAllocated(address referrer, uint inviteeShares, uint referralReward);
 
@@ -90,8 +65,6 @@ contract Campaign is Ownable {
     {
         token = Share(_token);
         budget = _budgetAmount;
-
-        state = CampaignState.Ready;
     }
 
     /**
@@ -106,9 +79,7 @@ contract Campaign is Ownable {
         uint _shares
     )
         public
-//        inState(CampaignState.Started)
         onlyNonZeroAddress(_invitee)
-//        onlyOnReferral(_invitee)
         onlyIfFundsAvailable()
         returns(uint reward)
     {
