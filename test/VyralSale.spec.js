@@ -34,7 +34,7 @@ function timeTravel(time) {
 
 contract("Vyral Presale Agreements", (accounts) => {
 
-    const [grace, julia, kevin] = accounts;
+    const [owner, grace, julia, kevin] = accounts;
 
     beforeEach(async () => {
         this.vyralSale = await VyralSale.deployed();
@@ -42,14 +42,21 @@ contract("Vyral Presale Agreements", (accounts) => {
 
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
+
+        //await this.vyralSale.startPresale({from: owner});
+        // await this.vyralSale.endPresale({from: owner});
+        //
+        // await this.vyralSale.initSale(
+        // moment().minute(1).unix(),
+        // moment().day(1).unix(),
+        // config.get("rate"), {from: owner});
     });
 
     describe("Basic sale", () => {
 
         it("should initialize sale", async () => {
-            let saleStartTime = await this.vyralSale.saleStartTime.call();
-            let saleEndTime   = await this.vyralSale.saleEndTime.call();
-            let saleDuration  = await this.vyralSale.saleDuration.call();
+            let saleStartTime = await this.vyralSale.presaleStartTimestamp.call();
+            let saleEndTime   = await this.vyralSale.presaleEndTimestamp.call();
         });
 
         it("should execute a sale and transfer tokens", async () => {
@@ -64,14 +71,14 @@ contract("Vyral Presale Agreements", (accounts) => {
 
         // it("should reject contributions less than 1 ETH ", async () => {
         //     try {
-        //         await this.vyralSale.crowdsale(grace, {from: julia, value: 0.5});
+        //         await this.vyralSale.buySale(grace, {from: julia, value: 0.5});
         //     } catch(err) {
         //         assert(isReverted(err), err.toString());
         //     }
         // });
 
         it("should reward referrer 7% bonus when a new node joins", async () => {
-            await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
+            await this.vyralSale.buySale(grace, {from: julia, value: 1});
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
             let juliasReferrer = await this.campaign.getReferrer.call(julia);
@@ -92,7 +99,7 @@ contract("Vyral Presale Agreements", (accounts) => {
         });
 
         it("should reward referrer 8% bonus when a new node joins", async () => {
-            await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
+            await this.vyralSale.buySale(grace, {from: julia, value: 1});
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
             let juliasReferrer = await this.campaign.getReferrer.call(julia);
@@ -120,13 +127,13 @@ contract("Vyral Presale Agreements", (accounts) => {
             let treeSize = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
-            let result1 = await this.vyralSale.crowdsale(grace, {from: julia, value: 1});
+            let result1 = await this.vyralSale.buySale(grace, {from: julia, value: 1});
             treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
             console.log(result1.logs)
 
-            let result2 = await this.vyralSale.crowdsale(grace, {from: kevin, value: 1});
+            let result2 = await this.vyralSale.buySale(grace, {from: kevin, value: 1});
             treeSize    = await this.campaign.getTreeSize.call();
             console.log("treeSize", treeSize.toString(10))
 
