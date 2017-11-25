@@ -105,6 +105,14 @@ contract Campaign is Ownable {
         }
     }
 
+    function sendReward(address _who, uint _amount)
+        onlyOwner //(ie, VyralSale)
+        external returns (bool)
+    {
+        token.transferReward(_who, _amount);
+        return true;
+    }
+
     /**
      * Return referral key of caller.
      */

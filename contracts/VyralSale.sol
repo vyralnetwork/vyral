@@ -276,9 +276,9 @@ contract VyralSale is Ownable {
         wallet.transfer(contribution);
         shareToken.transfer(msg.sender, purchased);
 
-        // Calculate presale bonus
+        /// Calculate reward and send it from campaign.
         uint reward = PresaleBonuses.presaleBonusApplicator(contribution, presaleStartTimestamp);
-        shareToken.transferReward(msg.sender, reward);
+        campaign.sendReward(msg.sender, reward);
 
         if (_referrer != address(0x0)) {
             campaign.join(_referrer, msg.sender, purchased);
