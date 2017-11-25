@@ -66,16 +66,10 @@ contract('Vesting implementation', async function(accounts) {
         )
         expect(vyralSale.address).to.exist
 
-        /// Approve the vesting wallets of the correct amounts
-        const teamShares = await vyralSale.TEAM()
-        const partnershipShares = await vyralSale.PARTNERSHIPS()
-        
-        console.log(teamShare, partnershipShares)
-
         /// Create the vesting schedules
         const teamVestTx = await vesting.registerVestingSchedule(
             Team,
-            Team,
+            vyralSale.address, //depositor
             EighteenMonthVest.startTimestamp,
             EighteenMonthVest.cliffTimestamp,
             EighteenMonthVest.lockPeriod,
@@ -87,7 +81,7 @@ contract('Vesting implementation', async function(accounts) {
 
         const partnershipsVestTx = await vesting.registerVestingSchedule(
             Partnerships,
-            Partnerships,
+            vyralSale.address, //depositor
             TwoYearVest.startTimestamp,
             TwoYearVest.cliffTimestamp,
             TwoYearVest.lockPeriod,
@@ -97,15 +91,36 @@ contract('Vesting implementation', async function(accounts) {
         
         expect(partnershipsVestTx.receipt).to.exist
 
-        /// Check the balances before
-        const teamBalOne = await token.balanceOf(Team)
-        expect(teamBalOne.toNumber()).to.equal(web3.toBigNumber(amount).toNumber())
-        const partnersBalOne = await token.balanceOf(Partnerships)
-        expect(partnersBalOne.toNumber()).to.equal(web3.toBigNumber(amount).toNumber())
+        /// Fund the sale and authorize addresses
+        const totalSupply = await shareToken.TOTAL_SUPPLY.call();
+
+        await shareToken.transfer(vyralSale.address, totalSupply.toNumber())
+        await shareToken.addTransferrer(vyralSale.address)
+        await shareToken.addTransferrer(vesting.address)
+
+        /// Accounting
+        const balance = await shareToken.balanceOf(vyralSale.address)
+        expect(balance.toNumber())
+            .to.equal(totalSupply.toNumber())
+
+        /// Call initPresale to approve the vesting schedule.
+        const txn = await vyralSale.initPresale(
+            Owner,
+            moment().minute(1).unix(),
+            moment().day(1).unix(),
+            web3.toWei(config.get("presale:cap")),
+            config.get("rate")
+        )
+
+        /// Accounting (Sends amount*2 to campaign)
+        const balance2 = await shareToken.balanceOf(vyralSale.address)
+        expect(balance2.toNumber())
+            .to.equal(amount*5)
 
         /// Confirm the vesting schedules this should move the tokens
         const teamConfirmTx = await vesting.confirmVestingSchedule(
-            EighteenMonthVest.startTimestamp,EighteenMonthVest.cliffTimestamp,
+            EighteenMonthVest.startTimestamp,
+            EighteenMonthVest.cliffTimestamp,
             EighteenMonthVest.lockPeriod,
             EighteenMonthVest.endTimestamp,
             EighteenMonthVest.totalAmount,
@@ -125,14 +140,14 @@ contract('Vesting implementation', async function(accounts) {
 
         expect(partnersConfirmTx.receipt).to.exist
 
-        /// Check that the tokens were transferred to the Vesting wallet.
-        const teamBalTwo = await token.balanceOf(Team)
-        expect(teamBalTwo.toNumber()).to.equal(0) 
-        const partnersBalTwo = await token.balanceOf(Partnerships)
-        expect(partnersBalTwo.toNumber()).to.equal(0)
+        /// Accounting
+        const balance3 = await shareToken.balanceOf(vyralSale.address)
+        expect(balance3.toNumber())
+            .to.equal(web3.toBigNumber(amount).mul(3).toNumber())
 
-        const vestingBal = await token.balanceOf(vesting.address)
-        expect(vestingBal.toNumber()).to.equal(web3.toBigNumber(amount).mul(2).toNumber())
+        const vestingBal = await shareToken.balanceOf(vesting.address)
+        expect(vestingBal.toNumber())
+            .to.equal(web3.toBigNumber(amount).mul(2).toNumber())
         
         /// Wait until the beginning of the vesting period.
         const secondsToWait = vestingStart - now
@@ -142,7 +157,7 @@ contract('Vesting implementation', async function(accounts) {
         const withdrawTx1 = await vesting.withdrawVestedTokens({from: Partnerships})
         expect(withdrawTx1.receipt).to.exist 
 
-        const partnersBalThree = await token.balanceOf(Partnerships)
+        const partnersBalThree = await shareToken.balanceOf(Partnerships)
         assert(partnersBalThree.toNumber() > web3.toBigNumber(amount).div(24).toNumber())
 
         /// Wait six months
@@ -152,7 +167,7 @@ contract('Vesting implementation', async function(accounts) {
         const withdrawTx2 = await vesting.withdrawVestedTokens({from: Team})
         expect(withdrawTx2.receipt).to.exist 
 
-        const teamBalThree = await token.balanceOf(Team)
+        const teamBalThree = await shareToken.balanceOf(Team)
         assert(teamBalThree.toNumber() > web3.toBigNumber(amount).div(3).toNumber())
 
         /// Wait a month
