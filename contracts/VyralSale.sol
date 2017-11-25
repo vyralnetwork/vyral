@@ -120,7 +120,8 @@ contract VyralSale is Ownable {
      * PHASES
      */
 
-     function VyralSale(address _share,
+    // Constructor
+    function VyralSale(address _share,
                         address _vesting,
                         address _datetime)
     {
@@ -156,7 +157,7 @@ contract VyralSale is Ownable {
 
         shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
 
-        // shareToken.transfer(campaign, VYRAL_REWARDS);
+        shareToken.transfer(address(campaign), VYRAL_REWARDS);
 
         phase = Phase.Initialized;
         return true;

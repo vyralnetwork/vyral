@@ -56,7 +56,18 @@ module.exports = function test(deployer) {
         DateTime.address);
     })
     .then(() => {
-        return VyralSale.deployed();
+        return Share.deployed();
+    })
+    .then((share) => {
+        shareInstance = share;
+        return Promise.all([
+            share.addTransferrer(Share.address),
+            share.addTransferrer(VyralSale.address),
+            share.addTransferrer(Vesting.address),
+        ]);
+    })
+    .then(() => {
+        return VyralSale.deployed()
     })
     .then((vyralSale) => {
         saleInstance = vyralSale;
@@ -68,32 +79,30 @@ module.exports = function test(deployer) {
         web3.toWei(config.get("presale:cap")),
         config.get("rate"));
 
-        return vyralSale.initPresale(MultiSigWallet.address,
-        moment().minute(1).unix(),
-        moment().day(1).unix(),
-        web3.toWei(config.get("presale:cap")),
-        config.get("rate"));
-    })
-    .then(() => {
-        return Share.deployed();
-    })
-    .then((share) => {
-        shareInstance = share;
-        return Promise.all([
-            share.addTransferrer(Share.address),
-            share.addTransferrer(VyralSale.address),
-            share.addTransferrer(Vesting.address)
-        ]);
+        return vyralSale.VYRAL_REWARDS.call();
+    })  
+    .then((vyralRewards) => {
+        // console.log(vyralRewards.toNumber())
+        return shareInstance.transfer(saleInstance.address, vyralRewards.toNumber());
     })
     .then((txs) => {
-        console.log(txs);
+        // console.log(txs)
+        return saleInstance.initPresale(
+            MultiSigWallet.address,
+            moment().minute(1).unix(),
+            moment().day(1).unix(),
+            web3.toWei(config.get("presale:cap")),
+            config.get("rate"));
+    })
+    .then((txs) => {
+        // console.log(txs);
         return saleInstance.campaign.call();
     })
     .then((campaignAddress) => {
         return shareInstance.addTransferrer(campaignAddress);
     })
     .then((txs) => {
-        console.log(txs);
+        // console.log(txs);
     })
     .catch((err) => {
         console.error("Deployment failed", err);
