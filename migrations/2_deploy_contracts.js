@@ -1,5 +1,7 @@
 const MultiSigWallet = artifacts.require('multisig-wallet/MultiSigWallet.sol');
 
+const DateTime = artifacts.require("../lib/ethereum-datetime/contracts/DateTime.sol");
+
 const SafeMath = artifacts.require("./math/SafeMath.sol");
 const Ownable  = artifacts.require("./traits/Ownable.sol");
 
@@ -13,11 +15,15 @@ const VyralSale = artifacts.require("./VyralSale.sol");
 const PresaleBonuses = artifacts.require("./PresaleBonuses.sol");
 
 const config = require("../config");
+const moment = require("moment");
 
 module.exports = function(deployer) {
     deployer.deploy(MultiSigWallet,
     config.get("wallet:owners"),
     config.get("wallet:required"))
+    .then(() => {
+        return deployer.deploy([SafeMath, Ownable]);
+    })
     .then(() => {
         return deployer.deploy(Share);
     })
@@ -25,7 +31,7 @@ module.exports = function(deployer) {
         return deployer.deploy(Vesting, Share.address);
     })
     .then(() => {
-        return deployer.deploy([SafeMath, Ownable]);
+        return deployer.deploy(DateTime);
     })
     .then(() => {
         return deployer.deploy(Referral);
@@ -42,21 +48,27 @@ module.exports = function(deployer) {
         deployer.link(Referral, VyralSale);
         deployer.link(PresaleBonuses, VyralSale);
 
-        return deployer.deploy(VyralSale);
+        return deployer.deploy(VyralSale,
+        Share.address,
+        Vesting.address,
+        DateTime.address);
     })
-    // .then((vyralSale) => {
-    //     return vyralSale.initialize(Vesting.address,
-    //     config.get("presale:startTime"),
-    //     config.get("presale:endTime"),
-    //     web3.toWei(config.get("presale:cap")),
-    //     config.get("rate"));
-    // })
-    // .then(() => {
-    //     return Share.deployed();
-    // })
-    // .then((share) => {
-    //     return share.addTransferrer(VyralSale.address);
-    // })
+    .then(() => {
+        return VyralSale.deployed();
+    })
+    .then((vyralSale) => {
+        return vyralSale.initialize(MultiSigWallet.address,
+        moment.unix(),
+        moment().day(1).unix(),
+        web3.toWei(config.get("presale:cap")),
+        config.get("rate"));
+    })
+    .then(() => {
+        return Share.deployed();
+    })
+    .then((share) => {
+        return share.addTransferrer(VyralSale.address);
+    })
     .catch((err) => {
         console.error("Deployment failed", err);
     })
