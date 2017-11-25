@@ -17,7 +17,7 @@ contract Campaign is Ownable {
     Referral.Tree vyralTree;
 
     /// Token in use
-    HumanStandardToken public token;
+    Share public token;
 
     /// Token in use
     uint public budget;
