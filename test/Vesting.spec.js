@@ -3,6 +3,7 @@ require('chai')
     .should()
 
 const expect = require('chai').expect
+const moment = require("moment");
 const config = require('../config')
 const { wait, waitUntilBlock } = require('@digix/tempo')(web3);
 
@@ -12,7 +13,6 @@ const Vesting = artifacts.require('./Vesting.sol')
 const VyralSale = artifacts.require('./VyralSale.sol')
 
 contract('Vesting implementation', async function(accounts) {
-
 
     it('$', async function() {
         /// Just set these as local accounts for testing
@@ -52,27 +52,25 @@ contract('Vesting implementation', async function(accounts) {
             depositor: '',
             isConfirmed: false, 
         }
-            
-        const crowdsale = await VyralSale.new(
-            Owner,
-            Team,
-            Partnerships,
-            now,
-            now
-        )
-        
-        expect(crowdsale.address).to.exist
-        
-        const shareAddr = await crowdsale.share()
-        const share = StandardToken.at(shareAddr)
 
-        const vesting = await Vesting.new(share.address)
+        const shareToken = await Share.new()
+        expect(shareToken.address).to.exist 
+
+        const vesting = await Vesting.new(shareToken.address)
         expect(vesting.address).to.exist
+            
+        const vyralSale = await VyralSale.new(
+            shareToken.address,
+            vesting.address,
+            Owner
+        )
+        expect(vyralSale.address).to.exist
 
         /// Approve the vesting wallets of the correct amounts
-        await crowdsale.finalize()
-        await crowdsale.approveVestTokens()
-        await crowdsale.enableTransfers()
+        const teamShares = await vyralSale.TEAM()
+        const partnershipShares = await vyralSale.PARTNERSHIPS()
+        
+        console.log(teamShare, partnershipShares)
 
         /// Create the vesting schedules
         const teamVestTx = await vesting.registerVestingSchedule(

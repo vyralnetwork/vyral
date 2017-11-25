@@ -99,13 +99,13 @@ contract VyralSale is Ownable {
      function VyralSale(address _share,
                         address _vesting,
                         address _datetime)
-     {
+    {
          phase = Phase.Deployed;
 
          shareToken = Share(_share);
          dateTime = DateTime(_datetime);
          vestingWallet = Vesting(_vesting);
-     }
+    }
 
     function initialize(address _wallet,
                         uint _presaleStartTimestamp,
@@ -128,9 +128,9 @@ contract VyralSale is Ownable {
 
         campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
 
-//        shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
-//        shareToken.addTransferrer(vestingWallet);
-//        shareToken.addTransferrer(campaign);
+    //    shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
+    //    shareToken.addTransferrer(vestingWallet);
+    //    shareToken.addTransferrer(campaign);
 
         phase = Phase.Initialized;
         return true;
