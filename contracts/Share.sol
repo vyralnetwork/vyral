@@ -1,6 +1,6 @@
 pragma solidity ^0.4.17;
 
-import "tokens/HumanStandardToken.sol";
+import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
 import "./math/SafeMath.sol";
 import "./traits/Ownable.sol";
 
