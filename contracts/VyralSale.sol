@@ -91,6 +91,7 @@ contract VyralSale is Ownable {
 
         shareToken = new Share();
         dateTime = new DateTime();
+        // vestingWallet = new Vesting(address(shareToken));
     }
 
     function initialize(address _wallet,
@@ -112,13 +113,11 @@ contract VyralSale is Ownable {
         presaleEndTimestamp = _presaleEndTimestamp;
         presaleCap = _presaleCap;
 
-        vestingWallet = new Vesting(address(shareToken));
+        // campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
 
-        campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
-
-        shareToken.approve(vestingWallet, TEAM.add(PARTNERS));
-        shareToken.addTransferrer(vestingWallet);
-        shareToken.addTransferrer(campaign);
+        // shareToken.approve(vestingWallet, TEAM.add(PARTNERS));
+        // shareToken.addTransferrer(vestingWallet);
+        // shareToken.addTransferrer(campaign);
 
         phase = Phase.Initialized;
         return true;
@@ -158,7 +157,7 @@ contract VyralSale is Ownable {
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
-        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(_presaleCap);
+        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
 
         phase = Phase.Ready;
         return true;
@@ -238,6 +237,43 @@ contract VyralSale is Ownable {
         if (_referrer != address(0x0)) {
             campaign.join(_referrer, msg.sender, purchased);
         }
+    }
+
+    function presaleBonusApplicator(uint _contribution)
+        internal view returns (uint reward)
+    {
+        if (block.timestamp <= presaleStartTimestamp.add(1 hours)) {
+            return applyPercentage(_contribution, 70);
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(1 days)) {
+            return applyPercentage(_contribution, 50);
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(2 days)) {
+            return applyPercentage(_contribution, 45);
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(20 days)) {
+            uint numDays = (block.timestamp.sub(presaleStartTimestamp))
+                                        .div(1 days);
+            numDays = numDays.sub(2);
+            return applyPercentage(_contribution, (45 - numDays));
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(21 days)) {
+            return applyPercentage(_contribution, 25);
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(22 days)) {
+            return applyPercentage(_contribution, 20);
+        }
+        if (block.timestamp <= presaleStartTimestamp.add(23 days)) {
+            return applyPercentage(_contribution, 15);
+        }
+        //else
+        revert();
+    }
+
+    function applyPercentage(uint _base, uint _percentage)
+        internal pure returns (uint num)
+    {
+        num = _base.mul(_percentage).div(100);
     }
 
     function buySale(address _referrer)
