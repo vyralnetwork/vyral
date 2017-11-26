@@ -11,16 +11,11 @@ const BigNumber = require("bignumber.js");
 const {assert}  = require("chai");
 
 require("chai")
-    .use(require("chai-as-promised"))
-    .should()
+.use(require("chai-as-promised"))
+.should()
 
-const expect    = require("chai").expect
-
+const expect = require("chai").expect;
 const config = require("../config");
-
-function isReverted(err) {
-    return err.toString().includes('revert');
-}
 
 function timeTravel(time) {
     return new Promise((resolve, reject) => {
@@ -49,80 +44,61 @@ contract("Vyral Presale Agreements", (accounts) => {
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
 
-        let phase = await this.vyralSale.phase.call();
-        console.log("phase", phase)
-
         await this.vyralSale.startPresale({from: owner});
-
-        phase = await this.vyralSale.phase.call();
-        console.log("phase", phase)
-
         await this.vyralSale.endPresale({from: owner});
-        phase = await this.vyralSale.phase.call();
-        console.log("phase", phase)
 
         await this.vyralSale.initSale(
         moment().day(1).unix(),
         moment().day(2).unix(),
         config.get("rate"), {from: owner});
-
-        phase = await this.vyralSale.phase.call();
-        console.log("phase", phase)
-
         await this.vyralSale.startSale({from: owner});
-
-        phase = await this.vyralSale.phase.call();
-        console.log("phase", phase)
-
-
     });
 
     describe("Basic sale", () => {
 
         it("should initialize sale", async () => {
             expect((await this.vyralSale.phase.call()).toNumber())
-                .to.equal(5)
+            .to.equal(5);
 
             const saleStartTime = await this.vyralSale.saleStartTimestamp.call();
             const saleEndTime   = await this.vyralSale.saleEndTimestamp.call();
 
-            assert(saleEndTime.toNumber() != 0 && saleStartTime.toNumber() != 0)
+            assert(saleEndTime.toNumber() != 0 && saleStartTime.toNumber() != 0);
 
             expect(saleStartTime.toNumber())
-                .to.be.below(saleEndTime.toNumber())
+            .to.be.below(saleEndTime.toNumber());
         });
 
         it("should execute a sale and transfer tokens", async () => {
             /// Let's take a ride in the Delorean...
-            const saleStartTime = await this.vyralSale.saleStartTimestamp.call();            
-            timeTravel(saleStartTime.toNumber())
+            const saleStartTime = await this.vyralSale.saleStartTimestamp.call();
+            timeTravel(saleStartTime.toNumber());
 
             /// Take this down really quick
-            const graceBalBefore = await this.share.balanceOf(grace)
-            const saleBalBefore = await this.share.balanceOf(this.vyralSale.address)
+            const graceBalBefore = await this.share.balanceOf(grace);
+            const saleBalBefore  = await this.share.balanceOf(this.vyralSale.address);
 
             /// Trigger the fallback function
-            const txObj = await this.vyralSale.sendTransaction({ from: grace, value: web3.toWei(1) });
-            expect(txObj.receipt).to.exist
+            const txObj = await this.vyralSale.sendTransaction({from: grace, value: web3.toWei(1)});
+            expect(txObj.receipt).to.exist;
 
             /// Accounting
             const graceBalAfter = await this.share.balanceOf.call(grace);
-            const saleBalAfter = await this.share.balanceOf.call(this.vyralSale.address);
+            const saleBalAfter  = await this.share.balanceOf.call(this.vyralSale.address);
 
-            assert(graceBalBefore.toNumber() == 0)
+            expect(graceBalBefore.toNumber())
+            .to.equal(0);
+
             expect(graceBalAfter.toNumber())
-                .to.equal(web3.toWei(1) * config.get("rate"))
+            .to.equal(web3.toWei(1) * config.get("rate"));
 
             expect(saleBalAfter.toNumber())
-                .to.equal((saleBalBefore.sub(graceBalAfter)).toNumber())
-            
+            .to.equal((saleBalBefore.sub(graceBalAfter)).toNumber());
         });
 
         it("should reject contributions less than 1 ETH ", async () => {
-            await this.vyralSale.buySale(grace, { from: julia, value: web3.toWei(0.5) })
-                .should.be.rejectedWith('VM Exception while processing transaction: revert')
-
-            console.log('Booyah!')
+            await this.vyralSale.buySale(grace, {from: julia, value: web3.toWei(0.5)})
+            .should.be.rejectedWith('VM Exception while processing transaction: revert');
         });
 
         // it("should reward referrer 7% bonus when a new node joins", async () => {

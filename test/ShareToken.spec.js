@@ -13,7 +13,7 @@ const config = require("../config");
 
 contract('Token API', () => {
 
-    before( async () => {
+    before(async () => {
         this.vyralSale = await VyralSale.deployed();
         this.share     = await Share.deployed();
 
@@ -73,13 +73,13 @@ contract('Token API', () => {
             assert.isTrue(campaignBalance.equals(vyralRewards));
         });
 
-        it('should allocate 333,333,333 SHARE to crowdsale', async () => {
-            let saleBalance    = await this.share.balanceOf.call(this.vyralSale.address);
-            let saleAllocation = await this.vyralSale.SALE_ALLOCATION.call();
+        it('should hold 555,555,555 SHARE until vesting is called', async () => {
+            let saleBalance        = await this.share.balanceOf.call(this.vyralSale.address);
+            let teamAllocation     = await this.vyralSale.TEAM.call();
+            let partnersAllocation = await this.vyralSale.PARTNERS.call();
+            let saleAllocation     = await this.vyralSale.SALE_ALLOCATION.call();
 
-            //assert.isTrue
-            console.log(saleBalance, saleAllocation); // allocates 555,555,555 SHARE until vesting is called.
-                //.equals(saleAllocation));
+            assert.isTrue(saleBalance.equals(saleAllocation.plus(teamAllocation).plus(partnersAllocation)));
         });
     });
 });

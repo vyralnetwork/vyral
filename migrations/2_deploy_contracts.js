@@ -74,8 +74,8 @@ module.exports = function test(deployer) {
 
         console.log("Sale deployed with these arguments",
         MultiSigWallet.address,
-        moment().day(1).unix(),
-        moment().day(2).unix(),
+        config.get("startTime"),
+        config.get("endTime"),
         web3.toWei(config.get("presale:cap")),
         config.get("rate"));
 
@@ -100,8 +100,7 @@ module.exports = function test(deployer) {
     })
     .then((campaignAddress) => {
         return Promise.all([
-            shareInstance.addTransferrer(campaignAddress),
-            shareInstance.addTransferrer(saleInstance.address)
+            shareInstance.addTransferrer(campaignAddress)
         ]);
     })
     .then((txs) => {
