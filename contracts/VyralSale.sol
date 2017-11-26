@@ -152,6 +152,7 @@ contract VyralSale is Ownable {
         presaleStartTimestamp = _presaleStartTimestamp;
         presaleEndTimestamp = _presaleEndTimestamp;
         presaleCap = _presaleCap;
+        presaleRate = _presaleRate;
 
         campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
 
@@ -323,7 +324,23 @@ contract VyralSale is Ownable {
      * ADMIN SETTERS
      */
 
-    /// TODO
+    function setPresaleParams(uint _presaleStartTimestamp,
+                              uint _presaleEndTimestamp,
+                              uint _presaleRate,
+                              uint _presaleCap)
+        onlyOwner
+        inPhase(Phase.Initialized)
+        external returns (bool)
+    {
+        // require(_presaleStartTimestamp >= block.timestamp);
+        // require(_presaleEndTimestamp > _presaleStartTimestamp);
+        // require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
+
+        presaleStartTimestamp = _presaleStartTimestamp;
+        presaleEndTimestamp = _presaleEndTimestamp;
+        presaleCap = _presaleCap;
+        presaleRate = _presaleRate;
+    }
 
     /**
      * EMERGENCY SWITCH
