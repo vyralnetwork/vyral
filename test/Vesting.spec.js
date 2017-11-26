@@ -15,6 +15,7 @@ const VyralSale = artifacts.require('./VyralSale.sol')
 contract('Vesting implementation', async function(accounts) {
 
     it('$', async function() {
+        
         /// Just set these as local accounts for testing
         const Owner = accounts[0]
         const Team = accounts[3]

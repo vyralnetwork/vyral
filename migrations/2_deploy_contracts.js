@@ -74,16 +74,16 @@ module.exports = function test(deployer) {
 
         console.log("Sale deployed with these arguments",
         MultiSigWallet.address,
-        moment().unix(),
         moment().day(1).unix(),
+        moment().day(2).unix(),
         web3.toWei(config.get("presale:cap")),
         config.get("rate"));
 
-        return vyralSale.VYRAL_REWARDS.call();
+        return vyralSale.TOTAL_SUPPLY.call();
     })  
-    .then((vyralRewards) => {
-        // console.log(vyralRewards.toNumber())
-        return shareInstance.transfer(saleInstance.address, vyralRewards.toNumber());
+    .then((totalSupply) => {
+        // console.log(totalSupply.toNumber())
+        return shareInstance.transfer(saleInstance.address, totalSupply.toNumber());
     })
     .then((txs) => {
         // console.log(txs)
@@ -99,7 +99,10 @@ module.exports = function test(deployer) {
         return saleInstance.campaign.call();
     })
     .then((campaignAddress) => {
-        return shareInstance.addTransferrer(campaignAddress);
+        return Promise.all([
+            shareInstance.addTransferrer(campaignAddress),
+            shareInstance.addTransferrer(saleInstance.address)
+        ]);
     })
     .then((txs) => {
         // console.log(txs);

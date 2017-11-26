@@ -75,9 +75,9 @@ contract Share is HumanStandardToken, Ownable {
     {
         require(balances[msg.sender] >= _value);
 
-        /// Only tansfer unlocked balance
+        /// Only transfer unlocked balance
         if(isBonusLocked) {
-            require(lockedBalances[msg.sender] < _value);
+            require(balances[msg.sender].sub(lockedBalances[msg.sender]) >= _value);
         }
 
         balances[msg.sender] = balances[msg.sender].sub(_value);
@@ -97,6 +97,11 @@ contract Share is HumanStandardToken, Ownable {
     {
         require(balances[_from] >= _value);
         require(allowed[_from][msg.sender] >= _value);
+
+        /// Only transfer unlocked balance
+        if(isBonusLocked) {
+            require(balances[_from].sub(lockedBalances[_from]) >= _value);
+        }
 
         allowed[_from][msg.sender] = allowed[_from][_to].sub(_value);
         balances[_from] = balances[_from].sub(_value);
