@@ -281,7 +281,10 @@ contract VyralSale is Ownable {
 
         if (_referrer != address(0x0)) {
             campaign.join(_referrer, msg.sender, purchased);
+            LogReferral(_referrer, msg.sender, 0);
         }
+
+        LogContribution(phase, msg.sender, contribution);
     }
 
     function buySale(address _referrer)
@@ -316,7 +319,10 @@ contract VyralSale is Ownable {
 
         if (_referrer != address(0x0)) {
             campaign.join(_referrer, msg.sender, purchased);
+            LogReferral(_referrer, msg.sender, 0);
         }
+
+        LogContribution(phase, msg.sender, contribution);
     }
 
     /**
