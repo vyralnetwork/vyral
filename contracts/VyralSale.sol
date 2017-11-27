@@ -7,9 +7,7 @@ import {Campaign} from "./Campaign.sol";
 import "./Share.sol";
 import {Vesting} from "./Vesting.sol";
 import "./PresaleBonuses.sol";
-
 import "../lib/ethereum-datetime/contracts/DateTime.sol";
-
 
 contract VyralSale is Ownable {
     using SafeMath for uint;
@@ -278,7 +276,7 @@ contract VyralSale is Ownable {
         shareToken.transfer(msg.sender, purchased);
 
         /// Calculate reward and send it from campaign.
-        uint reward = PresaleBonuses.presaleBonusApplicator(purchased, presaleStartTimestamp);
+        uint reward = PresaleBonuses.presaleBonusApplicator(purchased, address(dateTime));
         campaign.sendReward(msg.sender, reward);
 
         if (_referrer != address(0x0)) {

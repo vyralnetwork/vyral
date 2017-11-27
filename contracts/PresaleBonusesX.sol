@@ -1,63 +1,44 @@
 pragma solidity ^0.4.18;
 
 import "./math/SafeMath.sol";
-import "../lib/ethereum-datetime/contracts/api.sol";
 
 library PresaleBonuses {
     using SafeMath for uint;
 
-    function presaleBonusApplicator(uint _purchased, address _dateTimeLib)
+    function presaleBonusApplicator(uint _purchased, uint _presaleStartTimestamp)
         internal view returns (uint reward)
     {
-        DateTimeAPI dateTime = DateTimeAPI(_dateTimeLib);
-        uint hour = dateTime.getHour(block.timestamp);
-        uint day = dateTime.getDay(block.timestamp);
-
         /// First hour bonus
-        if (day == 2 && hour == 16) {
+        if (block.timestamp <= _presaleStartTimestamp.add(1 hours)) {
             return applyPercentage(_purchased, 70);
         }
-
         /// First day bonus
-        if ((day == 2 && hour > 16) || (day == 3 && hour < 5)) {
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours)) {
             return applyPercentage(_purchased, 50);
         }
-
         /// Second day bonus
-        if ((day == 3 && hour >= 5) || (day == 4 && hour < 5)) {
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours).add(1 days)) {
             return applyPercentage(_purchased, 45);
-        } 
-
+        }
         /// Days 3 - 20 bonus
-        if (day < 22) {
-            uint numDays = day - 3;
-            if (hour < 5) {
-                numDays--;
-            }
-
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours).add(19 days)) {
+            uint numDays = (block.timestamp.sub(_presaleStartTimestamp))
+                                        .div(1 days);
+            numDays = numDays.sub(2);
             return applyPercentage(_purchased, (45 - numDays));
         }
-
-        /// Fill the gap
-        if (day == 22 && hour < 5) {
-            return applyPercentage(_purchased, 27);
-        }
-
         /// Day 21 bonus
-        if ((day == 22 && hour >= 5) || (day == 23 && hour < 5)) {
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours).add(20 days)) {
             return applyPercentage(_purchased, 25);
         }
-
         /// Day 22 bonus
-        if ((day == 23 && hour >= 5) || (day == 24 && hour < 5)) {
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours).add(21 days)) {
             return applyPercentage(_purchased, 20);
         }
-
         /// Day 23 bonus
-        if ((day == 24 && hour >= 5) || (day == 25 && hour < 5)) {
+        if (block.timestamp <= _presaleStartTimestamp.add(12 hours).add(22 days)) {
             return applyPercentage(_purchased, 15);
         }
-
         //else
         revert();
     }
