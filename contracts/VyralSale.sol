@@ -140,9 +140,9 @@ contract VyralSale is Ownable {
         external returns (bool)
     {
         require(_wallet != 0x0);
-        // require(_presaleStartTimestamp >= block.timestamp);
-        // require(_presaleEndTimestamp > _presaleStartTimestamp);
-        // require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
+        require(_presaleStartTimestamp >= block.timestamp);
+        require(_presaleEndTimestamp > _presaleStartTimestamp);
+        require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
 
         wallet = _wallet;
         presaleStartTimestamp = _presaleStartTimestamp;
@@ -190,13 +190,13 @@ contract VyralSale is Ownable {
         onlyOwner
         external returns (bool)
     {
-        // require(_saleStartTimestamp > block.timestamp);
-        // require(_saleEndTimestamp > _saleStartTimestamp);
+        require(_saleStartTimestamp > block.timestamp);
+        require(_saleEndTimestamp > _saleStartTimestamp);
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
-        // saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
-        saleCap = 12000 * (10**18);
+        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
+        // saleCap = 12000 * (10**18);
         saleRate = _saleRate;
         phase = Phase.Ready;
         return true;
@@ -331,9 +331,9 @@ contract VyralSale is Ownable {
         inPhase(Phase.Initialized)
         external returns (bool)
     {
-        // require(_presaleStartTimestamp >= block.timestamp);
-        // require(_presaleEndTimestamp > _presaleStartTimestamp);
-        // require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
+        require(_presaleStartTimestamp >= block.timestamp);
+        require(_presaleEndTimestamp > _presaleStartTimestamp);
+        require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
 
         presaleStartTimestamp = _presaleStartTimestamp;
         presaleEndTimestamp = _presaleEndTimestamp;

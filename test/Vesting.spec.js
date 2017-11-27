@@ -27,16 +27,16 @@ contract('Vesting implementation', async function(accounts) {
         const MINUTE = 60 //seconds
         const HOUR = 60*MINUTE//s
         const DAY = 24*HOUR//s
-        const MONTH = 30*DAY//s (approx.)
+        const MONTH = 2629743//seconds
 
-        const vestingStart = now + 2*DAY
+        const vestingStart = config.get("vesting:teamSchedule:startTime")
         const amount = web3.toWei(111111111)
 
         const EighteenMonthVest = {
-            startTimestamp: vestingStart,
-            cliffTimestamp: vestingStart + 6*MONTH,
-            lockPeriod: 6*MONTH,
-            endTimestamp: vestingStart + 18*MONTH,
+            startTimestamp: config.get("vesting:teamSchedule:startTime"),
+            cliffTimestamp: config.get("vesting:teamSchedule:cliffTime"),
+            lockPeriod: config.get("vesting:teamSchedule:lockPeriod"),
+            endTimestamp: config.get("vesting:teamSchedule:endTime"),
             totalAmount: amount,
             amountWithdrawn: 0,
             depositor: '',
@@ -44,10 +44,10 @@ contract('Vesting implementation', async function(accounts) {
         }
 
         const TwoYearVest = {
-            startTimestamp: vestingStart - MONTH,
-            cliffTimestamp: vestingStart,
-            lockPeriod: MONTH,
-            endTimestamp: vestingStart + 23*MONTH,
+            startTimestamp: config.get("vesting:partnershipsSchedule:startTime"),
+            cliffTimestamp: config.get("vesting:partnershipsSchedule:cliffTime"),
+            lockPeriod: config.get("vesting:partnershipsSchedule:lockPeriod"),
+            endTimestamp: config.get("vesting:partnershipsSchedule:endTime"),
             totalAmount: amount,
             amountWithdrawn: 0,
             depositor: '',
@@ -107,8 +107,8 @@ contract('Vesting implementation', async function(accounts) {
         /// Call initPresale to approve the vesting schedule.
         const txn = await vyralSale.initPresale(
             Owner,
-            moment().minute(1).unix(),
-            moment().day(1).unix(),
+            config.get("presale:startTime"),
+            config.get("presale:endTime"),
             web3.toWei(config.get("presale:cap")),
             config.get("rate")
         )
@@ -163,6 +163,7 @@ contract('Vesting implementation', async function(accounts) {
 
         /// Wait six months
         await waitUntilBlock(6*MONTH, 1)
+        // await waitUntilBlock(15778458, 0)
 
         /// Team should withdraw
         const withdrawTx2 = await vesting.withdrawVestedTokens({from: Team})
@@ -180,7 +181,7 @@ contract('Vesting implementation', async function(accounts) {
 
         /// Fails with invalid opcode since it fails the `canWithdraw()` check
         const withdrawTx4 = await vesting.withdrawVestedTokens({from: Team})
-            .should.be.rejectedWith('VM Exception while processing transaction: invalid opcode')
+            .should.be.rejectedWith('VM Exception while processing transaction: revert')
 
         /// Wait five more months and team can withdraw
         await waitUntilBlock(5*MONTH, 1)
