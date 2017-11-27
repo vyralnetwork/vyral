@@ -74,8 +74,8 @@ module.exports = function test(deployer) {
 
         console.log("Sale deployed with these arguments",
         MultiSigWallet.address,
-        config.get("startTime"),
-        config.get("endTime"),
+        config.get("presale:startTime"),
+        config.get("presale:endTime"),
         web3.toWei(config.get("presale:cap")),
         config.get("rate"));
 
@@ -89,8 +89,8 @@ module.exports = function test(deployer) {
         // console.log(txs)
         return saleInstance.initPresale(
             MultiSigWallet.address,
-            moment().minute(1).unix(),
-            moment().day(1).unix(),
+            config.get("presale:startTime"),
+            config.get("presale:endTime"),
             web3.toWei(config.get("presale:cap")),
             config.get("rate"));
     })

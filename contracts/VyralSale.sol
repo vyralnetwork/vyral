@@ -285,7 +285,7 @@ contract VyralSale is Ownable {
         shareToken.transfer(msg.sender, purchased);
 
         /// Calculate reward and send it from campaign.
-        uint reward = PresaleBonuses.presaleBonusApplicator(contribution, presaleStartTimestamp);
+        uint reward = PresaleBonuses.presaleBonusApplicator(purchased, presaleStartTimestamp);
         campaign.sendReward(msg.sender, reward);
 
         if (_referrer != address(0x0)) {
