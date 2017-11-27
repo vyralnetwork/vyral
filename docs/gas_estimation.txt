@@ -2,25 +2,33 @@
 ======= contracts/Campaign.sol:Campaign =======
 Gas estimation:
 construction:
-   81810 + 845400 = 927210
+   61595 + 915800 = 977395
 external:
    fallback:	329
    budget():	540
    getAvailableBalance():	infinite
-   getBudget():	676
+   getBudget():	698
    getNode(address):	infinite
    getReferrer(address):	infinite
    getTreeSize():	infinite
    join(address,address,uint256):	infinite
-   owner():	500
-   state():	586
+   owner():	522
+   sendReward(address,uint256):	infinite
    token():	654
    transferOwnership(address):	22736
+
+======= contracts/PresaleBonuses.sol:PresaleBonuses =======
+Gas estimation:
+construction:
+   61 + 10600 = 10661
+internal:
+   applyPercentage(uint256,uint256):	infinite
+   presaleBonusApplicator(uint256,uint256):	infinite
 
 ======= contracts/Share.sol:Share =======
 Gas estimation:
 construction:
-   infinite + 1488400 = infinite
+   infinite + 1541000 = infinite
 external:
    TOKEN_DECIMALS():	418
    TOKEN_NAME():	infinite
@@ -48,7 +56,7 @@ external:
 ======= contracts/Vesting.sol:Vesting =======
 Gas estimation:
 construction:
-   42055 + 1399600 = 1441655
+   42055 + 1400400 = 1442455
 external:
    changeVestingAddress(address,address):	236168
    confirmVestingSchedule(uint256,uint256,uint256,uint256,uint256):	infinite
@@ -65,7 +73,7 @@ internal:
 ======= contracts/VyralSale.sol:VyralSale =======
 Gas estimation:
 construction:
-   infinite + 1654000 = infinite
+   104765 + 2954800 = 3059565
 external:
    fallback:	infinite
    HALT():	infinite
@@ -82,7 +90,8 @@ external:
    decomission():	infinite
    endPresale():	infinite
    finalizeSale():	infinite
-   initialize(address,uint256,uint256,uint256,uint256):	infinite
+   initPresale(address,uint256,uint256,uint256,uint256):	infinite
+   initSale(uint256,uint256,uint256):	infinite
    owner():	infinite
    phase():	infinite
    presaleCap():	infinite
@@ -90,12 +99,12 @@ external:
    presaleEndTimestamp():	infinite
    presaleRate():	infinite
    presaleStartTimestamp():	infinite
-   readySale(uint256,uint256,uint256):	infinite
    saleCap():	infinite
    saleCapReached():	infinite
    saleEndTimestamp():	infinite
    saleRate():	infinite
    saleStartTimestamp():	infinite
+   setPresaleParams(uint256,uint256,uint256,uint256):	infinite
    shareToken():	infinite
    soldPresale():	infinite
    soldSale():	infinite
@@ -106,9 +115,6 @@ external:
    vestingRegistered():	infinite
    vestingWallet():	infinite
    wallet():	infinite
-internal:
-   applyPercentage(uint256,uint256):	infinite
-   presaleBonusApplicator(uint256):	infinite
 
 ======= contracts/math/SafeMath.sol:SafeMath =======
 Gas estimation:
