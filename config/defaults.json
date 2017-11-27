@@ -12,8 +12,8 @@
     },
     "rate": "7000",
     "presale": {
-        "startTime": 1512144000,
-        "endTime": 1514091600,
+        "startTime": 1512230400,
+        "endTime": 1514178000,
         "durationInDays": 23,
         "cap": 40000
     },
@@ -22,7 +22,7 @@
         "endTime": 1518710400
     },
     "vesting": {
-        "teamSchedule": {
+        "teamSchedule": {   
             "startTime": 1518710400,
             "cliffTime": 1534488858,
             "lockPeriod": 15778458,

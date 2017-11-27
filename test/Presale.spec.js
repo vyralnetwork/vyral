@@ -163,26 +163,10 @@ contract('Presale simulation', async function(accounts) {
             )
     })
 
-    it('should revert a transaction not sent during the open hours', async function() {
-
-        /// Cindy wants to contribute but sleeps all day and misses the 5 UTC cutoff
-        const secondsToWait = 12*HOUR//s
-        await waitUntilBlock(secondsToWait, 0)
-
-        const cindyBefore = await shareToken.balanceOf(Cindy)
-        assert(cindyBefore == 0)
-
-        await vyralSale.sendTransaction({from: Cindy, value: web3.toWei(20)})
-            .should.be.rejectedWith('VM Exception while processing transaction: revert')
-
-        const cindyAfter = await shareToken.balanceOf(Cindy)
-        assert(cindyAfter == 0)
-    })
-
-    it('should reopen on day two and send 45% reward bonus', async function() {
+    it('shoul send the correct reward bonus on day two', async function() {
 
         /// Too bad for Cindy! She stays up all night so she can send a transaction in the morning.
-        const secondsToWait = 12*HOUR//s
+        const secondsToWait = 24*HOUR//s
         await waitUntilBlock(secondsToWait, 0)
 
         const cindyBefore = await shareToken.balanceOf(Cindy)
@@ -228,7 +212,7 @@ contract('Presale simulation', async function(accounts) {
             .to.equal(
                 (new BigNumber(web3.toWei(2))
                 .mul(presaleRate)
-                .mul(1.34))
+                .mul(1.33))
                 .toNumber()
             )
     })
