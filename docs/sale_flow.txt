@@ -54,4 +54,4 @@ Notes
 ------
 * The Admin address will be the one that has the `onlyOwner` priviledge
    on all crowdsale related contracts and will have the power to call
-   any of the function declared with this modifier. 
+   any of the functions declared with this modifier. 

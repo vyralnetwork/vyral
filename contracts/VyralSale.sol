@@ -110,12 +110,6 @@ contract VyralSale is Ownable {
         _;
     }
 
-    modifier presaleOpenHours {
-        uint8 hourUTC = dateTime.getHour(block.timestamp);
-        require(hourUTC < 5 || hourUTC >= 16);
-        _;
-    }
-
     modifier stopInEmergency {
         require(!HALT);
         _;
@@ -256,7 +250,6 @@ contract VyralSale is Ownable {
     function buyPresale(address _referrer)
         inPhase(Phase.Presale)
         canBuy(Phase.Presale)
-        presaleOpenHours
         stopInEmergency
         public payable
     {
