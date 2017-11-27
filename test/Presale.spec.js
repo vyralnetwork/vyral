@@ -10,6 +10,10 @@ const { wait, waitUntilBlock } = require('@digix/tempo')(web3);
 const Share = artifacts.require('./Share.sol')
 const VyralSale = artifacts.require('./VyralSale.sol')
 
+const MINUTE = 60 //seconds
+const HOUR = 60*MINUTE//s
+const DAY = 24*HOUR//s
+
 contract('Presale simulation', async function(accounts) {
 
     /// Local accounts for testing purposes
@@ -132,5 +136,114 @@ contract('Presale simulation', async function(accounts) {
             )
     })
 
+    it('should handle the dynamic rewarding mechanism correctly', async function() {
+
+        /// Ben wants to contribute on the first day but barely misses the first hour bonus
+        /// But he still wants the first day bonus of 50%
+        const secondsToWait = HOUR + 5*MINUTE//s
+        await waitUntilBlock(secondsToWait, 0)
+
+        const benBefore = await shareToken.balanceOf(Ben)
+        assert(benBefore.toNumber() == 0) 
+
+        const tx = await vyralSale.sendTransaction({from: Ben, value: web3.toWei(12)})
+        expect(tx.receipt)
+            .to.exist
+
+        const benAfter = await shareToken.balanceOf(Ben)
+        expect(benAfter.toNumber())
+            .to.be.above(benBefore.toNumber())
+        
+        expect(benAfter.toNumber())
+            .to.equal(
+                (new BigNumber(web3.toWei(12))
+                .mul(presaleRate)
+                .mul(1.5))
+                .toNumber()
+            )
+    })
+
+    it('should revert a transaction not sent during the open hours', async function() {
+
+        /// Cindy wants to contribute but sleeps all day and misses the 5 UTC cutoff
+        const secondsToWait = 12*HOUR//s
+        await waitUntilBlock(secondsToWait, 0)
+
+        const cindyBefore = await shareToken.balanceOf(Cindy)
+        assert(cindyBefore == 0)
+
+        await vyralSale.sendTransaction({from: Cindy, value: web3.toWei(20)})
+            .should.be.rejectedWith('VM Exception while processing transaction: revert')
+
+        const cindyAfter = await shareToken.balanceOf(Cindy)
+        assert(cindyAfter == 0)
+    })
+
+    it('should reopen on day two and send 45% reward bonus', async function() {
+
+        /// Too bad for Cindy! She stays up all night so she can send a transaction in the morning.
+        const secondsToWait = 12*HOUR//s
+        await waitUntilBlock(secondsToWait, 0)
+
+        const cindyBefore = await shareToken.balanceOf(Cindy)
+        assert(cindyBefore == 0)
+
+        const tx = await vyralSale.sendTransaction({from: Cindy, value: web3.toWei(20)})
+
+        expect(tx.receipt)
+            .to.exist 
+        
+        const cindyAfter = await shareToken.balanceOf(Cindy)
+        expect(cindyAfter.toNumber())
+            .to.be.above(cindyBefore.toNumber())
+        
+        expect(cindyAfter.toNumber())
+            .to.equal(
+                (new BigNumber(web3.toWei(20))
+                .mul(presaleRate)
+                .mul(1.45))
+                .toNumber()
+            )
+    })
+
+    it('should send 1% lower bonuses everyday from day three until day 20', async function() {
+
+        /// Anna remembered that she tried to contribute early and now wants to contribute on day 14.
+        const secondsToWait = 12*DAY
+        await waitUntilBlock(secondsToWait, 0)
+
+        const annaBefore = await shareToken.balanceOf(Anna)
+        assert(annaBefore == 0)
+
+        const tx = await vyralSale.sendTransaction({from: Anna, value: web3.toWei(2)})
+
+        expect(tx.receipt)
+        .to.exist 
     
+        const annaAfter = await shareToken.balanceOf(Anna)
+        expect(annaAfter.toNumber())
+            .to.be.above(annaBefore.toNumber())
+        
+        expect(annaAfter.toNumber())
+            .to.equal(
+                (new BigNumber(web3.toWei(2))
+                .mul(presaleRate)
+                .mul(1.34))
+                .toNumber()
+            )
+    })
+
+    it('all presale ether was sold out, switch the VyralSale to phase 3', async function() {
+
+        await vyralSale.endPresale()
+        
+        expect((await vyralSale.phase.call()).toNumber())
+            .to.equal(3)
+
+        /// Wait! Anna was going to contribute again!
+        const tx = await vyralSale.sendTransaction({from: Anna, value: web3.toWei(2)})
+            .should.be.rejectedWith('VM Exception while processing transaction: revert')
+        
+        /// Too late Anna. Better luck in the crowdsale.
+    })
 })
