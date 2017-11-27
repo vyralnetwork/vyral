@@ -116,6 +116,11 @@ contract VyralSale is Ownable {
         _;
     }
 
+    modifier stopInEmergency {
+        require(!HALT);
+        _;
+    }
+
     /**
      * PHASES
      */
@@ -235,6 +240,7 @@ contract VyralSale is Ownable {
     /** BUY TOKENS */
 
     function()
+        stopInEmergency
         public payable
     {
         if (phase == Phase.Presale) {
@@ -251,6 +257,7 @@ contract VyralSale is Ownable {
         inPhase(Phase.Presale)
         canBuy(Phase.Presale)
         presaleOpenHours
+        stopInEmergency
         public payable
     {
         require(msg.value >= MIN_CONTRIBUTION);
@@ -289,6 +296,7 @@ contract VyralSale is Ownable {
     function buySale(address _referrer)
         inPhase(Phase.Crowdsale)
         canBuy(Phase.Crowdsale)
+        stopInEmergency
         public payable
     {
         require(msg.value >= MIN_CONTRIBUTION);
@@ -345,7 +353,7 @@ contract VyralSale is Ownable {
     /**
      * EMERGENCY SWITCH
      */
-    bool public HALT;
+    bool public HALT = false;
 
     function toggleHALT(bool _on)
         onlyOwner

@@ -23,16 +23,16 @@
     },
     "vesting": {
         "teamSchedule": {
-            "startTime": 1518710400,  //Feb 15 2018 @ 16:00
-            "cliffTime": 1534488858,  //Aug 17 2018 @ 6:54
-            "lockPeriod": 15778458,   //six months in seconds
-            "endTime": 1566045774     //Aug 17 2019 @ 12:42
+            "startTime": 1518710400,
+            "cliffTime": 1534488858,
+            "lockPeriod": 15778458,
+            "endTime": 1566045774
         },
         "partnershipsSchedule": {
-            "startTime": 1516080657,  //Jan 16 2018 @  5:30
-            "cliffTime": 1518710400,  //Feb 15 2018 @ 16:00
-            "lockPeriod": 2629743,    //1 month
-            "endTime": 1579194489     //Feb 16 2020 @ 3:37
+            "startTime": 1516080657,
+            "cliffTime": 1518710400,
+            "lockPeriod": 2629743,
+            "endTime": 1579194489
         }
     }
 }
