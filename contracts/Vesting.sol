@@ -44,7 +44,7 @@ contract Vesting is Ownable {
         require( vestingSchedules[_newAddress].depositor == 0x0 );
 
         // Validate that the times make sense.
-        require( _cliffTimestamp > _startTimestamp );
+        require( _cliffTimestamp >= _startTimestamp );
         require( _endTimestamp > _cliffTimestamp );
 
         // Some lock period sanity checks.
@@ -158,7 +158,7 @@ contract Vesting is Ownable {
                                                          .div(_vestingSchedule.lockPeriod);
 
         if (now < _vestingSchedule.endTimestamp) {
-            assert( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
+            require( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
         }
     }
 

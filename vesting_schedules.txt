@@ -1,0 +1,68 @@
+Team Vesting Schedule
+----------------------
+Amount: 111,111,111 SHARE
+
+Length: 18 months
+Starts: Feb 15, 2018 @ 16:00 UTC (1518710400 UNIX)
+Cliff:  Aug 17, 2018 @  6:54 UTC (1534488858 UNIX)
+Ends:   Aug 17, 2019 @ 12:42 UTC (1566045774 UNIX)
+
+Withdrawal periods*: 6 months (15778458 seconds)
+Amount per period: 37,037,037 SHARE (1/3)
+
+Withdrawal dates:
+ - Aug 17, 2018 @  6:54 UTC   (1534488858 UNIX)
+ - Feb 15, 2019 @ 21:48 UTC   (1550267316 UNIX)
+ - Aug 17, 2019 @ 12:42 UTC   (1566045774 UNIX) 
+
+
+Partnerships Vesting Schedule
+------------------------------
+Amount: 111,111,111 SHARE
+
+Length: 24 months
+Starts: Jan 16, 2018 @  5:30 UTC (1516080657 UNIX)**
+Cliff:  Feb 15, 2018 @ 16:00 UTC (1518710400 UNIX)
+Ends:   Feb 16, 2020 @  3:37 UTC (1579194489 UNIX)
+
+Withdrawal periods*: 1 month (2629743 seconds)
+Amount per period: 4,629,629 SHARE (1/24)
+
+Withdrawal dates: 
+ - Feb 15, 2018 @ 16:00 UTC   (1518710400 UNIX)
+ - Mar 18, 2018 @  2:29 UTC   (1521340143 UNIX)
+ - Apr 17, 2018 @ 12:58 UTC   (1523969886 UNIX)
+ - May 17, 2018 @ 23:27 UTC   (1526599629 UNIX)
+ - Jun 17, 2018 @  9:56 UTC   (1529229372 UNIX)
+ - Jul 17, 2018 @ 20:25 UTC   (1531859115 UNIX)
+ - Aug 17, 2018 @  6:54 UTC   (1534488858 UNIX)
+ - Sep 16, 2018 @ 17:23 UTC   (1537118601 UNIX)
+ - Oct 17, 2018 @  3:53 UTC   (1539748344 UNIX)
+ - Nov 16, 2018 @ 17:21 UTC   (1542378087 UNIX)
+ - Dec 17, 2018 @  0:50 UTC   (1545007830 UNIX)
+ - Jan 16, 2019 @ 11:19 UTC   (1547637573 UNIX)
+ - Feb 15, 2019 @ 21:48 UTC   (1550267316 UNIX)
+ - Mar 18, 2019 @  8:19 UTC   (1552897059 UNIX)
+ - Apr 17, 2019 @ 18:46 UTC   (1555526802 UNIX)
+ - May 18, 2019 @  5:15 UTC   (1558156545 UNIX)
+ - Jun 17, 2019 @ 18:44 UTC   (1560786288 UNIX)
+ - Jul 18, 2019 @  2:13 UTC   (1563416031 UNIX)
+ - Aug 17, 2019 @ 12:42 UTC   (1566045774 UNIX)
+ - Sep 16, 2019 @ 11:11 UTC   (1568675517 UNIX)
+ - Oct 17, 2019 @  9:41 UTC   (1571305260 UNIX)
+ - Nov 16, 2019 @ 20:10 UTC   (1573935003 UNIX)
+ - Dec 17, 2019 @  6:39 UTC   (1576564746 UNIX)
+ - Jan 16, 2020 @ 18:08 UTC   (1579194489 UNIX)
+ - Feb 16, 2020 @  3:37 UTC   (1579194489 UNIX)
+
+
+Notes
+-----
+
+* These schedules are based on the assumption that the caller will be calling
+   the contract on time every month. A caller is allowed to call a contract late,
+   but they will then be locked from calling that contract again for their lock period.
+
+** The partnerships schedule starts a month early due purely to accounting reasons.
+    In order to make it so that the first payment is immediate at the conclusion of
+    the sale, the contract needs to think vesting started the month before.
