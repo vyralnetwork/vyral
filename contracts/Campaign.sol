@@ -86,25 +86,23 @@ contract Campaign is Ownable {
         Referral.Node memory referrerNode = vyralTree.nodes[_referrer];
 
         // Referrer was not found, add referrer as a new node
-        if(referrerNode.shares == 0x0) {
+        if(referrerNode.exists == false) {
             vyralTree.addInvitee(owner, _referrer, 0);
         }
 
         // Add invitee to the tree
         vyralTree.addInvitee(_referrer, _invitee, _shares);
 
-        if(_referrer != 0x0) {
-            // Referrer exists in the tree
-            reward = vyralTree.payoff(_referrer, _shares);
+        // Calculate referrer's reward
+        reward = vyralTree.payoff(_referrer, _shares);
 
-            // Transfer reward
-            token.transferReward(_referrer, reward);
-
-            // Log event
-            LogRewardAllocated(_referrer, _shares, reward);
-        }
+        // Log event
+        LogRewardAllocated(_referrer, _shares, reward);
     }
 
+    /**
+     * VyralSale (owner) transfers rewards on behalf of this contract.
+     */
     function sendReward(address _who, uint _amount)
         onlyOwner //(ie, VyralSale)
         external returns (bool)

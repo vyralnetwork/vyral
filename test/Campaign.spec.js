@@ -1,7 +1,6 @@
 /**
  * Vyral campaign scenarios.
  */
-const MultiSigWallet = artifacts.require('./MultiSigWallet.sol');
 const Campaign       = artifacts.require("./Campaign.sol");
 
 const {assert} = require('chai');

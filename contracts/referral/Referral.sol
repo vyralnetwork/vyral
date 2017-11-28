@@ -50,6 +50,8 @@ library Referral {
         address[] inviteeIndex;
         /// Reward accumulated
         uint shares;
+        /// Used for membership check
+        bool exists;
     }
 
     /**
@@ -103,10 +105,13 @@ library Referral {
         Node memory inviteeNode;
         inviteeNode.referrer = _referrer;
         inviteeNode.shares = _shares;
+        inviteeNode.exists = true;
         self.nodes[_invitee] = inviteeNode;
         self.treeIndex.push(_invitee);
 
-        self.nodes[_referrer].invitees[_invitee] = _shares;
-        self.nodes[_referrer].inviteeIndex.push(_invitee);
+        if (self.nodes[_referrer].exists == true) {
+            self.nodes[_referrer].invitees[_invitee] = _shares;
+            self.nodes[_referrer].inviteeIndex.push(_invitee);
+        }
     }
 }

@@ -2,9 +2,9 @@ require('chai')
 .use(require('chai-as-promised'))
 .should();
 
-const expect           = require('chai').expect;
-const BigNumber        = require('bignumber.js');
-const {waitUntilBlock} = require('@digix/tempo')(web3);
+const expect                 = require('chai').expect;
+const BigNumber              = require('bignumber.js');
+const {wait, waitUntilBlock} = require('@digix/tempo')(web3);
 
 /// Contracts
 const Share     = artifacts.require('./Share.sol');
@@ -85,7 +85,7 @@ contract('Vyral Presale', async function(accounts) {
         .should.be.rejectedWith('VM Exception while processing transaction: revert');
     });
 
-    it('should accept a valid contribution at start of sale and return proper bonus', async function() {
+    it('should accept a valid contribution in the first hour of presale and return 70% bonus', async function() {
 
         /// Time travellin'
         const block_        = await web3.eth.getBlock('latest');

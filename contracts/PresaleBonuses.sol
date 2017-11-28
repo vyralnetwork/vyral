@@ -14,12 +14,12 @@ library PresaleBonuses {
         uint day = dateTime.getDay(block.timestamp);
 
         /// First hour bonus
-        if (day == 2 && hour == 16) {
+        if (day == 2 && hour == 14) {
             return applyPercentage(_purchased, 70);
         }
 
         /// First day bonus
-        if ((day == 2 && hour > 16) || (day == 3 && hour < 5)) {
+        if ((day == 2 && hour > 14) || (day == 3 && hour < 5)) {
             return applyPercentage(_purchased, 50);
         }
 

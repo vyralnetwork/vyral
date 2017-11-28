@@ -285,8 +285,9 @@ contract VyralSale is Ownable {
         campaign.sendReward(msg.sender, reward);
 
         if (_referrer != address(0x0)) {
-            campaign.join(_referrer, msg.sender, purchased);
-            LogReferral(_referrer, msg.sender, 0);
+            uint referralReward = campaign.join(_referrer, msg.sender, purchased);
+            campaign.sendReward(_referrer, referralReward);
+            LogReferral(_referrer, msg.sender, referralReward);
         }
 
         LogContribution(phase, msg.sender, contribution);
@@ -323,8 +324,9 @@ contract VyralSale is Ownable {
         shareToken.transfer(msg.sender, purchased);
 
         if (_referrer != address(0x0)) {
-            campaign.join(_referrer, msg.sender, purchased);
-            LogReferral(_referrer, msg.sender, 0);
+            uint referralReward = campaign.join(_referrer, msg.sender, purchased);
+            campaign.sendReward(_referrer, referralReward);
+            LogReferral(_referrer, msg.sender, referralReward);
         }
 
         LogContribution(phase, msg.sender, contribution);
@@ -392,5 +394,5 @@ contract VyralSale is Ownable {
 
     event LogContribution(Phase phase, address buyer, uint contribution);
 
-    event LogReferral(address referrer, address referree, uint reward);
+    event LogReferral(address referrer, address invitee, uint referralReward);
 }
