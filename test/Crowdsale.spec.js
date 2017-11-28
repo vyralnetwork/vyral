@@ -33,7 +33,7 @@ function timeTravel(time) {
     })
 }
 
-contract("Vyral Presale Agreements", (accounts) => {
+contract("Vyral Crowdsale", (accounts) => {
 
     const [owner, grace, julia, kevin] = accounts;
 

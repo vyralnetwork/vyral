@@ -117,15 +117,21 @@ contract VyralSale is Ownable {
      * PHASES
      */
 
-    // Constructor
-    function VyralSale(address _share,
-                        address _vesting,
-                        address _datetime) {
-         phase = Phase.Deployed;
+    /**
+     * Initialize Vyral sales.
+     */
+    function VyralSale(
+        address _share,
+        address _vesting,
+        address _datetime
+    )
+        public
+    {
+        phase = Phase.Deployed;
 
-         shareToken = Share(_share);
-         dateTime = DateTime(_datetime);
-         vestingWallet = Vesting(_vesting);
+        shareToken = Share(_share);
+        dateTime = DateTime(_datetime);
+        vestingWallet = Vesting(_vesting);
     }
 
     function initPresale(
@@ -184,19 +190,18 @@ contract VyralSale is Ownable {
     function initSale(
         uint _saleStartTimestamp,
         uint _saleEndTimestamp,
-        uint _saleRate)
-        inPhase(Phase.Freeze
+        uint _saleRate
     )
+        inPhase(Phase.Freeze)
         onlyOwner
         external returns (bool)
     {
-        require(_saleStartTimestamp > block.timestamp);
+        require(_saleStartTimestamp >= block.timestamp);
         require(_saleEndTimestamp > _saleStartTimestamp);
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
         saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
-        // saleCap = 12000 * (10**18);
         saleRate = _saleRate;
         phase = Phase.Ready;
         return true;
@@ -329,10 +334,12 @@ contract VyralSale is Ownable {
      * ADMIN SETTERS
      */
 
-    function setPresaleParams(uint _presaleStartTimestamp,
-                              uint _presaleEndTimestamp,
-                              uint _presaleRate,
-                              uint _presaleCap)
+    function setPresaleParams(
+        uint _presaleStartTimestamp,
+        uint _presaleEndTimestamp,
+        uint _presaleRate,
+        uint _presaleCap
+    )
         onlyOwner
         inPhase(Phase.Initialized)
         external returns (bool)
@@ -346,6 +353,24 @@ contract VyralSale is Ownable {
         presaleCap = _presaleCap;
         presaleRate = _presaleRate;
     }
+
+    function setCrowdsaleParams(
+        uint _saleStartTimestamp,
+        uint _saleEndTimestamp,
+        uint _saleRate
+    )
+        onlyOwner
+        inPhase(Phase.Freeze)
+        external returns (bool)
+    {
+        require(_saleStartTimestamp >= block.timestamp);
+        require(_saleEndTimestamp > _saleStartTimestamp);
+
+        saleStartTimestamp = _saleStartTimestamp;
+        saleEndTimestamp = _saleEndTimestamp;
+        saleRate = _saleRate;
+    }
+
 
     /**
      * EMERGENCY SWITCH

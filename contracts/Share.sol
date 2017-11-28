@@ -26,6 +26,7 @@ contract Share is HumanStandardToken, Ownable {
      * Init this contract with the same params as a HST.
      */
     function Share() HumanStandardToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_DECIMALS, TOKEN_SYMBOL)
+        public
     {
         transferrers[msg.sender] = true;
     }

@@ -83,7 +83,7 @@ contract Campaign is Ownable {
         onlyIfFundsAvailable()
         returns(uint reward)
     {
-        Referral.Node referrerNode = vyralTree.nodes[_referrer];
+        Referral.Node memory referrerNode = vyralTree.nodes[_referrer];
 
         // Referrer was not found, add referrer as a new node
         if(referrerNode.shares == 0x0) {
@@ -98,7 +98,7 @@ contract Campaign is Ownable {
             reward = vyralTree.payoff(_referrer, _shares);
 
             // Transfer reward
-            token.transfer(_referrer, reward);
+            token.transferReward(_referrer, reward);
 
             // Log event
             LogRewardAllocated(_referrer, _shares, reward);

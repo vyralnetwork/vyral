@@ -152,7 +152,7 @@ contract Vesting is Ownable {
 
     /// @dev Checks to see if the amount is greater than the total amount divided by the lock periods.
     function canWithdraw(VestingSchedule _vestingSchedule, uint _amountWithdrawable)
-        internal
+        internal view
     {
         uint lockPeriods = (_vestingSchedule.endTimestamp.sub(_vestingSchedule.startTimestamp))
                                                          .div(_vestingSchedule.lockPeriod);
