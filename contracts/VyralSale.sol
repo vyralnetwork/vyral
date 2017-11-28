@@ -362,7 +362,7 @@ contract VyralSale is Ownable {
         uint _saleRate
     )
         onlyOwner
-        inPhase(Phase.Freeze)
+        inPhase(Phase.Ready)
         external returns (bool)
     {
         require(_saleStartTimestamp >= block.timestamp);
