@@ -94,7 +94,7 @@ contract Campaign is Ownable {
         vyralTree.addInvitee(_referrer, _invitee, _shares);
 
         // Calculate referrer's reward
-        reward = vyralTree.payoff(_referrer, _shares);
+        reward = vyralTree.payoff(_referrer);
 
         // Log event
         LogRewardAllocated(_referrer, _shares, reward);

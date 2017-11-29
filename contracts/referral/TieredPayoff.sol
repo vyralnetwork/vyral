@@ -42,16 +42,40 @@ library TieredPayoff {
      */
     function payoff(
         Referral.Tree storage self,
-        address _referrer,
-        uint _shares
+        address _referrer
     )
         public
         view
         returns (uint)
     {
-        Referral.Node memory node = self.nodes[_referrer];
-        uint bonusPercentage = getBonusPercentage(node.inviteeIndex.length);
-        uint reward = _shares.mul(bonusPercentage).div(100);
+        Referral.Node node = self.nodes[_referrer];
+
+        if(!node.exists) {
+            return 0;
+        }
+
+        uint reward = 0;
+        uint degree = node.inviteeIndex.length;
+        uint tierPercentage = getBonusPercentage(node.inviteeIndex.length);
+
+        // No bonus if there are no invitees
+        if(degree == 0) {
+            return 0;
+        }
+
+        assert(tierPercentage > 0);
+
+        // For the k-th node, gather tier% of SHARE
+        uint shares = node.invitees[node.inviteeIndex[degree - 1]];
+        reward = reward.add(shares.mul(tierPercentage).div(100));
+
+        // Add 1% from the first k-1 nodes
+        if(degree >= 2) {
+            for (uint i = 0; i < (degree - 1); i++) {
+                shares = node.invitees[node.inviteeIndex[i]];
+                reward = reward.add(shares.mul(1).div(100));
+            }
+        }
 
         return reward;
     }
