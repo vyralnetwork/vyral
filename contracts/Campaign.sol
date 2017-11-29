@@ -177,5 +177,6 @@ contract Campaign is Ownable {
      * Fallback. Don't send ETH to a campaign.
      */
     function() public {
+        revert();
     }
 }

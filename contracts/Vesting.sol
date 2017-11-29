@@ -203,6 +203,7 @@ contract Vesting is Ownable {
 
         require( vestingSchedule.isConfirmed == true );
         require( _newAddress != 0x0 );
+        require( vestingSchedules[_newAddress].depositor == 0x0 );
 
         VestingSchedule memory newVestingSchedule = vestingSchedule;
         delete vestingSchedules[_oldAddress];
