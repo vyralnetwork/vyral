@@ -148,8 +148,6 @@ contract Campaign is Ownable {
         _size = vyralTree.getTreeSize();
     }
 
-    // Update budget
-
     /**
      * @dev Returns Reward as a tuple.
      */
