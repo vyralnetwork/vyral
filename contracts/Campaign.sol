@@ -32,6 +32,11 @@ contract Campaign is Ownable {
         _;
     }
 
+    modifier onlyNonSelfReferral(address _referrer, address _invitee) {
+        require(_referrer != _invitee);
+        _;
+    }
+
     modifier onlyOnReferral(address _invitee) {
         require(getReferrer(_invitee) != 0x0);
         _;
@@ -79,7 +84,9 @@ contract Campaign is Ownable {
         uint _shares
     )
         public
+        onlyOwner
         onlyNonZeroAddress(_invitee)
+        onlyNonSelfReferral(_referrer, _invitee)
         onlyIfFundsAvailable()
         returns(uint reward)
     {
