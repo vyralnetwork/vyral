@@ -183,7 +183,6 @@ contract VyralSale is Ownable {
         external returns (bool)
     {
         phase = Phase.Freeze;
-
         return true;
     }
 
@@ -373,6 +372,21 @@ contract VyralSale is Ownable {
         saleRate = _saleRate;
     }
 
+    /// WARNING - If you uncomment these lines, the contract will
+    /// fail to deploy due to out of gas error. It's here so that we can 
+    /// consider whether it's smart to refactor other parts of the
+    /// codebase in order to include it. -Logan
+
+    // function replaceDecomissioned(address _newAddress)
+    //     onlyOwner
+    //     inPhase(Phase.Decomissioned)
+    //     external returns (bool)
+    // {
+    //     uint allTokens = shareToken.balanceOf(address(this));
+    //     shareToken.transfer(_newAddress, allTokens);
+    //     campaign.transferOwnership(_newAddress);
+    //     return true;
+    // }
 
     /**
      * EMERGENCY SWITCH
@@ -390,8 +404,6 @@ contract VyralSale is Ownable {
     /**
      * LOGS
      */
-    event LogPhaseShift(Phase phase);
-
     event LogContribution(Phase phase, address buyer, uint contribution);
 
     event LogReferral(address referrer, address invitee, uint referralReward);
