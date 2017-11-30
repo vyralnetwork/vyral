@@ -200,8 +200,8 @@ contract VyralSale is Ownable {
 
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
-        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
         saleRate = _saleRate;
+        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
         phase = Phase.Ready;
         return true;
     }
@@ -246,7 +246,6 @@ contract VyralSale is Ownable {
         } else {
             revert();
         }
- 
     }
 
     function buyPresale(address _referrer)
@@ -351,8 +350,8 @@ contract VyralSale is Ownable {
 
         presaleStartTimestamp = _presaleStartTimestamp;
         presaleEndTimestamp = _presaleEndTimestamp;
-        presaleCap = _presaleCap;
         presaleRate = _presaleRate;
+        presaleCap = _presaleCap;
     }
 
     function setCrowdsaleParams(
@@ -370,6 +369,7 @@ contract VyralSale is Ownable {
         saleStartTimestamp = _saleStartTimestamp;
         saleEndTimestamp = _saleEndTimestamp;
         saleRate = _saleRate;
+        saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
     }
 
     /// WARNING - If you uncomment these lines, the contract will

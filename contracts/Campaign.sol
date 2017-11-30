@@ -19,7 +19,7 @@ contract Campaign is Ownable {
     /// Token in use
     Share public token;
 
-    /// Token in use
+    /// Budget of the campaign
     uint public budget;
 
 
@@ -134,18 +134,18 @@ contract Campaign is Ownable {
     /**
      * Return referral key of caller.
      */
-    function getNode(
-        address _invitee
-    )
-        public
-        constant
-        returns (address _referrer)
-    {
-        _referrer = vyralTree.getReferrer(_invitee);
-    }
+    // function getNode(
+    //     address _invitee
+    // )
+    //     public
+    //     constant
+    //     returns (address _referrer)
+    // {
+    //     _referrer = vyralTree.getReferrer(_invitee);
+    // }
 
     /**
-     * @dev Find referrer of the given invitee.
+     * @dev Returns the size of the Referral Tree.
      */
     function getTreeSize()
         public
@@ -156,7 +156,7 @@ contract Campaign is Ownable {
     }
 
     /**
-     * @dev Returns Reward as a tuple.
+     * @dev Returns the budget as a tuple, (token address, amount)
      */
     function getBudget()
         public

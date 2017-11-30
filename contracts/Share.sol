@@ -42,7 +42,7 @@ contract Share is HumanStandardToken, Ownable {
     bool isBonusLocked = true;
 
     /// Allows the owner to transfer tokens whenever, but others to only transfer after owner says so.
-    modifier canBeTransfered {
+    modifier canBeTransferred {
         require(transferrers[msg.sender] || isTransferable);
         _;
     }
@@ -51,7 +51,7 @@ contract Share is HumanStandardToken, Ownable {
         address _to,
         uint _value
     )
-        canBeTransfered
+        canBeTransferred
         public
         returns (bool)
     {
@@ -70,7 +70,7 @@ contract Share is HumanStandardToken, Ownable {
         address _to,
         uint _value
     )
-        canBeTransfered
+        canBeTransferred
         public
         returns (bool)
     {
@@ -92,7 +92,7 @@ contract Share is HumanStandardToken, Ownable {
         address _to,
         uint _value
     )
-        canBeTransfered
+        canBeTransferred
         public
         returns (bool)
     {

@@ -79,7 +79,7 @@ library Referral {
     }
 
     /**
-     * @dev Number of entreis in referral tree.
+     * @dev Number of entries in referral tree.
      */
     function getTreeSize (
         Tree storage self
