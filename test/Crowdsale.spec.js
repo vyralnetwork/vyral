@@ -37,7 +37,7 @@ function timeTravel(time) {
 
 contract("Vyral Crowdsale", (accounts) => {
 
-    const [owner, grace, julia, kevin] = accounts;
+    const [owner, alice, bob, charlie, dave, emma, faith, grace, henry, issac] = accounts;
 
     before(async () => {
         this.vyralSale = await VyralSale.deployed();
@@ -81,144 +81,93 @@ contract("Vyral Crowdsale", (accounts) => {
 
         it("should execute a sale and transfer tokens", async () => {
             /// Take this down really quick
-            const graceBalBefore = await this.share.balanceOf(grace);
+            const aliceBalBefore = await this.share.balanceOf(alice);
             const saleBalBefore  = await this.share.balanceOf(this.vyralSale.address);
 
             /// Trigger the fallback function
-            const txObj = await this.vyralSale.sendTransaction({from: grace, value: web3.toWei(1)});
+            const txObj = await this.vyralSale.sendTransaction({from: alice, value: web3.toWei(1)});
             expect(txObj.receipt).to.exist;
 
             /// Accounting
-            const graceBalAfter = await this.share.balanceOf.call(grace);
+            const aliceBalAfter = await this.share.balanceOf.call(alice);
             const saleBalAfter  = await this.share.balanceOf.call(this.vyralSale.address);
 
-            expect(graceBalBefore.toNumber())
+            expect(aliceBalBefore.toNumber())
             .to.equal(0);
 
-            expect(graceBalAfter.toNumber())
+            expect(aliceBalAfter.toNumber())
             .to.equal(web3.toWei(1) * config.get("rate"));
 
             expect(saleBalAfter.toNumber())
-            .to.equal((saleBalBefore.sub(graceBalAfter)).toNumber());
+            .to.equal((saleBalBefore.sub(aliceBalAfter)).toNumber());
         });
 
         it("should reject contributions less than 1 ETH ", async () => {
-            await this.vyralSale.buySale(grace, {from: julia, value: web3.toWei(0.5)})
+            await this.vyralSale.buySale(grace, {from: alice, value: web3.toWei(0.5)})
             .should.be.rejectedWith('VM Exception while processing transaction: revert');
         });
 
-        it("should reward referrer 7% bonus when a new node joins", async () => {
-            await this.vyralSale.buySale(grace, {from: julia, value: web3.toWei(1)});
+        it("should reward referrer 7% bonus when 1 node is invited", async () => {
+            await this.vyralSale.buySale(alice, {from: bob, value: web3.toWei(1)});
+            await this.vyralSale.buySale(bob, {from: charlie, value: web3.toWei(1)});
 
-            let gracesReferrer = await this.campaign.getReferrer.call(grace);
-            let juliasReferrer = await this.campaign.getReferrer.call(julia);
-            assert.equal(grace, juliasReferrer);
+            let bobsReferrer = await this.campaign.getReferrer.call(bob);
+            let charliesReferrer = await this.campaign.getReferrer.call(charlie);
 
-            let graceBalance = await this.share.balanceOf.call(grace);
-            let juliaBalance = await this.share.balanceOf.call(julia);
-            let lostBalance  = await this.share.balanceOf.call("0x0");
+            assert.equal(alice, bobsReferrer);
+            assert.equal(bob, charliesReferrer);
 
-            expect(graceBalance.toNumber())
-            .to.equal(
-            (new BigNumber(web3.toWei(1))
-            .mul(saleRate)
-            .mul(1.7))
-            .toNumber()
-            );
+            let bobBalance = await this.share.balanceOf.call(bob);
+            let charlieBalance = await this.share.balanceOf.call(charlie);
 
-            expect(juliaBalance.toNumber())
-            .to.equal(
-            (new BigNumber(web3.toWei(1))
-            .mul(saleRate)
-            .mul(1))
-            .toNumber()
-            );
+            expect(bobBalance.toNumber())
+            .to.equal((new BigNumber(web3.toWei(1)).mul(saleRate).mul(1.07)).toNumber());
 
-            assert.isTrue(lostBalance.equals(new BigNumber("0")));
+            expect(charlieBalance.toNumber())
+            .to.equal((new BigNumber(web3.toWei(1)).mul(saleRate).mul(1)).toNumber());
         });
 
-        it("should reward referrer 8% bonus when a new node joins", async () => {
-            await this.vyralSale.buySale(grace, {from: julia, value: web3.toWei(1)});
+        it("should reward referrer 8% bonus when 2 nodes are invited", async () => {
+            await this.vyralSale.buySale(alice, {from: dave, value: web3.toWei(1)});
+            await this.vyralSale.buySale(dave, {from: emma, value: web3.toWei(1)});
+            await this.vyralSale.buySale(dave, {from: faith, value: web3.toWei(1)});
 
-            let gracesReferrer = await this.campaign.getReferrer.call(grace);
-            let juliasReferrer = await this.campaign.getReferrer.call(julia);
-            let kevinsReferrer = await this.campaign.getReferrer.call(kevin);
-            assert.equal(grace, juliasReferrer);
-            assert.equal(grace, kevinsReferrer);
+            let davesReferrer = await this.campaign.getReferrer.call(dave);
+            let emmasReferrer = await this.campaign.getReferrer.call(emma);
+            let faithsReferrer = await this.campaign.getReferrer.call(faith);
 
-            let graceBalance = await this.share.balanceOf.call(grace);
-            let juliaBalance = await this.share.balanceOf.call(julia);
-            let kevinBalance = await this.share.balanceOf.call(kevin);
-            let lostBalance  = await this.share.balanceOf.call("0x0");
+            assert.equal(alice, davesReferrer);
+            assert.equal(dave, emmasReferrer);
+            assert.equal(dave, faithsReferrer);
 
-            expect(graceBalance.toNumber())
-            .to.equal(
-            (new BigNumber(web3.toWei(1))
-            .mul(saleRate)
-            .mul(1.8))
-            .toNumber()
-            );
+            let aliceBalance = await this.share.balanceOf.call(alice);
+            let daveBalance = await this.share.balanceOf.call(dave);
+            let emmaBalance = await this.share.balanceOf.call(emma);
+            let faithBalance = await this.share.balanceOf.call(faith);
 
-            expect(juliaBalance.toNumber())
-            .to.equal(
-            (new BigNumber(web3.toWei(1))
-            .mul(saleRate)
-            .mul(1))
-            .toNumber()
-            );
+            let tokens = new BigNumber(web3.toWei(1)).mul(saleRate);
+            expect(daveBalance.toNumber())
+            .to.equal(tokens.add(tokens.mul(0.08).mul(2)).toNumber());
 
-            expect(kevinBalance.toNumber())
-            .to.equal(
-            (new BigNumber(web3.toWei(1))
-            .mul(saleRate)
-            .mul(1))
-            .toNumber()
-            );
+            expect(emmaBalance.toNumber())
+            .to.equal((new BigNumber(web3.toWei(1)).mul(saleRate).mul(1)).toNumber());
 
-            assert.isTrue(lostBalance.equals(new BigNumber("0")));
+            expect(faithBalance.toNumber())
+            .to.equal((new BigNumber(web3.toWei(1)).mul(saleRate).mul(1)).toNumber());
         });
 
-        it("should reward referrer 8% bonus when a new node joins", async () => {
-            let treeSize = await this.campaign.getTreeSize.call();
-            console.log("treeSize", treeSize.toString(10))
-
-            let result1 = await this.vyralSale.buySale(grace, {from: julia, value: web3.toWei(1)});
-            treeSize    = await this.campaign.getTreeSize.call();
-            console.log("treeSize", treeSize.toString(10))
-
-            console.log(result1.logs)
-
-            let result2 = await this.vyralSale.buySale(grace, {from: kevin, value: web3.toWei(1)});
-            treeSize    = await this.campaign.getTreeSize.call();
-            console.log("treeSize", treeSize.toString(10))
-
-            console.log(result2.logs)
-
+        it("should reward referrer 9% bonus when 3 nodes are invited", async () => {
+            await this.vyralSale.buySale(alice, {from: grace, value: web3.toWei(1)});
 
             let gracesReferrer = await this.campaign.getReferrer.call(grace);
-            let juliasReferrer = await this.campaign.getReferrer.call(julia);
-            let kevinsReferrer = await this.campaign.getReferrer.call(kevin);
 
-            console.log("gracesReferrer", gracesReferrer)
-            console.log("juliasReferrer", juliasReferrer)
-            console.log("kevinsReferrer", kevinsReferrer)
+            assert.equal(alice, gracesReferrer);
 
-            let graceBalance    = await this.share.balanceOf.call(grace);
-            let juliaBalance    = await this.share.balanceOf.call(julia);
-            let kevinBalance    = await this.share.balanceOf.call(kevin);
-            let saleBalance     = await this.share.balanceOf.call(this.vyralSale.address);
-            let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
-            let lostBalance     = await this.share.balanceOf.call("0x0");
+            let aliceBalance = await this.share.balanceOf.call(alice);
 
-            console.log("graceBalance", graceBalance.toString(10))
-            console.log("juliaBalance", juliaBalance.toString(10))
-            console.log("kevinBalance", kevinBalance.toString(10))
-            console.log("saleBalance", saleBalance.toString(10))
-            console.log("campaignBalance", campaignBalance.toString(10))
-            console.log("lostBalance", lostBalance.toString(10))
-
-
-            assert.equal(4285, juliaBalance.toNumber());
+            let tokens = new BigNumber(web3.toWei(1)).mul(saleRate);
+            expect(aliceBalance.toNumber())
+            .to.equal(tokens.add(tokens.mul(0.09).mul(3)).toNumber());
         });
 
     });
