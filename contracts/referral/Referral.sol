@@ -102,6 +102,8 @@ library Referral {
     )
         internal
     {
+        require(_referrer != _invitee);
+
         Node memory inviteeNode;
         inviteeNode.referrer = _referrer;
         inviteeNode.shares = _shares;
