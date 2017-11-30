@@ -39,6 +39,17 @@ library TieredPayoff {
     /**
      * Tiered payoff computes reward based on number of invitees a referrer has brought in.
      * Returns the reward or the number of tokens referrer should be awarded.
+     *
+     * For degree == 1:
+     * tier% of shares of newly joined node
+     *
+     * For 2 <= degree < 27:
+     *   k-1
+     * (  ∑  1% of shares(node_i) )  + tier% of shares of node_k
+     *   i=1
+     *
+     * For degree > 27:
+     * tier% of shares of newly joined node
      */
     function payoff(
         Referral.Tree storage self,
@@ -81,14 +92,9 @@ library TieredPayoff {
                 shares = node.invitees[node.inviteeIndex[i]];
                 reward = reward.add(shares.mul(1).div(100));
             }
-
-            // For the k-th node, gather tier% of SHARE
-            shares = node.invitees[node.inviteeIndex[degree - 1]];
-            reward = reward.add(shares.mul(tierPercentage).div(100));
-            return reward;
         }
 
-        // For degree > 27, referrer bonus remains constant at 33%
+        // For degree > 27, referrer bonus remains constant at tier%
         shares = node.invitees[node.inviteeIndex[degree - 1]];
         reward = reward.add(shares.mul(tierPercentage).div(100));
 
