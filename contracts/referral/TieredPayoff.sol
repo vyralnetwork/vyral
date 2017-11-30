@@ -87,7 +87,7 @@ library TieredPayoff {
         // For 2 <= degree <= 27
         //    add 1% from the first k-1 nodes
         //    add tier% from the last node
-        if(2 <= degree && degree <= 27) {
+        if(degree >= 2 && degree <= 27) {
             for (uint i = 0; i < (degree - 1); i++) {
                 shares = node.invitees[node.inviteeIndex[i]];
                 reward = reward.add(shares.mul(1).div(100));
