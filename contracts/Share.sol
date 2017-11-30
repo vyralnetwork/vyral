@@ -111,6 +111,15 @@ contract Share is HumanStandardToken, Ownable {
         return true;
     }
 
+    function lockedBalanceOf(
+        address _owner
+    )
+        constant
+        returns (uint)
+    {
+        return lockedBalances[_owner];
+    }
+
     ///-----------------
     /// Admin
     ///-----------------

@@ -164,10 +164,14 @@ contract("Vyral Crowdsale", (accounts) => {
             assert.equal(alice, gracesReferrer);
 
             let aliceBalance = await this.share.balanceOf.call(alice);
-
+            let aliceRewards = await this.share.lockedBalanceOf.call(alice);
             let tokens = new BigNumber(web3.toWei(1)).mul(saleRate);
+
             expect(aliceBalance.toNumber())
             .to.equal(tokens.add(tokens.mul(0.09).mul(3)).toNumber());
+
+            expect(aliceRewards.toNumber())
+            .to.equal(tokens.mul(0.09).mul(3).toNumber());
         });
 
     });
