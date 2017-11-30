@@ -85,7 +85,7 @@ contract('Vyral Presale', async function(accounts) {
         .should.be.rejectedWith('VM Exception while processing transaction: revert');
     });
 
-    it('should accept a valid contribution in the first hour of presale and return 70% bonus', async function() {
+    it('should accept a valid contribution in the first 4 hours of presale and return 70% bonus', async function() {
 
         /// Time travellin'
         const block_        = await web3.eth.getBlock('latest');
@@ -151,7 +151,7 @@ contract('Vyral Presale', async function(accounts) {
 
         /// Ben wants to contribute on the first day but barely misses the first hour bonus
         /// But he still wants the first day bonus of 50%
-        const secondsToWait = HOUR + 5 * MINUTE;
+        const secondsToWait = (4 * HOUR) + (5 * MINUTE);
         await waitUntilBlock(secondsToWait, 0);
 
         const benBefore = await shareToken.balanceOf(Ben);
