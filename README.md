@@ -2,7 +2,11 @@
 Smart contract for [Vyral](https://vyral.network) crowdsale.
 
 * [VyralSale.sol](contracts/VyralSale.sol) Driver contract that runs presale and crowdsale. Presale begins Dec 2, 2017 9AM EST 
-  and runs for 23 days. Crowdsale is can be initialized after presale ends.
+  and runs for 23 days. Crowdsale will be initialized after presale ends.
+* [Campaign.sol](contracts/Campaign.sol) Campaign manager contract that keeps track of the Referral tree and sends rewards for new referrals.
+* [Share.sol](contracts/Share.sol) Standard ERC20 token with some added logic to make it compatible with the referral mechanisms.
+* [Vesting.sol](contracts/Vesting.sol) A wallet with vesting logic that keeps track of registered vesting schedules and unlocks tokens over time for team and partners.
+* [PresaleBonuses.sol](contracts/PresaleBonuses.sol) Library contract that calculates the bonus rewards during the presale phase of the sale.
 
 ## Development
 
