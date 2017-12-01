@@ -15,9 +15,9 @@ const VyralSale      = artifacts.require("./VyralSale.sol");
 const PresaleBonuses = artifacts.require("./PresaleBonuses.sol");
 
 const config = require("../config");
-const moment = require("moment");
+const fs     = require("fs");
 
-let saleInstance, shareInstance;
+let saleInstance, shareInstance, campaignAddress;
 
 module.exports = function test(deployer) {
     deployer.deploy(MultiSigWallet,
@@ -80,7 +80,7 @@ module.exports = function test(deployer) {
         config.get("rate"));
 
         return vyralSale.TOTAL_SUPPLY.call();
-    })  
+    })
     .then((totalSupply) => {
         // console.log(totalSupply.toNumber())
         return shareInstance.transfer(saleInstance.address, totalSupply.toNumber());
@@ -88,23 +88,36 @@ module.exports = function test(deployer) {
     .then((txs) => {
         // console.log(txs)
         return saleInstance.initPresale(
-            MultiSigWallet.address,
-            config.get("presale:startTime"),
-            config.get("presale:endTime"),
-            web3.toWei(config.get("presale:cap")),
-            config.get("rate"));
+        MultiSigWallet.address,
+        config.get("presale:startTime"),
+        config.get("presale:endTime"),
+        web3.toWei(config.get("presale:cap")),
+        config.get("rate"));
     })
     .then((txs) => {
         // console.log(txs);
         return saleInstance.campaign.call();
     })
-    .then((campaignAddress) => {
+    .then((campaignAddr) => {
+        campaignAddress = campaignAddr;
         return Promise.all([
-            shareInstance.addTransferrer(campaignAddress)
+            shareInstance.addTransferrer(campaignAddr)
         ]);
     })
     .then((txs) => {
-        // console.log(txs);
+        fs.writeFileSync('contracts.txt', `LIST OF CONTRACTS
+${"-".repeat(30)}
+Campaign:      ${campaignAddress}
+DateTime:      ${DateTime.address}
+MultiSig:      ${MultiSigWallet.address}
+PresaleBonuses:${PresaleBonuses.address}
+Referral:      ${Referral.address}
+SafeMath:      ${SafeMath.address}
+Share:         ${Share.address}
+TieredPayoff:  ${TieredPayoff.address}
+Vesting:       ${Vesting.address}
+VyralSale:     ${VyralSale.address}
+        `);
     })
     .catch((err) => {
         console.error("Deployment failed", err);

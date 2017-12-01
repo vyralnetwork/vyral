@@ -4,6 +4,7 @@
 .notes
 build
 bower_components
+contracts.txt
 dist
 logs
 node_modules

@@ -372,6 +372,17 @@ contract VyralSale is Ownable {
         saleCap = (SALE_ALLOCATION.div(_saleRate)).sub(presaleCap);
     }
 
+    function rewardBeneficiary(
+        address _beneficiary,
+        uint8 _tokens
+    )
+        onlyOwner
+        external returns (bool)
+    {
+        uint reward = _tokens * (10 ** uint(18));
+        return campaign.sendReward(_beneficiary, reward);
+    }
+
     /// WARNING - If you uncomment these lines, the contract will
     /// fail to deploy due to out of gas error. It's here so that we can 
     /// consider whether it's smart to refactor other parts of the

@@ -1,5 +1,6 @@
 pragma solidity ^0.4.18;
 
+import "./math/SafeMath.sol";
 import "./traits/Ownable.sol";
 import "./referral/TieredPayoff.sol";
 import "./referral/Referral.sol";
@@ -10,6 +11,7 @@ import "./Share.sol";
  * A {Campaign} represents an advertising campaign.
  */
 contract Campaign is Ownable {
+    using SafeMath for uint;
     using Referral for Referral.Tree;
     using TieredPayoff for Referral.Tree;
 
@@ -22,6 +24,8 @@ contract Campaign is Ownable {
     /// Budget of the campaign
     uint public budget;
 
+    /// Tokens spent
+    uint public cost;
 
     /*
      * Modifiers
@@ -114,8 +118,13 @@ contract Campaign is Ownable {
         onlyOwner //(ie, VyralSale)
         external returns (bool)
     {
-        token.transferReward(_who, _amount);
-        return true;
+        if(getAvailableBalance() >= _amount) {
+            token.transferReward(_who, _amount);
+            cost = cost.add(_amount);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -130,19 +139,6 @@ contract Campaign is Ownable {
     {
         _referrer = vyralTree.getReferrer(_invitee);
     }
-
-    /**
-     * Return referral key of caller.
-     */
-    // function getNode(
-    //     address _invitee
-    // )
-    //     public
-    //     constant
-    //     returns (address _referrer)
-    // {
-    //     _referrer = vyralTree.getReferrer(_invitee);
-    // }
 
     /**
      * @dev Returns the size of the Referral Tree.
@@ -175,7 +171,7 @@ contract Campaign is Ownable {
         constant
         returns (uint _balance)
     {
-        _balance = token.balanceOf(this);
+        _balance = (budget - cost);
     }
 
     /**
