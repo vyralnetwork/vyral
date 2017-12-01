@@ -224,7 +224,7 @@ contract VyralSale is Ownable {
     }
 
     function decomission()
-        inPhase(Phase.Finalized)
+        // inPhase(Phase.Finalized)
         onlyOwner
         external returns (bool)
     {

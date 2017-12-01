@@ -72,7 +72,7 @@ module.exports = function test(deployer) {
     .then((num) => {
         deployer.link(Referral, Campaign)
         deployer.link(TieredPayoff, Campaign)
-        console.log(num)
+        // console.log(num)
         return deployer.deploy(Campaign,
             shareInstance.address,
             num
@@ -131,7 +131,7 @@ module.exports = function test(deployer) {
     })
     .then((campaignAddr) => {
         campaignAddress = campaignAddr;
-        fs.writeFileSync('campaign', campaignAddr)
+        // fs.writeFileSync('campaign', campaignAddr)
         return Promise.all([
             shareInstance.addTransferrer(campaignAddr)
         ]);
