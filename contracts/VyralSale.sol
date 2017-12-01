@@ -122,7 +122,7 @@ contract VyralSale is Ownable {
      */
     function VyralSale(
         address _share,
-        address _vesting,
+        // address _vesting,
         address _datetime
     )
         public
@@ -131,7 +131,7 @@ contract VyralSale is Ownable {
 
         shareToken = Share(_share);
         dateTime = DateTime(_datetime);
-        vestingWallet = Vesting(_vesting);
+        // vestingWallet = Vesting(_vesting);
     }
 
     function initPresale(
@@ -150,15 +150,14 @@ contract VyralSale is Ownable {
         require(_presaleEndTimestamp > _presaleStartTimestamp);
         require(_presaleCap < SALE_ALLOCATION.div(_presaleRate));
 
+        /// Campaign must be set first.
+        require(address(campaign) != 0x0);
+
         wallet = _wallet;
         presaleStartTimestamp = _presaleStartTimestamp;
         presaleEndTimestamp = _presaleEndTimestamp;
         presaleCap = _presaleCap;
         presaleRate = _presaleRate;
-
-        campaign = new Campaign(address(shareToken), VYRAL_REWARDS);
-
-        shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
 
         shareToken.transfer(address(campaign), VYRAL_REWARDS);
 
@@ -383,21 +382,42 @@ contract VyralSale is Ownable {
         return campaign.sendReward(_beneficiary, reward);
     }
 
-    /// WARNING - If you uncomment these lines, the contract will
-    /// fail to deploy due to out of gas error. It's here so that we can 
-    /// consider whether it's smart to refactor other parts of the
-    /// codebase in order to include it. -Logan
+    function replaceDecomissioned(address _newAddress)
+        onlyOwner
+        inPhase(Phase.Decomissioned)
+        external returns (bool)
+    {
+        uint allTokens = shareToken.balanceOf(address(this));
+        shareToken.transfer(_newAddress, allTokens);
+        campaign.transferOwnership(_newAddress);
 
-    // function replaceDecomissioned(address _newAddress)
-    //     onlyOwner
-    //     inPhase(Phase.Decomissioned)
-    //     external returns (bool)
-    // {
-    //     uint allTokens = shareToken.balanceOf(address(this));
-    //     shareToken.transfer(_newAddress, allTokens);
-    //     campaign.transferOwnership(_newAddress);
-    //     return true;
-    // }
+        return true;
+    }
+
+    function setCampaign(
+        address _newCampaign
+    )
+        onlyOwner
+        external returns (bool)
+    {
+        require(address(campaign) != _newCampaign && _newCampaign != 0x0);
+        campaign = Campaign(_newCampaign);
+
+        return true;
+    }
+
+    function setVesting(
+        address _newVesting
+    )
+        onlyOwner
+        external returns (bool)
+    {
+        require(address(vestingWallet) != _newVesting && _newVesting != 0x0);
+        vestingWallet = Vesting(_newVesting);
+        shareToken.approve(address(vestingWallet), TEAM.add(PARTNERS));
+
+        return true;
+    }
 
     /**
      * EMERGENCY SWITCH

@@ -7,6 +7,7 @@ const BigNumber              = require('bignumber.js');
 const {wait, waitUntilBlock} = require('@digix/tempo')(web3);
 
 /// Contracts
+const Campaign  = artifacts.require('./Campaign.sol')
 const Share     = artifacts.require('./Share.sol');
 const VyralSale = artifacts.require('./VyralSale.sol');
 
@@ -33,6 +34,7 @@ contract('Vyral Presale', async function(accounts) {
 
         shareToken = await Share.deployed();
         vyralSale  = await VyralSale.deployed();
+        campaign   = Campaign.at(await vyralSale.campaign.call())
 
         /// VyralSale should be in phase 1 (initialized)
         expect((await vyralSale.phase.call()).toNumber())
@@ -41,6 +43,14 @@ contract('Vyral Presale', async function(accounts) {
         /// VyralSale should have 555,555,555 shares allocated
         expect((await shareToken.balanceOf(vyralSale.address)).toNumber())
         .to.equal(5.55555555e+26);
+
+        /// Campaign should have 222,222,222 shares allocated
+        expect((await shareToken.balanceOf(campaign.address)).toNumber())
+        .to.equal(2.22222222e+26);
+
+        /// VyralSale should be the owner of Campaign
+        expect((await campaign.owner.call()))
+        .to.equal(vyralSale.address)
 
         /// Take in all the data
         presaleStartTimestamp = await vyralSale.presaleStartTimestamp.call();
@@ -63,6 +73,8 @@ contract('Vyral Presale', async function(accounts) {
 
         expect(presaleCap.toNumber())
         .to.equal(4e+22);
+
+        console.log(presaleRate)
     });
 
     it('moves VyralSale into phase 2', async function() {

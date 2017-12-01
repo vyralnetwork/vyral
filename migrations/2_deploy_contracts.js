@@ -52,26 +52,43 @@ module.exports = function test(deployer) {
 
         return deployer.deploy(VyralSale,
         Share.address,
-        Vesting.address,
+        // Vesting.address,
         DateTime.address);
     })
     .then(() => {
         return Share.deployed();
     })
     .then((share) => {
-        shareInstance = share;
+        shareInstance = share
+    })
+    .then(() => {
+        return VyralSale.deployed()
+    })
+    .then((vyralSale) => {
+        saleInstance = vyralSale
+
+        return saleInstance.VYRAL_REWARDS.call()
+    })
+    .then((num) => {
+        deployer.link(Referral, Campaign)
+        deployer.link(TieredPayoff, Campaign)
+        console.log(num)
+        return deployer.deploy(Campaign,
+            shareInstance.address,
+            num
+        )
+    })
+    .then(() => {
         return Promise.all([
-            share.addTransferrer(Share.address),
-            share.addTransferrer(VyralSale.address),
-            share.addTransferrer(Vesting.address),
+            shareInstance.addTransferrer(Share.address),
+            shareInstance.addTransferrer(VyralSale.address),
+            shareInstance.addTransferrer(Vesting.address),
         ]);
     })
     .then(() => {
         return VyralSale.deployed()
     })
     .then((vyralSale) => {
-        saleInstance = vyralSale;
-
         console.log("Sale deployed with these arguments",
         MultiSigWallet.address,
         config.get("presale:startTime"),
@@ -84,6 +101,20 @@ module.exports = function test(deployer) {
     .then((totalSupply) => {
         // console.log(totalSupply.toNumber())
         return shareInstance.transfer(saleInstance.address, totalSupply.toNumber());
+    })
+    .then(() => {
+        return saleInstance.setVesting(Vesting.address)
+    })
+    .then(() => {
+        return saleInstance.setCampaign(Campaign.address)
+    })
+    .then(() => {
+        return Campaign.deployed()
+    })
+    .then((campaign) => {
+        campaignInstance = campaign 
+
+        return campaign.transferOwnership(saleInstance.address)
     })
     .then((txs) => {
         // console.log(txs)
@@ -100,6 +131,7 @@ module.exports = function test(deployer) {
     })
     .then((campaignAddr) => {
         campaignAddress = campaignAddr;
+        fs.writeFileSync('campaign', campaignAddr)
         return Promise.all([
             shareInstance.addTransferrer(campaignAddr)
         ]);

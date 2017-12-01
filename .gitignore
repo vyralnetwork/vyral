@@ -10,3 +10,4 @@ logs
 node_modules
 secrets.json
 truffle.js
+vestingSchedules.json
