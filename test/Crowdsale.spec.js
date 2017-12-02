@@ -111,13 +111,13 @@ contract("Vyral Crowdsale", (accounts) => {
             await this.vyralSale.buySale(alice, {from: bob, value: web3.toWei(1)});
             await this.vyralSale.buySale(bob, {from: charlie, value: web3.toWei(1)});
 
-            let bobsReferrer = await this.campaign.getReferrer.call(bob);
+            let bobsReferrer     = await this.campaign.getReferrer.call(bob);
             let charliesReferrer = await this.campaign.getReferrer.call(charlie);
 
             assert.equal(alice, bobsReferrer);
             assert.equal(bob, charliesReferrer);
 
-            let bobBalance = await this.share.balanceOf.call(bob);
+            let bobBalance     = await this.share.balanceOf.call(bob);
             let charlieBalance = await this.share.balanceOf.call(charlie);
 
             expect(bobBalance.toNumber())
@@ -132,8 +132,8 @@ contract("Vyral Crowdsale", (accounts) => {
             await this.vyralSale.buySale(dave, {from: emma, value: web3.toWei(1)});
             await this.vyralSale.buySale(dave, {from: faith, value: web3.toWei(1)});
 
-            let davesReferrer = await this.campaign.getReferrer.call(dave);
-            let emmasReferrer = await this.campaign.getReferrer.call(emma);
+            let davesReferrer  = await this.campaign.getReferrer.call(dave);
+            let emmasReferrer  = await this.campaign.getReferrer.call(emma);
             let faithsReferrer = await this.campaign.getReferrer.call(faith);
 
             assert.equal(alice, davesReferrer);
@@ -141,8 +141,8 @@ contract("Vyral Crowdsale", (accounts) => {
             assert.equal(dave, faithsReferrer);
 
             let aliceBalance = await this.share.balanceOf.call(alice);
-            let daveBalance = await this.share.balanceOf.call(dave);
-            let emmaBalance = await this.share.balanceOf.call(emma);
+            let daveBalance  = await this.share.balanceOf.call(dave);
+            let emmaBalance  = await this.share.balanceOf.call(emma);
             let faithBalance = await this.share.balanceOf.call(faith);
 
             let tokens = new BigNumber(web3.toWei(1)).mul(saleRate);
@@ -165,13 +165,36 @@ contract("Vyral Crowdsale", (accounts) => {
 
             let aliceBalance = await this.share.balanceOf.call(alice);
             let aliceRewards = await this.share.lockedBalanceOf.call(alice);
-            let tokens = new BigNumber(web3.toWei(1)).mul(saleRate);
+            let tokens       = new BigNumber(web3.toWei(1)).mul(saleRate);
 
             expect(aliceBalance.toNumber())
             .to.equal(tokens.add(tokens.mul(0.09).mul(3)).toNumber());
 
             expect(aliceRewards.toNumber())
             .to.equal(tokens.mul(0.09).mul(3).toNumber());
+        });
+
+        it("should prevent tokens from being transferred until transfers are enabled", async () => {
+            let aliceBalance = await this.share.balanceOf.call(alice);
+            let aliceRewards = await this.share.lockedBalanceOf.call(alice);
+
+            await this.share.transfer(henry, aliceBalance.toNumber(), {from: alice})
+            .should.be.rejectedWith('VM Exception while processing transaction: revert');
+
+            await this.share.enableTransfers({from: owner});
+
+            await this.share.transfer(henry, aliceBalance.sub(aliceRewards).toNumber(), {from: alice});
+        });
+
+        it("should lock rewards until unlocked by owner", async () => {
+            let aliceRewards = await this.share.lockedBalanceOf.call(alice);
+
+            await this.share.transfer(henry, aliceRewards.toNumber(), {from: alice})
+            .should.be.rejectedWith('VM Exception while processing transaction: revert');
+
+            await this.share.releaseBonus({from: owner});
+
+            await this.share.transfer(henry, aliceRewards.toNumber(), {from: alice});
         });
 
     });
