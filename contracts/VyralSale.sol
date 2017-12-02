@@ -373,13 +373,22 @@ contract VyralSale is Ownable {
 
     function rewardBeneficiary(
         address _beneficiary,
-        uint8 _tokens
+        uint _tokens
     )
         onlyOwner
         external returns (bool)
     {
-        uint reward = _tokens * (10 ** uint(18));
-        return campaign.sendReward(_beneficiary, reward);
+        return campaign.sendReward(_beneficiary, _tokens);
+    }
+
+    function distributeTimelockedTokens(
+        address _beneficiary,
+        uint _tokens
+    )
+        onlyOwner
+        external returns (bool)
+    {
+        return shareToken.transfer(_beneficiary, _tokens);
     }
 
     function replaceDecomissioned(address _newAddress)

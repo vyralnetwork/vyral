@@ -197,5 +197,19 @@ contract("Vyral Crowdsale", (accounts) => {
             await this.share.transfer(henry, aliceRewards.toNumber(), {from: alice});
         });
 
+        it("should distribute tokens to whitelisted address", async () => {
+            let tokens = new BigNumber(17850000).mul(new BigNumber(10).pow(18));
+            await this.vyralSale.distributeTimelockedTokens(issac, tokens, {from: owner});
+
+            let issacBalance = await this.share.balanceOf.call(issac);
+            let issacRewards = await this.share.lockedBalanceOf.call(issac);
+
+            expect(issacBalance.toNumber())
+            .to.equal(tokens.toNumber());
+
+            expect(issacRewards.toNumber())
+            .to.equal(0);
+        });
+
     });
 });
