@@ -5,7 +5,7 @@ Vyral is based on the idea that the spread of information in the social network 
 in which users do not explicitly exert effort i.e., a user is more likely to be "infected" with an idea if more 
 of her neighbors are.
 
-* [VyralSale.sol](contracts/VyralSale.sol) Driver contract that runs presale and crowdsale. Presale begins Dec 2, 2017 9AM EST 
+* [VyralSale.sol](contracts/VyralSale.sol) Driver contract that runs presale and crowdsale. Presale begins Dec 2, 2017 11 am EST 
   and runs for 23 days. Crowdsale will be initialized after presale ends.
 * [Campaign.sol](contracts/Campaign.sol) Campaign manager contract that keeps track of the Referral tree and sends rewards for new referrals.
 * [Share.sol](contracts/Share.sol) Standard ERC20 token with some added logic to make it compatible with the referral mechanisms.
