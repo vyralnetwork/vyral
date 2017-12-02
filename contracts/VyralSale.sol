@@ -122,7 +122,6 @@ contract VyralSale is Ownable {
      */
     function VyralSale(
         address _share,
-        // address _vesting,
         address _datetime
     )
         public
@@ -131,7 +130,6 @@ contract VyralSale is Ownable {
 
         shareToken = Share(_share);
         dateTime = DateTime(_datetime);
-        // vestingWallet = Vesting(_vesting);
     }
 
     function initPresale(
@@ -224,7 +222,6 @@ contract VyralSale is Ownable {
     }
 
     function decomission()
-        // inPhase(Phase.Finalized)
         onlyOwner
         external returns (bool)
     {
