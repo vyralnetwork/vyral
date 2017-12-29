@@ -5,15 +5,15 @@ import '../math/SafeMath.sol';
 
 /**
  * Bonus tiers
- * 1 Vyral Referral - 7% bonus
- * 2 Vyral Referrals - 8% bonus
- * 3 Vyral Referrals - 9% bonus
- * 4 Vyral Referrals - 10% bonus
- * 5 Vyral Referrals - 11% bonus
- * 6 Vyral Referrals - 12% bonus
- * 7 Vyral Referrals - 13% bonus
- * 8 Vyral Referrals - 14% bonus
- * 9 Vyral Referrals - 15% bonus
+ *  1 Vyral Referral - 7% bonus
+ *  2 Vyral Referrals - 8% bonus
+ *  3 Vyral Referrals - 9% bonus
+ *  4 Vyral Referrals - 10% bonus
+ *  5 Vyral Referrals - 11% bonus
+ *  6 Vyral Referrals - 12% bonus
+ *  7 Vyral Referrals - 13% bonus
+ *  8 Vyral Referrals - 14% bonus
+ *  9 Vyral Referrals - 15% bonus
  * 10 Vyral Referrals - 16% bonus
  * 11 Vyral Referrals - 17% bonus
  * 12 Vyral Referrals - 18% bonus
@@ -39,18 +39,64 @@ library TieredPayoff {
     /**
      * Tiered payoff computes reward based on number of invitees a referrer has brought in.
      * Returns the reward or the number of tokens referrer should be awarded.
+     *
+     * For degree == 1:
+     * tier% of shares of newly joined node
+     *
+     * For 2 <= degree < 27:
+     *   k-1
+     * (  ∑  1% of shares(node_i) )  + tier% of shares of node_k
+     *   i=1
+     *
+     * For degree > 27:
+     * tier% of shares of newly joined node
      */
     function payoff(
         Referral.Tree storage self,
-        address _referrer,
-        uint _shares
+        address _referrer
     )
         public
+        view
         returns (uint)
     {
-        Referral.Node memory node = self.nodes[_referrer];
-        uint16 bonusPercentage = getBonusPercentage(node.degree);
-        uint reward = _shares.mul(bonusPercentage).div(100);
+        Referral.Node node = self.nodes[_referrer];
+
+        if(!node.exists) {
+            return 0;
+        }
+
+        uint reward = 0;
+        uint shares = 0;
+        uint degree = node.inviteeIndex.length;
+        uint tierPercentage = getBonusPercentage(node.inviteeIndex.length);
+
+        // No bonus if there are no invitees
+        if(degree == 0) {
+            return 0;
+        }
+
+        assert(tierPercentage > 0);
+
+        if(degree == 1) {
+            shares = node.invitees[node.inviteeIndex[0]];
+            reward = reward.add(shares.mul(tierPercentage).div(100));
+            return reward;
+        }
+
+
+        // For 2 <= degree <= 27
+        //    add 1% from the first k-1 nodes
+        //    add tier% from the last node
+        if(degree >= 2 && degree <= 27) {
+            for (uint i = 0; i < (degree - 1); i++) {
+                shares = node.invitees[node.inviteeIndex[i]];
+                reward = reward.add(shares.mul(1).div(100));
+            }
+        }
+
+        // For degree > 27, referrer bonus remains constant at tier%
+        shares = node.invitees[node.inviteeIndex[degree - 1]];
+        reward = reward.add(shares.mul(tierPercentage).div(100));
 
         return reward;
     }
@@ -60,11 +106,11 @@ library TieredPayoff {
      * based on comments above.
      */
     function getBonusPercentage(
-        uint16 _referrals
+        uint _referrals
     )
         public
         pure
-        returns (uint16)
+        returns (uint)
     {
         if (_referrals == 0) {
             return 0;

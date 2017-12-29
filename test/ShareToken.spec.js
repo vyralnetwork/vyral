@@ -1,7 +1,7 @@
 /**
  * SHARE token scenarios.
  */
-const Share          = artifacts.require("./HumanStandardToken.sol");
+const Share          = artifacts.require("./Share.sol");
 const Campaign       = artifacts.require("./Campaign.sol");
 const VyralSale      = artifacts.require("./VyralSale.sol");
 const MultiSigWallet = artifacts.require("./MultiSigWallet.sol");
@@ -15,9 +15,7 @@ contract('Token API', () => {
 
     before(async () => {
         this.vyralSale = await VyralSale.deployed();
-
-        let tokenAddr = await this.vyralSale.token.call();
-        this.share    = Share.at(tokenAddr);
+        this.share     = await Share.deployed();
 
         let campaignAddr = await this.vyralSale.campaign.call();
         this.campaign    = Campaign.at(campaignAddr);
@@ -50,7 +48,7 @@ contract('Token API', () => {
             assert.isTrue(total.equals(TOTAL_SUPPLY));
         });
 
-        it('should allocate 111,111,111 SHARE to team', async () => {
+        /*it('should allocate 111,111,111 SHARE to team', async () => {
             let teamAddress = await this.vyralSale.team.call();
             let teamBalance = await this.share.balanceOf.call(config.get("crowdsale:team"));
             let ONE_SEVENTH = await this.vyralSale.ONE_SEVENTH.call();
@@ -66,20 +64,22 @@ contract('Token API', () => {
 
             assert.equal(partnersAddress, config.get("crowdsale:partnerships"));
             assert.isTrue(partnersBalance.equals(ONE_SEVENTH));
-        });
+        });*/
 
         it('should transfer 222,222,222 SHARE to campaign rewards', async () => {
             let campaignBalance = await this.share.balanceOf.call(this.campaign.address);
-            let TWO_SEVENTHS    = await this.vyralSale.TWO_SEVENTHS.call();
+            let vyralRewards    = await this.vyralSale.VYRAL_REWARDS.call();
 
-            assert.isTrue(campaignBalance.equals(TWO_SEVENTHS));
+            assert.isTrue(campaignBalance.equals(vyralRewards));
         });
 
-        it('should allocate 333,333,333 SHARE to crowdsale', async () => {
-            let saleBalance    = await this.share.balanceOf.call(this.vyralSale.address);
-            let THREE_SEVENTHS = await this.vyralSale.THREE_SEVENTHS.call();
+        it('should hold 555,555,555 SHARE until vesting is called', async () => {
+            let saleBalance        = await this.share.balanceOf.call(this.vyralSale.address);
+            let teamAllocation     = await this.vyralSale.TEAM.call();
+            let partnersAllocation = await this.vyralSale.PARTNERS.call();
+            let saleAllocation     = await this.vyralSale.SALE_ALLOCATION.call();
 
-            assert.isTrue(saleBalance.equals(THREE_SEVENTHS));
+            assert.isTrue(saleBalance.equals(saleAllocation.plus(teamAllocation).plus(partnersAllocation)));
         });
     });
 });

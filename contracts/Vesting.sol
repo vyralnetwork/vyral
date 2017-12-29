@@ -2,7 +2,7 @@ pragma solidity ^0.4.17;
 
 import 'contracts/traits/Ownable.sol';
 import 'contracts/math/SafeMath.sol';
-import 'tokens/Token.sol';
+import 'installed_contracts/tokens/contracts/Token.sol';
 
 contract Vesting is Ownable {
     using SafeMath for uint;
@@ -44,12 +44,12 @@ contract Vesting is Ownable {
         require( vestingSchedules[_newAddress].depositor == 0x0 );
 
         // Validate that the times make sense.
-        require( _cliffTimestamp > _startTimestamp );
+        require( _cliffTimestamp >= _startTimestamp );
         require( _endTimestamp > _cliffTimestamp );
 
         // Some lock period sanity checks.
         require( _lockPeriod != 0 ); 
-        require( _endTimestamp.sub(_startTimestamp) < _lockPeriod );
+        require( _endTimestamp.sub(_startTimestamp) > _lockPeriod );
 
         // Register the new address.
         vestingSchedules[_newAddress] = VestingSchedule({
@@ -152,13 +152,13 @@ contract Vesting is Ownable {
 
     /// @dev Checks to see if the amount is greater than the total amount divided by the lock periods.
     function canWithdraw(VestingSchedule _vestingSchedule, uint _amountWithdrawable)
-        internal
+        internal view
     {
         uint lockPeriods = (_vestingSchedule.endTimestamp.sub(_vestingSchedule.startTimestamp))
                                                          .div(_vestingSchedule.lockPeriod);
 
         if (now < _vestingSchedule.endTimestamp) {
-            assert( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
+            require( _amountWithdrawable >= _vestingSchedule.totalAmount.div(lockPeriods) );
         }
     }
 
@@ -203,6 +203,7 @@ contract Vesting is Ownable {
 
         require( vestingSchedule.isConfirmed == true );
         require( _newAddress != 0x0 );
+        require( vestingSchedules[_newAddress].depositor == 0x0 );
 
         VestingSchedule memory newVestingSchedule = vestingSchedule;
         delete vestingSchedules[_oldAddress];

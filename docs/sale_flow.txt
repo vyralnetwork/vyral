@@ -1,0 +1,57 @@
+Ethereum Mainnet Deployment Procedure
+---------------------------------------
+
+1. Deploy the MultiSig Wallet (installed_contracts/multisig-wallet/)
+    on the mainnet and set the key holder addresses to ones controlled
+    by company heads.
+
+2. Deploy the Vyral Token (contracts/Share.sol) and DateTime library 
+    (lib/ethereum-datetime) from the Admin* address.
+
+3. Deploy the Vesting Wallet (contracts/Vesting.sol) by passing the address
+    of the already deployed Vyral Token as a parameter to the constructor
+    function.
+
+4. Deploy the Vyral Sale (contracts/VyralSale.sol) by passing in the addresses 
+    of the Vyral Token, the DateTime library, and the Vesting Wallet as parameters 
+    to the constructor function.
+
+5. Call `initPresale()` from the Admin address on the Vyral Sale contract and 
+    pass in as parameters the MultiSig Wallet address, the unix timestamps
+    for the _start_ and _end_ dates of the sale, the _presaleCap_ in amount
+    of Ether, and the _presaleRate_ of exchange from Ether to Share.
+
+6. Before doing anything else on the Vyral Sale contract, triple-check all the 
+    parameters for the presale are correct. Admin address may call the function 
+    `setPresaleParams()` to change presale-related parameters BUT only before 
+    enabling the start of the presale.
+
+7. After ensuring that all the parameters are correct, Admin address calls 
+    `startPresale()` to enable the presale. NOTE: The contract is now enabled 
+    but will continue to revert all contributions until the time specified in
+    the `presaleStartTimestamp` parameter. This is done so that you can enable
+    the sale early and it will programmatically start accepting contributions 
+    at the specified time.
+
+8. Sit back and wait until the start time of the presale. At the start time, 
+    the contract will no longer revert contributions and will begin to exchange 
+    Ether sent to it for Vyral Token.
+
+9. If anything happens while the presale is running, the admin address can call 
+    `toggleHALT(true)` on the Vyral Sale contract and immediately stop all incoming 
+    contributions and revert them. This is a feature intended only in the case of 
+    extreme emergencies.
+
+10. If the contract receives a total amount of Ether equal to the specified `presaleCap`
+     it will stop accepting contributions and revert any incoming ones. If the cap is 
+     not reached then the Vyral Sale contract will stop accepting contributions at the 
+     `presaleEndTimestamp` time. Either way, at the conclusion of a successful presale, 
+     the Admin address will call `endPresale()` on the Vyral Sale contract thereby 
+     moving it into the `freeze` phase and deactivating it until the crowdsale date.
+
+
+Notes
+------
+* The Admin address will be the one that has the `onlyOwner` priviledge
+   on all crowdsale related contracts and will have the power to call
+   any of the functions declared with this modifier. 

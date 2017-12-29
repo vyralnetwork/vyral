@@ -1,15 +1,17 @@
 pragma solidity ^0.4.18;
 
+import "./math/SafeMath.sol";
 import "./traits/Ownable.sol";
 import "./referral/TieredPayoff.sol";
 import "./referral/Referral.sol";
-import "tokens/HumanStandardToken.sol";
+import "./Share.sol";
 
 
 /**
  * A {Campaign} represents an advertising campaign.
  */
 contract Campaign is Ownable {
+    using SafeMath for uint;
     using Referral for Referral.Tree;
     using TieredPayoff for Referral.Tree;
 
@@ -17,40 +19,25 @@ contract Campaign is Ownable {
     Referral.Tree vyralTree;
 
     /// Token in use
-    HumanStandardToken public token;
+    Share public token;
 
-    /// Token in use
+    /// Budget of the campaign
     uint public budget;
 
-    /// Campaign is always in one of the following states
-    enum CampaignState {
-        Ready,
-        Started,
-        Stopped,
-        Canceled,
-        Completed
-    }
-
-    // Current state of the contract
-    CampaignState public state;
-
+    /// Tokens spent
+    uint public cost;
 
     /*
      * Modifiers
      */
 
-    modifier inState(CampaignState _state) {
-        require(state == _state);
-        _;
-    }
-
-    modifier notInState(CampaignState _state) {
-        require(state != _state);
-        _;
-    }
-
     modifier onlyNonZeroAddress(address _a) {
         require(_a != 0);
+        _;
+    }
+
+    modifier onlyNonSelfReferral(address _referrer, address _invitee) {
+        require(_referrer != _invitee);
         _;
     }
 
@@ -72,9 +59,6 @@ contract Campaign is Ownable {
     /// A new campaign was created
     event LogCampaignCreated(address campaign);
 
-    /// A campaign's state changed
-    event LogCampaignStateChanged(address campaign, CampaignState previousState, CampaignState currentState);
-
     /// Reward allocated
     event LogRewardAllocated(address referrer, uint inviteeShares, uint referralReward);
 
@@ -88,10 +72,8 @@ contract Campaign is Ownable {
     )
         public
     {
-        token = HumanStandardToken(_token);
+        token = Share(_token);
         budget = _budgetAmount;
-
-        state = CampaignState.Ready;
     }
 
     /**
@@ -106,31 +88,42 @@ contract Campaign is Ownable {
         uint _shares
     )
         public
-//        inState(CampaignState.Started)
+        onlyOwner
         onlyNonZeroAddress(_invitee)
-//        onlyOnReferral(_invitee)
+        onlyNonSelfReferral(_referrer, _invitee)
         onlyIfFundsAvailable()
         returns(uint reward)
     {
-        address referrer = vyralTree.getReferrerAddress(_invitee);
+        Referral.Node memory referrerNode = vyralTree.nodes[_referrer];
 
         // Referrer was not found, add referrer as a new node
-        if(referrer != _referrer) {
-            vyralTree.addInvitee(_referrer, owner, 0);
+        if(referrerNode.exists == false) {
+            vyralTree.addInvitee(owner, _referrer, 0);
         }
 
         // Add invitee to the tree
-        vyralTree.addInvitee(referrer, _invitee, _shares);
+        vyralTree.addInvitee(_referrer, _invitee, _shares);
 
-        if(referrer != 0x0) {
-            // Referrer exists in the tree
-            reward = vyralTree.payoff(referrer, _shares);
+        // Calculate referrer's reward
+        reward = vyralTree.payoff(_referrer);
 
-            // Transfer reward
-            token.transfer(referrer, reward);
+        // Log event
+        LogRewardAllocated(_referrer, _shares, reward);
+    }
 
-            // Log event
-            LogRewardAllocated(referrer, _shares, reward);
+    /**
+     * VyralSale (owner) transfers rewards on behalf of this contract.
+     */
+    function sendReward(address _who, uint _amount)
+        onlyOwner //(ie, VyralSale)
+        external returns (bool)
+    {
+        if(getAvailableBalance() >= _amount) {
+            token.transferReward(_who, _amount);
+            cost = cost.add(_amount);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -144,13 +137,22 @@ contract Campaign is Ownable {
         constant
         returns (address _referrer)
     {
-        _referrer = vyralTree.getReferrerAddress(_invitee);
+        _referrer = vyralTree.getReferrer(_invitee);
     }
 
-    // Update budget
+    /**
+     * @dev Returns the size of the Referral Tree.
+     */
+    function getTreeSize()
+        public
+        constant
+        returns (uint _size)
+    {
+        _size = vyralTree.getTreeSize();
+    }
 
     /**
-     * @dev Returns Reward as a tuple.
+     * @dev Returns the budget as a tuple, (token address, amount)
      */
     function getBudget()
         public
@@ -169,12 +171,13 @@ contract Campaign is Ownable {
         constant
         returns (uint _balance)
     {
-        _balance = token.balanceOf(this);
+        _balance = (budget - cost);
     }
 
     /**
      * Fallback. Don't send ETH to a campaign.
      */
     function() public {
+        revert();
     }
 }

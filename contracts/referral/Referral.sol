@@ -46,23 +46,28 @@ library Referral {
         address referrer;
         /// Invitees (and their shares) of this node
         mapping (address => uint) invitees;
-        /// Number of children (invitees)
-        uint16 degree;
+        /// Store keys separately
+        address[] inviteeIndex;
         /// Reward accumulated
         uint shares;
+        /// Used for membership check
+        bool exists;
     }
 
     /**
      * @dev A referral tree is a collection of Nodes.
      */
     struct Tree {
-        mapping (address => Node) nodes;
+        /// Nodes
+        mapping (address => Referral.Node) nodes;
+        /// stores keys separately
+        address[] treeIndex;
     }
 
     /**
      * @dev Find referrer of the given invitee.
      */
-    function getReferrerAddress (
+    function getReferrer (
         Tree storage self,
         address _invitee
     )
@@ -71,6 +76,19 @@ library Referral {
         returns (address _referrer)
     {
         _referrer = self.nodes[_invitee].referrer;
+    }
+
+    /**
+     * @dev Number of entries in referral tree.
+     */
+    function getTreeSize (
+        Tree storage self
+    )
+        public
+        constant
+        returns (uint _size)
+    {
+        _size = self.treeIndex.length;
     }
 
     /**
@@ -86,9 +104,14 @@ library Referral {
     {
         Node memory inviteeNode;
         inviteeNode.referrer = _referrer;
+        inviteeNode.shares = _shares;
+        inviteeNode.exists = true;
         self.nodes[_invitee] = inviteeNode;
+        self.treeIndex.push(_invitee);
 
-        self.nodes[_referrer].invitees[_invitee] = _shares;
-        self.nodes[_referrer].degree += 1;
+        if (self.nodes[_referrer].exists == true) {
+            self.nodes[_referrer].invitees[_invitee] = _shares;
+            self.nodes[_referrer].inviteeIndex.push(_invitee);
+        }
     }
 }
