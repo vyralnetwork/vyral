@@ -185,7 +185,7 @@ contract Vesting is Ownable {
             // Vesting has started, need to figure out how much hasn't been vested yet
             uint totalAmountVested = calculateTotalAmountVested(vestingSchedule);
             amountWithdrawable = totalAmountVested.sub(vestingSchedule.amountWithdrawn);
-            amountRefundable = totalAmountVested.sub(vestingSchedule.amountWithdrawn);
+            amountRefundable = vestingSchedule.totalAmount.sub(totalAmountVested);
 
             delete vestingSchedules[_addressToRevoke];
             require( vestingToken.transfer(_addressToRevoke, amountWithdrawable) );
