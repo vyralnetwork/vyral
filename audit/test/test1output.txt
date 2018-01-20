@@ -1,0 +1,1646 @@
+MODE               = 'test'
+GETHATTACHPOINT    = 'ipc:./testchain/geth.ipc'
+PASSWORD           = 'testtest'
+SOURCEDIR          = '../../contracts'
+CAMPAIGNSOL        = 'Campaign.sol'
+CAMPAIGNJS         = 'Campaign.js'
+DATETIMESOL        = 'DateTime.sol'
+DATETIMEJS         = 'DateTime.js'
+PRESALEBONUSESSOL  = 'PresaleBonuses.sol'
+PRESALEBONUSESJS   = 'PresaleBonuses.js'
+REFERRALSOL        = 'Referral.sol'
+REFERRALJS         = 'Referral.js'
+SAFEMATHSOL        = 'SafeMath.sol'
+SAFEMATHJS         = 'SafeMath.js'
+SHARESOL           = 'Share.sol'
+SHAREJS            = 'Share.js'
+TIEREDPAYOFFSOL    = 'TieredPayoff.sol'
+TIEREDPAYOFFJS     = 'TieredPayoff.js'
+VESTINGSOL         = 'Vesting.sol'
+VESTINGJS          = 'Vesting.js'
+VYRALSALESOL       = 'VyralSale.sol'
+VYRALSALEJS        = 'VyralSale.js'
+DEPLOYMENTDATA     = 'deploymentData.txt'
+INCLUDEJS          = './include.js'
+TEST1OUTPUT        = 'test1output.txt'
+TEST1RESULTS       = 'test1results.txt'
+CURRENTTIME        = '1515512579' 'Tue  9 Jan 2018 15:42:59 UTC'
+PRESALE_START_DATE = '1515512669' 'Tue  9 Jan 2018 15:44:29 UTC'
+PRESALE_END_DATE   = '1515512729' 'Tue  9 Jan 2018 15:45:29 UTC'
+START_DATE         = '1515512734' 'Tue  9 Jan 2018 15:45:34 UTC'
+END_DATE           = '1515512789' 'Tue  9 Jan 2018 15:46:29 UTC'
+--- Differences ../../contracts/Campaign.sol Campaign.sol ---
+64a65
+>     event PayoffCalc(address indexed referrer, uint degree, uint tierPercentage, uint shares, uint reward);
+--- Differences ../../contracts/PresaleBonuses.sol PresaleBonuses.sol ---
+4c4
+< import "../lib/ethereum-datetime/contracts/api.sol";
+---
+> import "./api.sol";
+15a16,17
+>         return applyPercentage(_purchased, 0);
+>         /*
+62a65
+>         */
+--- Differences ../../contracts/Share.sol Share.sol ---
+3c3
+< import "installed_contracts/tokens/contracts/HumanStandardToken.sol";
+---
+> import "./HumanStandardToken.sol";
+39c39
+<     bool isTransferable = false;
+---
+>     bool public isTransferable = false;
+42c42
+<     bool isBonusLocked = true;
+---
+>     bool public isBonusLocked = true;
+--- Differences ../../contracts/Vesting.sol Vesting.sol ---
+3,5c3,5
+< import 'contracts/traits/Ownable.sol';
+< import 'contracts/math/SafeMath.sol';
+< import 'installed_contracts/tokens/contracts/Token.sol';
+---
+> import 'traits/Ownable.sol';
+> import 'math/SafeMath.sol';
+> import './Token.sol';
+--- Differences ../../contracts/VyralSale.sol VyralSale.sol ---
+10c10
+< import "../lib/ethereum-datetime/contracts/DateTime.sol";
+---
+> import "./DateTime.sol";
+solc, the solidity compiler commandline interface
+Version: 0.4.18+commit.9cf6e910.Darwin.appleclang
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.7.3-stable-4bb3c89d/darwin-amd64/go1.9.2
+coinbase: 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e
+at block: 0 (Thu, 01 Jan 1970 10:00:00 AEST)
+ datadir: /Users/bok/Projects/VyralNetworkCrowdsaleContractAudit/audit/test/testchain
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+true
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+> 
+> 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.000000000000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433        0.000000000000000000           0.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f        0.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                                     0.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: --- Deploy Contracts #1 ---
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+... 
+undefined
+> 
+DATA: safeMathAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688
+DATA: dateTimeAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d
+DATA: presaleBonusesAddress=0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff
+DATA: referralAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3
+DATA: shareAddress=0xf4441f10804b35b13bad1e664e32237773276253
+DATA: tieredPayoffAddress=0x57930444aa5c1e758c1407ded001a8f36aa80b1d
+DATA: vestingAddress=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        8.003736097000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.003736097000000000   777777777.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f        0.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - SafeMath
+1
+> 
+RESULT: safeMathAddress=0x90d8927407c79c4a28ee879b821c76fc9bcc2688 status=0x1 Success gas=6000000 gasUsed=68653 costETH=0.000068653 costUSD=0.03225455246 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=0 txId=0x0153c80dddc2f1ff8a95d29ad0d6c18ce42539dfe2efdbbe64fefbbbb48f1d83 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - DateTime
+1
+> 
+RESULT: dateTimeAddress=0x0e946b999033257976aa5cbe0e3530618ca1582d status=0x1 Success gas=6000000 gasUsed=628507 costETH=0.000628507 costUSD=0.29528515874 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=1 txId=0x8c0d88755cb8dc30831532cb3d4cc82b9cff0c7b2c03024470efe1b282b48700 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - PresaleBonuses
+1
+> 
+RESULT: presaleBonusesAddress=0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff status=0x1 Success gas=6000000 gasUsed=68653 costETH=0.000068653 costUSD=0.03225455246 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=2 txId=0x88bd49e111cca71dcaee721fc94fa6af5cda23fae528808e11f891b6e0bcf8b2 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - Referral
+1
+> 
+RESULT: referralAddress=0xe6ada9beed6e24be4c0259383db61b52bfca85f3 status=0x1 Success gas=6000000 gasUsed=126344 costETH=0.000126344 costUSD=0.05935893808 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=3 txId=0x7dd560dfd69bd43093afa469935a8f3c97a7ee31c2a6b866f42522109bee0520 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - Share
+1
+> 
+RESULT: shareAddress=0xf4441f10804b35b13bad1e664e32237773276253 status=0x1 Success gas=6000000 gasUsed=1330181 costETH=0.001330181 costUSD=0.62494563742 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=4 txId=0xd15a8a16f3956db73b8e755dc31567eca7c131b83d716d4004506f02d228ed26 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - TieredPayoff
+1
+> 
+RESULT: tieredPayoffAddress=0x57930444aa5c1e758c1407ded001a8f36aa80b1d status=0x1 Success gas=6000000 gasUsed=331938 costETH=0.000331938 costUSD=0.15595111116 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=5 txId=0xfb31d09bdbf9125e5fdb70cc298622cf0c579989f43d279df3cc2216c946922d @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #1 - Vesting
+1
+> 
+RESULT: vestingAddress=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a status=0x1 Success gas=6000000 gasUsed=1181821 costETH=0.001181821 costUSD=0.55524314222 @ ETH/USD=469.82 gasPrice=1 gwei block=2 txIx=6 txId=0x0337ea7c7c3a68da9372b0d6876b58896c6791e72b23a431a291165d6f1aab12 @ 1515512597 Tue, 09 Jan 2018 15:43:17 UTC
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: --- Deploy Contracts #2 ---
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+...... 
+......... 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+............ 
+......... 
+...... 
+... 
+undefined
+> 
+... 
+undefined
+> 
+DATA: campaignAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+DATA: vyralSaleAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       14.006703758000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.006703758000000000   777777777.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f        0.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000           0.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000           0.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Deploy Contracts #2 - Campaign
+1
+> 
+RESULT: campaignAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 status=0x1 Success gas=6000000 gasUsed=787171 costETH=0.000787171 costUSD=0.36982867922 @ ETH/USD=469.82 gasPrice=1 gwei block=4 txIx=0 txId=0xce8c9fa8fde77d83fcb22cc284d10d858f09a8008341e76e3c4c924196fb6716 @ 1515512606 Tue, 09 Jan 2018 15:43:26 UTC
+undefined
+> 
+RESULT: PASS Deploy Contracts #2 - VyralSale
+1
+> 
+RESULT: vyralSaleAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b status=0x1 Success gas=6000000 gasUsed=2180490 costETH=0.00218049 costUSD=1.0244378118 @ ETH/USD=469.82 gasPrice=1 gwei block=4 txIx=1 txId=0x3a889f2f7a8b49852aff16d52a54a1955bb5e0f87d2f031e76f2a3fb26729b60 @ 1515512606 Tue, 09 Jan 2018 15:43:26 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=0
+RESULT: crowdsale.presaleStartTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.presaleEndTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.presaleRate=0
+RESULT: crowdsale.presaleCap=0
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=0
+RESULT: crowdsale.saleStartTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleEndTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleRate=0
+RESULT: crowdsale.saleCap=0
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=0
+RESULT: crowdsale.wallet=0x0000000000000000000000000000000000000000
+RESULT: crowdsale.vestingWallet=0x0000000000000000000000000000000000000000
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0x0000000000000000000000000000000000000000
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=0 0
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: --- Setup #1 ---
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       38.007171990000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007171990000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f        0.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   222222222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   333333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Setup #1 - vyralSale.setCampaign(...)
+1
+> 
+RESULT: PASS Setup #1 - vyralSale.setVesting(...)
+1
+> 
+RESULT: PASS Setup #1 - share.transfer(vyralSaleAddress, vyralSale.SALE_ALLOCATION())
+1
+> 
+RESULT: PASS Setup #1 - share.addTransferrer(vyralSaleAddress)
+1
+> 
+RESULT: PASS Setup #1 - share.addTransferrer(campaignAddress)
+1
+> 
+RESULT: PASS Setup #1 - campaign.transferOwnership(vyralSaleAddress)
+1
+> 
+RESULT: PASS Setup #1 - vyralSale.initPresale(...)
+1
+> 
+RESULT: PASS Setup #1 - vyralSale.startPresale()
+1
+> 
+RESULT: setup1_1Tx status=0x1 Success gas=400000 gasUsed=43799 costETH=0.000043799 costUSD=0.02057764618 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=0 txId=0xd68b1a3bdacedb6d25993571de6f11cae917f27753269cbe767e679fb1286c99 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_2Tx status=0x1 Success gas=400000 gasUsed=66766 costETH=0.000066766 costUSD=0.03136800212 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=1 txId=0xe136edc05e8560b3ab6b82e76f2aeebba26492f5baeb6689ef2dcb6a325e41b0 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_3Tx status=0x1 Success gas=400000 gasUsed=52460 costETH=0.00005246 costUSD=0.0246467572 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=2 txId=0x1fa2079468293d2fb2ba4748309061213625ef25f2b4702312a7cc1033a20480 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_4Tx status=0x1 Success gas=1400000 gasUsed=43603 costETH=0.000043603 costUSD=0.02048556146 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=3 txId=0xf6711a7aaf0a6850236b0137e8583d235baa4334f6c0d673bef6293a15faac24 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_5Tx status=0x1 Success gas=1400000 gasUsed=43603 costETH=0.000043603 costUSD=0.02048556146 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=4 txId=0xb8a219f4449f8dceddb4707b007e7850be37686debce9abc66ac32ab37470896 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_6Tx status=0x1 Success gas=1400000 gasUsed=30024 costETH=0.000030024 costUSD=0.01410587568 @ ETH/USD=469.82 gasPrice=1 gwei block=8 txIx=5 txId=0x4c04efd0531766e8e3496cbafb2006a39690c8e3af56a06e57b9ebf74fea54a7 @ 1515512622 Tue, 09 Jan 2018 15:43:42 UTC
+undefined
+> 
+RESULT: setup1_7Tx status=0x1 Success gas=400000 gasUsed=161084 costETH=0.000161084 costUSD=0.07568048488 @ ETH/USD=469.82 gasPrice=1 gwei block=10 txIx=0 txId=0x8c7474d613922e102de828520857024dc92a2523c1dc5e3a0137577d610e30c6 @ 1515512634 Tue, 09 Jan 2018 15:43:54 UTC
+undefined
+> 
+RESULT: setup1_8Tx status=0x1 Success gas=400000 gasUsed=26893 costETH=0.000026893 costUSD=0.01263486926 @ ETH/USD=469.82 gasPrice=1 gwei block=12 txIx=0 txId=0xb70a5d3c76729b6d9f28722e365b52d45c295a78d610ae0253cf8821fd276867 @ 1515512641 Tue, 09 Jan 2018 15:44:01 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=2
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=0
+RESULT: crowdsale.saleStartTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleEndTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleRate=0
+RESULT: crowdsale.saleCap=0
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=0
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Approval 0 #8 _owner=0x0a91add9e3e97057980da7826043aab2a2d4c35b _spender=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a _value=222222222
+RESULT: Transfer 0 #8: _from=0xa11aae29840fbb5c86e6fd4cf809eba183aef433 _to=0x0a91add9e3e97057980da7826043aab2a2d4c35b _value=555555555
+RESULT: Transfer 1 #10: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _value=222222222
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=0 0
+RESULT: OwnershipTransferred 0 #8 {"newOwner":"0x0a91add9e3e97057980da7826043aab2a2d4c35b","previousOwner":"0xa11aae29840fbb5c86e6fd4cf809eba183aef433"}
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+RESULT: Waiting until 'vyralSale.presaleStartTimestamp()' at 1515512669+0s =Wed, 10 Jan 2018 02:44:30 AEDT now=Wed, 10 Jan 2018 02:44:05 AEDT
+RESULT: Waited until 'vyralSale.presaleStartTimestamp()' at at 1515512669+0s =Wed, 10 Jan 2018 02:44:30 AEDT now=Wed, 10 Jan 2018 02:44:30 AEDT
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #1
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       80.007283727000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007171990000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1000000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     1000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   222222222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   332333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #1 - ac3 1000 ETH
+1
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: sendContribution1_1Tx status=0x1 Success gas=400000 gasUsed=111737 costETH=0.000111737 costUSD=0.05249627734 @ ETH/USD=469.82 gasPrice=1 gwei block=26 txIx=0 txId=0xcdf35c388be5be6be90259b4dfb274b0b266f7f3b0cfc506d95a045cd4567744 @ 1515512670 Tue, 09 Jan 2018 15:44:30 UTC
+undefined
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=2
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleEndTimestamp=0 Thu, 01 Jan 1970 00:00:00 UTC
+RESULT: crowdsale.saleRate=0
+RESULT: crowdsale.saleCap=0
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=0
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #26 {"buyer":"0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0","contribution":"1e+21","phase":"2"}
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #26: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=1000000
+RESULT: Transfer 1 #26: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=0
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=0 0
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: --- Setup #2 ---
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       98.007447676000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1000000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     1000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   222222222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   332333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Setup #2 - vyralSale.endPresale()
+1
+> 
+RESULT: PASS Setup #2 - vyralSale.initSale(...)
+1
+> 
+RESULT: PASS Setup #2 - vyralSale.startSale()
+1
+> 
+RESULT: setup2_1Tx status=0x1 Success gas=400000 gasUsed=27630 costETH=0.00002763 costUSD=0.0129811266 @ ETH/USD=469.82 gasPrice=1 gwei block=28 txIx=0 txId=0x2bb398ee0e000b05a5667d4a1365cbe144f7d3100bde8324d8744e5553d5e61d @ 1515512682 Tue, 09 Jan 2018 15:44:42 UTC
+undefined
+> 
+RESULT: setup2_2Tx status=0x1 Success gas=400000 gasUsed=108645 costETH=0.000108645 costUSD=0.0510435939 @ ETH/USD=469.82 gasPrice=1 gwei block=30 txIx=0 txId=0xdcbb215ad00c2795b3048ac94ddcbd74e89c66f8c9200d6c0b5ae2d7d6754e61 @ 1515512684 Tue, 09 Jan 2018 15:44:44 UTC
+undefined
+> 
+RESULT: setup2_3Tx status=0x1 Success gas=400000 gasUsed=27674 costETH=0.000027674 costUSD=0.01300179868 @ ETH/USD=469.82 gasPrice=1 gwei block=32 txIx=0 txId=0xe4204aa7431eaedccfddf8f886470f4b65eba3e9740369354513b50989163479 @ 1515512687 Tue, 09 Jan 2018 15:44:47 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=0
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+RESULT: Waiting until 'vyralSale.saleStartTimestamp()' at 1515512734+0s =Wed, 10 Jan 2018 02:45:35 AEDT now=Wed, 10 Jan 2018 02:44:52 AEDT
+RESULT: Waited until 'vyralSale.saleStartTimestamp()' at at 1515512734+0s =Wed, 10 Jan 2018 02:45:35 AEDT now=Wed, 10 Jan 2018 02:45:35 AEDT
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #2
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      167.007839363000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1070000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844    -1000.000391687000000000     1000000.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     2000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   222152222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   331333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #2 - ac4(referred by ac3) 1,000 ETH
+1
+> 
+RESULT: sendContribution2_1Tx status=0x1 Success gas=400000 gasUsed=391687 costETH=0.000391687 costUSD=0.18402238634 @ ETH/USD=469.82 gasPrice=1 gwei block=55 txIx=0 txId=0x4c444cfcecf78a374786a5d0a4db7724c4a3fdc5968446810c888279536d11b4 @ 1515512739 Tue, 09 Jan 2018 15:45:39 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=1e+21
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #55 {"buyer":"0xa44a08d3f6933c69212114bb66e2df1813651844","contribution":"1e+21","phase":"5"}
+RESULT: LogReferral 0 #55 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 invitee=0xa44a08d3f6933c69212114bb66e2df1813651844 referralReward=70000
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #55: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa44a08d3f6933c69212114bb66e2df1813651844 _value=1000000
+RESULT: Transfer 1 #55: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=70000
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=7e+22 70000
+RESULT: PayoffCalc 0 #55 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=1 tierPercentage=7 shares=1000000 reward=70000
+RESULT: LogRewardAllocated 0 #55 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 inviteeShares=1000000 referralReward=70000
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #3
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      173.008082604000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1160000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844    -1000.000391687000000000     1000000.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea    -1000.000243241000000000     1000000.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     3000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   222062222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   330333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #3 - ac5(referred by ac3) 1,000 ETH
+1
+> 
+RESULT: sendContribution3_1Tx status=0x1 Success gas=400000 gasUsed=243241 costETH=0.000243241 costUSD=0.11427948662 @ ETH/USD=469.82 gasPrice=1 gwei block=57 txIx=0 txId=0xc5ddab62b7a6badf7adee1660fe61d5d480284f8134ca0d36e83f1dad96f3a9c @ 1515512747 Tue, 09 Jan 2018 15:45:47 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=2e+21
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #57 {"buyer":"0xa55a151eb00fded1634d27d1127b4be4627079ea","contribution":"1e+21","phase":"5"}
+RESULT: LogReferral 0 #57 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 invitee=0xa55a151eb00fded1634d27d1127b4be4627079ea referralReward=90000
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #57: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa55a151eb00fded1634d27d1127b4be4627079ea _value=1000000
+RESULT: Transfer 1 #57: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=90000
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=1.6e+23 160000
+RESULT: PayoffCalc 0 #57 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=2 tierPercentage=8 shares=1000000 reward=10000
+RESULT: PayoffCalc 1 #57 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=2 tierPercentage=8 shares=1000000 reward=90000
+RESULT: LogRewardAllocated 0 #57 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 inviteeShares=1000000 referralReward=90000
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #4
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      182.008329050000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1270000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844    -1000.000391687000000000     1000000.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea    -1000.000243241000000000     1000000.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9    -1000.000246446000000000     1000000.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     4000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   221952222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   329333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #4 - ac6(referred by ac3) 1,000 ETH
+1
+> 
+RESULT: sendContribution4_1Tx status=0x1 Success gas=400000 gasUsed=246446 costETH=0.000246446 costUSD=0.11578525972 @ ETH/USD=469.82 gasPrice=1 gwei block=60 txIx=0 txId=0x9d3cdba9e4dcbf8b2aacdd901a78bcb3e71a10b166d37209fade6952d580f86f @ 1515512755 Tue, 09 Jan 2018 15:45:55 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=3e+21
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #60 {"buyer":"0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9","contribution":"1e+21","phase":"5"}
+RESULT: LogReferral 0 #60 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 invitee=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 referralReward=110000
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #60: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9 _value=1000000
+RESULT: Transfer 1 #60: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=110000
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=2.7e+23 270000
+RESULT: PayoffCalc 0 #60 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=3 tierPercentage=9 shares=1000000 reward=10000
+RESULT: PayoffCalc 1 #60 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=3 tierPercentage=9 shares=1000000 reward=20000
+RESULT: PayoffCalc 2 #60 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=3 tierPercentage=9 shares=1000000 reward=110000
+RESULT: LogRewardAllocated 0 #60 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 inviteeShares=1000000 referralReward=110000
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #5
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      188.008578700000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1400000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844    -1000.000391687000000000     1000000.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea    -1000.000243241000000000     1000000.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9    -1000.000246446000000000     1000000.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec    -1000.000249650000000000     1000000.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     5000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   221822222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   328333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #5 - ac7(referred by ac3) 1,000 ETH
+1
+> 
+RESULT: sendContribution5_1Tx status=0x1 Success gas=400000 gasUsed=249650 costETH=0.00024965 costUSD=0.117290563 @ ETH/USD=469.82 gasPrice=1 gwei block=62 txIx=0 txId=0x8bc1228c0d2bb4fbcbc9d26e6b0f86773ab815f2be4d893f5b152b68a00d57aa @ 1515512761 Tue, 09 Jan 2018 15:46:01 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=4e+21
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #62 {"buyer":"0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec","contribution":"1e+21","phase":"5"}
+RESULT: LogReferral 0 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 invitee=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec referralReward=130000
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #62: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec _value=1000000
+RESULT: Transfer 1 #62: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 _value=130000
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=4e+23 400000
+RESULT: PayoffCalc 0 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=4 tierPercentage=10 shares=1000000 reward=10000
+RESULT: PayoffCalc 1 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=4 tierPercentage=10 shares=1000000 reward=20000
+RESULT: PayoffCalc 2 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=4 tierPercentage=10 shares=1000000 reward=30000
+RESULT: PayoffCalc 3 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 degree=4 tierPercentage=10 shares=1000000 reward=130000
+RESULT: LogRewardAllocated 0 #62 referrer=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0 inviteeShares=1000000 referralReward=130000
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
+undefined
+> 
+undefined
+> 
+undefined
+> 
+RESULT: Send Contribution #6
+undefined
+> 
+undefined
+> 
+... 
+undefined
+> 
+RESULT:  # Account                                             EtherBalanceChange                          Token Name
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e      194.008788570000000000           0.000000000000000000 Account #0 - Miner
+RESULT:  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.007335939000000000   222222222.000000000000000000 Account #1 - Contract Owner
+RESULT:  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2
+RESULT:  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0    -1000.000111737000000000     1400000.000000000000000000 Account #3
+RESULT:  4 0xa44a08d3f6933c69212114bb66e2df1813651844    -2000.000601557000000000     2000000.000000000000000000 Account #4
+RESULT:  5 0xa55a151eb00fded1634d27d1127b4be4627079ea    -1000.000243241000000000     1070000.000000000000000000 Account #5
+RESULT:  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9    -1000.000246446000000000     1000000.000000000000000000 Account #6
+RESULT:  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec    -1000.000249650000000000     1000000.000000000000000000 Account #7
+RESULT:  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+RESULT:  9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+RESULT: 10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10 - Owner #1
+RESULT: 11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11 - Owner #2
+RESULT: 12 0xacca534c9f62ab495bd986e002ddf0f054caae4f     6000.000000000000000000           0.000000000000000000 Account #12 - Team Wallet
+RESULT: 13 0x90d8927407c79c4a28ee879b821c76fc9bcc2688        0.000000000000000000           0.000000000000000000 SafeMath
+RESULT: 14 0x0e946b999033257976aa5cbe0e3530618ca1582d        0.000000000000000000           0.000000000000000000 DateTime
+RESULT: 15 0xdf9f36fd5654d92e0844c78d2d2dd562404cd1ff        0.000000000000000000           0.000000000000000000 PresaleBonuses
+RESULT: 16 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 Referral
+RESULT: 17 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 Share
+RESULT: 18 0x57930444aa5c1e758c1407ded001a8f36aa80b1d        0.000000000000000000           0.000000000000000000 TieredPayoff
+RESULT: 19 0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a        0.000000000000000000           0.000000000000000000 Vesting
+RESULT: 20 0xb8c31f47dfba40162326aba12cd577ae5cb2ce99        0.000000000000000000   221752222.000000000000000000 Campaign
+RESULT: 21 0x0a91add9e3e97057980da7826043aab2a2d4c35b        0.000000000000000000   327333333.000000000000000000 VyralSale
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT:                                                                             777777777.000000000000000000 Total Token Balances
+RESULT: -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+RESULT: 
+undefined
+> 
+RESULT: PASS Send Contribution #6 - ac4(referred by ac5) 1,000 ETH
+1
+> 
+RESULT: sendContribution6_1Tx status=0x1 Success gas=400000 gasUsed=209870 costETH=0.00020987 costUSD=0.0986011234 @ ETH/USD=469.82 gasPrice=1 gwei block=64 txIx=0 txId=0xb93d2482d63fc626422f1f57801f8326c5f9eb90997fb1b269e19bd094d28ffe @ 1515512770 Tue, 09 Jan 2018 15:46:10 UTC
+undefined
+> 
+RESULT: crowdsaleContractAddress=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: crowdsale.owner()=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: crowdsale.MIN_CONTRIBUTION=1000000000000000000 1 ETH
+RESULT: crowdsale.phase=5
+RESULT: crowdsale.presaleStartTimestamp=1515512669 Tue, 09 Jan 2018 15:44:29 UTC
+RESULT: crowdsale.presaleEndTimestamp=1515512729 Tue, 09 Jan 2018 15:45:29 UTC
+RESULT: crowdsale.presaleRate=1000
+RESULT: crowdsale.presaleCap=5e+21
+RESULT: crowdsale.presaleCapReached=false
+RESULT: crowdsale.soldPresale=1e+21
+RESULT: crowdsale.saleStartTimestamp=1515512734 Tue, 09 Jan 2018 15:45:34 UTC
+RESULT: crowdsale.saleEndTimestamp=1515512789 Tue, 09 Jan 2018 15:46:29 UTC
+RESULT: crowdsale.saleRate=1000
+RESULT: crowdsale.saleCap=3.28333333e+23
+RESULT: crowdsale.saleCapReached=false
+RESULT: crowdsale.soldSale=5e+21
+RESULT: crowdsale.wallet=0xacca534c9f62ab495bd986e002ddf0f054caae4f
+RESULT: crowdsale.vestingWallet=0x936e75a404fc4ea6aba4d9c3b20ea67abab3188a
+RESULT: crowdsale.shareToken=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: crowdsale.campaign=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: crowdsale.dateTime=0x0e946b999033257976aa5cbe0e3530618ca1582d
+RESULT: crowdsale.vestingRegistered=false
+RESULT: crowdsale.TOTAL_SUPPLY=777777777
+RESULT: crowdsale.TEAM=111111111
+RESULT: crowdsale.PARTNERS=111111111
+RESULT: crowdsale.VYRAL_REWARDS=222222222
+RESULT: crowdsale.SALE_ALLOCATION=333333333
+RESULT: crowdsale.vestingRegistered=false
+RESULT: LogContribution 0 #64 {"buyer":"0xa44a08d3f6933c69212114bb66e2df1813651844","contribution":"1e+21","phase":"5"}
+RESULT: LogReferral 0 #64 referrer=0xa55a151eb00fded1634d27d1127b4be4627079ea invitee=0xa44a08d3f6933c69212114bb66e2df1813651844 referralReward=70000
+undefined
+> 
+RESULT: tokenContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+RESULT: token.TOKEN_NAME=Vyral Token
+RESULT: token.TOKEN_SYMBOL=SHARE
+RESULT: token.TOKEN_DECIMALS=18
+RESULT: token.TOTAL_SUPPLY=777777777
+RESULT: token.name=Vyral Token
+RESULT: token.symbol=SHARE
+RESULT: token.version=H0.1
+RESULT: token.decimals=18
+RESULT: token.totalSupply=777777777
+RESULT: token.isTransferable=false
+RESULT: token.isBonusLocked=true
+RESULT: Transfer 0 #64: _from=0x0a91add9e3e97057980da7826043aab2a2d4c35b _to=0xa44a08d3f6933c69212114bb66e2df1813651844 _value=1000000
+RESULT: Transfer 1 #64: _from=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99 _to=0xa55a151eb00fded1634d27d1127b4be4627079ea _value=70000
+undefined
+> 
+RESULT: campaignContractAddress=0xb8c31f47dfba40162326aba12cd577ae5cb2ce99
+RESULT: campaign.owner()=0x0a91add9e3e97057980da7826043aab2a2d4c35b
+RESULT: campaign.token()=0xf4441f10804b35b13bad1e664e32237773276253
+RESULT: campaign.budget=1e+24 1000000
+RESULT: campaign.cost=4.7e+23 470000
+RESULT: PayoffCalc 0 #64 referrer=0xa55a151eb00fded1634d27d1127b4be4627079ea degree=1 tierPercentage=7 shares=1000000 reward=70000
+RESULT: LogRewardAllocated 0 #64 referrer=0xa55a151eb00fded1634d27d1127b4be4627079ea inviteeShares=1000000 referralReward=70000
+undefined
+> 
+RESULT: 
+undefined
+> 
+> 
+> 
